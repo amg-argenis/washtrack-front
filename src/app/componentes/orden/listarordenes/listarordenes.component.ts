@@ -14,9 +14,9 @@ export class ListarordenesComponent {
 
   constructor(private ordenService: OrdenService) { }
 
-  buscar() {
+  listarOrdenesServicioComponent() {
 
-    this.ordenService.buscarOrdenes()
+    this.ordenService.listarOrdenesServicio()
       .subscribe({
         next: (data) => {
           this.ordenes = data;

@@ -8,12 +8,12 @@ import { Orden } from '../models/orden';
 })
 export class OrdenService {
 
-  private apiUrl = '/washtrack/api/v1/ordenes';
+  private apiUrl = '/washtrack/api/v1';
 
   constructor(private http: HttpClient) {}
 
-  buscarOrdenes(): Observable<Orden[]> {
-    return this.http.get<Orden[]>(`${this.apiUrl}/listar`);
+  listarOrdenesServicio(): Observable<Orden[]> {
+    return this.http.get<Orden[]>(`${this.apiUrl}/ordenes/listar`);
   }
 
 }
