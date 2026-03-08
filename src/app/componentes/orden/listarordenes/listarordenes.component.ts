@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { OrdenService } from '../../../servidor/orden.service';
 import { Orden } from '../../../models/orden';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-listarordenes',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './listarordenes.component.html',
   styleUrl: './listarordenes.component.css',
 })
