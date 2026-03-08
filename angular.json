@@ -15,6 +15,9 @@
         },
         "@schematics/angular:service": {
           "type": "service"
+        },
+        "@schematics/angular:models": {
+          "type": "models"
         }
       },
       "root": "",

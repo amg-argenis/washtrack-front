@@ -1,1 +1,33 @@
-<p>listarordenes works!</p>
+<div class="container">
+
+    <button class="btn btn-primary" (click)="buscar()">
+        Buscar órdenes
+    </button>
+
+    <table class="table table-striped mt-3">
+
+        <thead>
+            <tr>
+                <th>Folio</th>
+                <th>Estado</th>
+                <th>Prendas</th>
+                <th>Fecha Ingreso</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr *ngFor="let orden of ordenes">
+
+                <td>{{orden.folio}}</td>
+                <td>{{orden.estado}}</td>
+                <td>{{orden.totalPrendas}}</td>
+                <td>{{orden.fechaIngreso}}</td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
