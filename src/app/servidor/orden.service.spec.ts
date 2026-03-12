@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { OrdenResponse } from '../models/ordenservicio/ordenrespuesta';
-import { InsertarOrdenRequest } from '../models/ordenservicio/ordenrespuesta';
-import { ActualizarOrdenRequest } from '../models/ordenservicio/ordenrespuesta';
-import { EliminarOrdenRequest } from '../models/ordenservicio/ordenrespuesta';
+import { InsertarOrdenRequest } from '../models/ordenservicio/insertar-orden-request';
+import { ActualizarOrdenRequest } from '../models/ordenservicio/actualizar-orden-request';
+import { EliminarOrdenRequest } from '../models/ordenservicio/eliminar-orden-request';
 
 @Injectable({
   providedIn: 'root'

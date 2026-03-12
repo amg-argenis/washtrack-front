@@ -1,9 +1,8 @@
 <div class="page-wrapper">
-
     <div class="page-header">
         <h3 class="page-title">Listado de Órdenes de Servicio</h3>
-        <button class="btn-primary" (click)="listarOrdenesServicioComponent()">
-            🔍 Mostrar Órdenes
+        <button class="btn-primary" (click)="nuevaOrden()">
+            ➕ Nueva Orden
         </button>
     </div>
 
@@ -15,6 +14,7 @@
                     <th>Estado</th>
                     <th>Prendas</th>
                     <th>Fecha Ingreso</th>
+                    <th>Fecha Entrega</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -25,18 +25,18 @@
                     <td><span class="badge-estado">{{ orden.estado }}</span></td>
                     <td>{{ orden.totalPrendas }}</td>
                     <td>{{ orden.fechaIngreso }}</td>
+                    <td>{{ orden.fechaEntrega }}</td>
                     <td>
-                        <button class="btn-edit">Editar</button>
-                        <button class="btn-delete">Eliminar</button>
+                        <button class="btn-edit" (click)="editarOrden(orden)">✏️ Editar</button>
+                        <button class="btn-delete" (click)="eliminarOrden(orden)">🗑️ Eliminar</button>
                     </td>
                 </tr>
                 } @empty {
                 <tr>
-                    <td colspan="5" class="empty-msg">No hay registros</td>
+                    <td colspan="6" class="empty-msg">No hay registros</td>
                 </tr>
                 }
             </tbody>
         </table>
     </div>
-
 </div>

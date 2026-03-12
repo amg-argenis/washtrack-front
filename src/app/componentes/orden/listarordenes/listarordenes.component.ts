@@ -1,31 +1,51 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { OrdenService } from '../../../servidor/orden.service';
 import { Orden } from '../../../models/ordenservicio/orden';
-import { FormsModule } from '@angular/forms';
-import { OrdenResponse } from '../../../models/ordenservicio/ordenrespuesta';
+import { OrdenResponse } from '../../../models//ordenservicio/ordenrespuesta';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-listarordenes',
-  imports: [FormsModule],
+  imports: [CommonModule],
   templateUrl: './listarordenes.component.html',
   styleUrl: './listarordenes.component.css',
 })
 export class ListarordenesComponent implements OnInit {
   listadoOrdenServicio: Orden[] = [];
 
-  constructor(private ordenService: OrdenService) { }
+  constructor(private ordenService: OrdenService, private router: Router) { }
 
   ngOnInit(): void {
-    this.listarOrdenesServicioComponent(); // 👈 carga al entrar a la vista
+    this.listarOrdenesServicioComponent();
   }
 
   listarOrdenesServicioComponent() {
-    this.ordenService.listarOrdenesServicio()
-      .subscribe({
-        next: (response: OrdenResponse) => {
-          this.listadoOrdenServicio = [...response.data];
-        },
-        error: (err) => console.error('Error:', err)
-      });
+    this.ordenService.listarOrdenesServicio().subscribe({
+      next: (response: OrdenResponse) => {
+        this.listadoOrdenServicio = [...response.data];
+      },
+      error: (err) => console.error('Error:', err)
+    });
   }
+
+  nuevaOrden() {
+    this.router.navigate(['/ordenes/crear']);
+  }
+
+  editarOrden(orden: Orden) {
+    this.router.navigate(['/ordenes/editar', orden.idOrden], {
+      state: { orden }
+    });
+  }
+
+  eliminarOrden(orden: Orden) {
+    if (!confirm(`¿Eliminar la orden ${orden.folio}?`)) return;
+
+    this.ordenService.eliminarOrden({ idOrden: orden.idOrden, folio: orden.folio }).subscribe({
+      next: () => this.listarOrdenesServicioComponent(),
+      error: (err) => console.error('Error al eliminar:', err)
+    });
+  }
+
 }

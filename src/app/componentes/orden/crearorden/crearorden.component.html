@@ -1,1 +1,54 @@
-<p>crearorden works!</p>
+<div class="page-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">Nueva Orden de Servicio</h3>
+    </div>
+
+    <div class="form-card">
+        @if(errorMsg) {
+        <div class="alert-error">{{ errorMsg }}</div>
+        }
+
+        <div class="form-grid">
+            <div class="form-group">
+                <label>ID Cliente</label>
+                <input type="text" [(ngModel)]="orden.clienteId" placeholder="ID del cliente" />
+            </div>
+
+            <div class="form-group">
+                <label>Estado</label>
+                <select [(ngModel)]="orden.estado">
+                    @for(estado of estados; track estado) {
+                    <option [value]="estado">{{ estado }}</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Total Prendas</label>
+                <input type="number" [(ngModel)]="orden.totalPrendas" min="1" />
+            </div>
+
+            <div class="form-group">
+                <label>Fecha Ingreso</label>
+                <input type="date" [(ngModel)]="orden.fechaIngreso" />
+            </div>
+
+            <div class="form-group">
+                <label>Fecha Entrega</label>
+                <input type="date" [(ngModel)]="orden.fechaEntrega" />
+            </div>
+
+            <div class="form-group full-width">
+                <label>Observaciones</label>
+                <textarea [(ngModel)]="orden.observaciones" rows="3" placeholder="Observaciones..."></textarea>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button class="btn-secondary" (click)="cancelar()">Cancelar</button>
+            <button class="btn-primary" (click)="guardar()" [disabled]="guardando">
+                {{ guardando ? 'Guardando...' : '💾 Guardar Orden' }}
+            </button>
+        </div>
+    </div>
+</div>
