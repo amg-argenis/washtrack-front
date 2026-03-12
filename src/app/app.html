@@ -1,13 +1,48 @@
-<div class="container">
+<div class="app-layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-icon">🫧</span>
+      <span class="brand-name">WashTrack</span>
+    </div>
 
-  <h1>Sistema de WashTrack</h1>
+    <nav class="sidebar-nav">
+      <a routerLink="/inicio" routerLinkActive="active" class="nav-item">
+        <span class="nav-icon">🏠</span> Inicio
+      </a>
+      <a routerLink="/ordenes/listar" routerLinkActive="active" class="nav-item">
+        <span class="nav-icon">📋</span> Órdenes
+      </a>
+      <a routerLink="/clientes" routerLinkActive="active" class="nav-item">
+        <span class="nav-icon">👥</span> Clientes
+      </a>
+      <a routerLink="/facturas" routerLinkActive="active" class="nav-item">
+        <span class="nav-icon">🧾</span> Facturas
+      </a>
+      <a routerLink="/empleados" routerLinkActive="active" class="nav-item">
+        <span class="nav-icon">👔</span> Empleados
+      </a>
+      <a routerLink="/reportes" routerLinkActive="active" class="nav-item">
+        <span class="nav-icon">📊</span> Reportes
+      </a>
+    </nav>
 
-  <a (click)="listarOrdenes()" class="btn btn-primary">
-    Listar Órdenes
-  </a>
+    <div class="sidebar-footer">
+      <a routerLink="/configuracion" class="nav-item">
+        <span class="nav-icon">⚙️</span> Configuración
+      </a>
+    </div>
+  </aside>
 
-  <hr>
+  <main class="main-content">
+    <header class="topbar">
+      <h2 class="page-title">Sistema de Lavandería</h2>
+      <div class="topbar-right">
+        <span class="user-badge">👤 Admin</span>
+      </div>
+    </header>
 
-  <router-outlet></router-outlet>
-
+    <div class="content-area">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
 </div>

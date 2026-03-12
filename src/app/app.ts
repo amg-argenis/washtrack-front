@@ -1,20 +1,10 @@
-import { Component, signal } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
-  protected readonly title = signal('washtrack-front');
-
-  constructor(private router: Router) { }
-
-  listarOrdenes() {
-    this.router.navigate(['ordenes/listar'])
-
-  }
-
-}
+export class App { }
