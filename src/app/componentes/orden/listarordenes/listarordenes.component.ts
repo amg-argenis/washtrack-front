@@ -23,7 +23,7 @@ export class ListarordenesComponent implements OnInit {
   listarOrdenesServicioComponent() {
     this.ordenService.listarOrdenesServicio().subscribe({
       next: (response: OrdenResponse) => {
-        this.listadoOrdenServicio = [...response.data];
+        this.listadoOrdenServicio = response.data;
       },
       error: (err) => console.error('Error:', err)
     });
@@ -34,9 +34,9 @@ export class ListarordenesComponent implements OnInit {
   }
 
   editarOrden(orden: Orden) {
-    this.router.navigate(['/ordenes/editar', orden.idOrden], {
-      state: { orden }
-    });
+    localStorage.setItem('idOrdenLocal', orden.idOrden.toString());
+    localStorage.setItem('folioLocal', orden.folio.toString());
+    this.router.navigate(['/ordenes/editar']);
   }
 
   eliminarOrden(orden: Orden) {

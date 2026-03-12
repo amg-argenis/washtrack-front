@@ -6,6 +6,6 @@ import { ActualizarordenComponent } from './componentes/orden/actualizarorden/ac
 export const routes: Routes = [
     { path: 'ordenes/listar', component: ListarordenesComponent },
     { path: 'ordenes/crear', component: CrearordenComponent },
-    { path: 'ordenes/editar/:id', component: ActualizarordenComponent },
+    { path: 'ordenes/editar', component: ActualizarordenComponent },
     { path: '', redirectTo: 'ordenes/listar', pathMatch: 'full' }
 ];

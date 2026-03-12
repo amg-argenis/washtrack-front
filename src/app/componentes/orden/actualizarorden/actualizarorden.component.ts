@@ -3,6 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { OrdenService } from '../../../servidor/orden.service';
 import { ActualizarOrdenRequest } from '../../../models/ordenservicio/actualizar-orden-request';
+import { Orden } from '../../../models/ordenservicio/orden';
+import { BuscarOrdenRequest } from '../../../models/ordenservicio/BuscarOrdenRequest';
+import { BuscarOrdenResponse } from '../../../models/ordenservicio/BuscarOrdenResponse';
 
 @Component({
   selector: 'app-editarorden',
@@ -12,7 +15,7 @@ import { ActualizarOrdenRequest } from '../../../models/ordenservicio/actualizar
 })
 export class ActualizarordenComponent implements OnInit {
 
-  orden: ActualizarOrdenRequest = {
+  ordenCrear: ActualizarOrdenRequest = {
     idOrden: '',
     clienteId: '',
     folio: '',
@@ -27,29 +30,44 @@ export class ActualizarordenComponent implements OnInit {
   guardando = false;
   errorMsg = '';
 
-  constructor(
-    private ordenService: OrdenService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) { }
+  // Variables
+  ordenReq: BuscarOrdenRequest = new BuscarOrdenRequest();
+  ordenResponse: BuscarOrdenResponse = new BuscarOrdenResponse();
+  orden: Orden = new Orden();
+
+  constructor(private ordenService: OrdenService, private router: Router) { }
 
   ngOnInit(): void {
-    const nav = this.router.getCurrentNavigation();
-    const state = nav?.extras?.state as { orden: any };
+    this.buscarOrdenServicio();
+  }
 
-    if (state?.orden) {
-      this.orden = { ...state.orden };
-    } else {
-      // Si recarga la página, volver al listado
-      this.router.navigate(['/ordenes/listar']);
-    }
+  buscarOrdenServicio() {
+    let idorden = localStorage.getItem('idOrdenLocal');
+    let folio = localStorage.getItem('folioLocal');
+
+    this.ordenReq.idOrden = String(idorden);
+    this.ordenReq.folio = String(folio);
+
+    // Invocar al service y llamar al endpoint del BKN
+    this.ordenService.buscarOrden(this.ordenReq).subscribe(data => {
+      this.ordenResponse = data;
+
+      if (data.success) {
+        alert('Informacion obtenida');
+        this.orden = data.data;
+      }
+      else {
+        alert(`No hay informacion para el folio ${folio}`);
+      }
+
+    });
   }
 
   guardar() {
     this.guardando = true;
     this.errorMsg = '';
 
-    this.ordenService.actualizarOrden(this.orden).subscribe({
+    this.ordenService.actualizarOrden(this.ordenCrear).subscribe({
       next: () => {
         this.guardando = false;
         this.router.navigate(['/ordenes/listar']);

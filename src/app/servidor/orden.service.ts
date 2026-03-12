@@ -5,6 +5,8 @@ import { OrdenResponse } from '../models/ordenservicio/ordenrespuesta';
 import { InsertarOrdenRequest } from '../models/ordenservicio/insertar-orden-request';
 import { ActualizarOrdenRequest } from '../models/ordenservicio/actualizar-orden-request';
 import { EliminarOrdenRequest } from '../models/ordenservicio/eliminar-orden-request';
+import { BuscarOrdenRequest } from '../models/ordenservicio/BuscarOrdenRequest';
+import { BuscarOrdenResponse } from '../models/ordenservicio/BuscarOrdenResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +21,8 @@ export class OrdenService {
     return this.http.get<OrdenResponse>(`${this.apiUrl}/ordenes/listar`);
   }
 
-  buscarOrden(idOrden: string, folio: string): Observable<OrdenResponse> {
-    return this.http.post<OrdenResponse>(`${this.apiUrl}/ordenes/buscar`, { idOrden, folio });
+  buscarOrden(orden: BuscarOrdenRequest): Observable<BuscarOrdenResponse> {
+    return this.http.post<BuscarOrdenResponse>(`${this.apiUrl}/ordenes/buscar`, orden);
   }
 
   crearOrden(orden: InsertarOrdenRequest): Observable<OrdenResponse> {
