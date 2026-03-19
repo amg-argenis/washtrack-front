@@ -5,6 +5,8 @@ import { Orden } from '../../../models/ordenservicio/orden';
 import { OrdenResponse } from '../../../models/ordenservicio/ordenrespuesta';
 import { OrdenConDetalles } from '../../../models/ordenservicio/orden-detalle';
 import { CommonModule } from '@angular/common';
+import { BuscarOrdenRequest } from '../../../models/ordenservicio/BuscarOrdenRequest';
+import { BuscarOrdenConDetalleResponse } from '../../../models/ordenservicio/BuscarOrdenConDetalleResponse';
 
 @Component({
   selector: 'app-listarordenes',
@@ -14,10 +16,15 @@ import { CommonModule } from '@angular/common';
 })
 export class ListarordenesComponent implements OnInit {
 
-  listadoOrdenServicio: Orden[] = [];
-  ordenExpandida: string | null = null;
-  detalleOrden: OrdenConDetalles | null = null;
+  // Variables
   cargandoDetalle = false;
+  listadoOrdenServicio: Orden[] = [];
+  idOrdenExpand: string | null = null;
+  folioOrden: string | null = null;
+  detalleOrden: OrdenConDetalles | null = null;
+  ordenReq: BuscarOrdenRequest = new BuscarOrdenRequest();
+  ordenConDetalleResponse: BuscarOrdenConDetalleResponse = new BuscarOrdenConDetalleResponse();
+  orden: Orden = new Orden();
 
   constructor(private ordenService: OrdenService, private router: Router) { }
 
@@ -53,26 +60,45 @@ export class ListarordenesComponent implements OnInit {
     });
   }
 
+  // Mostrar detalle en la tabla "ListarOrdenes"
+
   toggleDetalle(orden: Orden) {
-    if (this.ordenExpandida === orden.idOrden) {
-      this.ordenExpandida = null;
+    if (this.idOrdenExpand === orden.idOrden) {
+      this.idOrdenExpand = null;
       this.detalleOrden = null;
       return;
     }
 
     console.log(`Orden: ${orden.folio}`);
-    this.ordenExpandida = orden.idOrden;
+    this.idOrdenExpand = orden.idOrden;
+    this.folioOrden = orden.folio;
     this.detalleOrden = null;
     this.cargandoDetalle = true;
 
-    // Conecta aquí tu servicio cuando lo tengas listo:
-    // this.ordenService.buscarDetalle(orden.idOrden, orden.folio).subscribe({
-    //   next: (res) => {
-    //     this.detalleOrden = res.data;
-    //     this.cargandoDetalle = false;
-    //   },
-    //   error: () => { this.cargandoDetalle = false; }
-    // });
+    this.buscarOrdenConDetalle(orden.idOrden, orden.folio);
+
+
+  }
+
+  private buscarOrdenConDetalle(idOrdenExpand: string, folioOrden: string) {
+
+    this.ordenReq.idOrden = idOrdenExpand;
+    this.ordenReq.folio = folioOrden;
+
+    // Invocar al service y llamar al endpoint del BKN
+    this.ordenService.buscarOrdenConDetalle(this.ordenReq).subscribe(data => {
+      this.ordenConDetalleResponse = data;
+
+      if (data.success) {
+        alert('Informacion obtenida');
+        this.detalleOrden = data.data;
+        console.log(this.detalleOrden);
+      }
+      else {
+        alert(`No hay informacion para el folio ${folioOrden}`);
+      }
+
+    });
   }
 
 }
