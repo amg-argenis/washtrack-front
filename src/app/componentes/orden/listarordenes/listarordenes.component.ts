@@ -80,7 +80,13 @@ export class ListarordenesComponent implements OnInit {
 
   }
 
+  // Metodo para buscar la orden con detalle
   private buscarOrdenConDetalle(idOrdenExpand: string, folioOrden: string) {
+
+    console.log('Inicia buscar orden con detalle...');
+    console.log(`Id orden: ${idOrdenExpand} | Folio: ${folioOrden}`);
+
+
 
     this.ordenReq.idOrden = idOrdenExpand;
     this.ordenReq.folio = folioOrden;

@@ -1,90 +1,117 @@
 <div class="page-wrapper">
-  <div class="page-header">
-    <h3 class="page-title">Listado de Órdenes de Servicio</h3>
-    <button class="btn-primary" (click)="nuevaOrden()">
-      ➕ Nueva Orden
-    </button>
-  </div>
+    <div class="page-header">
+        <h3 class="page-title">Listado de Órdenes de Servicio</h3>
+        <button class="btn-primary" (click)="nuevaOrden()">
+            ➕ Nueva Orden
+        </button>
+    </div>
 
-  <div class="card-table">
-    <table class="tabla">
-      <thead>
-        <tr>
-          <th></th>
-          <th>Folio</th>
-          <th>Estado</th>
-          <th>Prendas</th>
-          <th>Fecha Ingreso</th>
-          <th>Fecha Entrega</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for(orden of listadoOrdenServicio; track orden.idOrden) {
-          <tr class="fila-orden" [class.fila-expandida]="ordenExpandida === orden.idOrden">
-            <td>
-              <button class="btn-expand" (click)="toggleDetalle(orden)"
-                [class.rotado]="ordenExpandida === orden.idOrden">
-                ▶
-              </button>
-            </td>
-            <td>{{ orden.folio }}</td>
-            <td><span class="badge-estado">{{ orden.estado }}</span></td>
-            <td>{{ orden.totalPrendas }}</td>
-            <td>{{ orden.fechaIngreso && orden.fechaIngreso !== 'null' ? orden.fechaIngreso : 'No especificado' }}</td>
-            <td>{{ orden.fechaEntrega && orden.fechaEntrega !== 'null' ? orden.fechaEntrega : 'No especificado' }}</td>
-            <td>
-              <button class="btn-edit" (click)="editarOrden(orden)">✏️ Editar</button>
-              <button class="btn-delete" (click)="eliminarOrden(orden)">🗑️ Eliminar</button>
-            </td>
-          </tr>
+    <div class="card-table">
+        <table class="tabla">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Folio</th>
+                    <th>Estado</th>
+                    <th>Prendas</th>
+                    <th>Fecha Ingreso</th>
+                    <th>Fecha Entrega</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(orden of listadoOrdenServicio; track orden.idOrden) {
+                <tr class="fila-orden" [class.fila-expandida]="idOrdenExpand === orden.idOrden">
+                    <td>
+                        <button class="btn-expand" (click)="toggleDetalle(orden)"
+                            [class.rotado]="idOrdenExpand === orden.idOrden">
+                            ▶
+                        </button>
+                    </td>
+                    <td>{{ orden.folio }}</td>
+                    <td><span class="badge-estado">{{ orden.estado }}</span></td>
+                    <td>{{ orden.totalPrendas }}</td>
+                    <td>{{ orden.fechaIngreso && orden.fechaIngreso !== 'null' ? orden.fechaIngreso : 'No especificado'
+                        }}</td>
+                    <td>{{ orden.fechaEntrega && orden.fechaEntrega !== 'null' ? orden.fechaEntrega : 'No especificado'
+                        }}</td>
+                    <td>
+                        <button class="btn-edit" (click)="editarOrden(orden)">✏️ Editar</button>
+                        <button class="btn-delete" (click)="eliminarOrden(orden)">🗑️ Eliminar</button>
+                    </td>
+                </tr>
 
-          <!-- Fila desplegable -->
-          @if(ordenExpandida === orden.idOrden) {
-            <tr class="fila-detalle">
-              <td colspan="7">
-                <div class="detalle-wrapper">
+                <!-- Fila desplegable -->
+                @if(idOrdenExpand === orden.idOrden) {
+                <tr class="fila-detalle">
+                    <td colspan="7">
+                        <div class="detalle-wrapper">
 
-                  @if(cargandoDetalle) {
-                    <span class="detalle-loading">Cargando detalle...</span>
-                  } @else if(detalleOrden) {
-                    <div class="detalle-grid">
-                      <div class="detalle-item">
-                        <span class="detalle-label">Tipo de Prenda</span>
-                        <span class="detalle-valor">{{ detalleOrden.tipoPrenda }}</span>
-                      </div>
-                      <div class="detalle-item">
-                        <span class="detalle-label">Cantidad</span>
-                        <span class="detalle-valor">{{ detalleOrden.cantidad }}</span>
-                      </div>
-                      <div class="detalle-item">
-                        <span class="detalle-label">Color / Referencia</span>
-                        <span class="detalle-valor">{{ detalleOrden.colorReferencia }}</span>
-                      </div>
-                      <div class="detalle-item">
-                        <span class="detalle-label">ID Detalle</span>
-                        <span class="detalle-valor detalle-id">{{ detalleOrden.idDetalleOrden }}</span>
-                      </div>
-                      <div class="detalle-item">
-                        <span class="detalle-label">Proceso ID</span>
-                        <span class="detalle-valor detalle-id">{{ detalleOrden.procesoId }}</span>
-                      </div>
-                    </div>
-                  } @else {
-                    <span class="detalle-empty">Sin detalle disponible para esta orden.</span>
-                  }
+                            @if(cargandoDetalle) {
+                            <span class="detalle-loading">Cargando detalle...</span>
+                            } @else if(detalleOrden) {
+                            <div class="detalle-grid">
+                                <div class="detalle-item">
+                                    <span class="detalle-label">Folio</span>
+                                    <span class="detalle-valor">{{ detalleOrden.folio }}</span>
+                                </div>
+                                <div class="detalle-item">
+                                    <span class="detalle-label">Cliente ID</span>
+                                    <span class="detalle-valor detalle-id">{{ detalleOrden.clienteId }}</span>
+                                </div>
+                                <div class="detalle-item">
+                                    <span class="detalle-label">Estado</span>
+                                    <span class="detalle-valor">{{ detalleOrden.estado }}</span>
+                                </div>
+                                <div class="detalle-item">
+                                    <span class="detalle-label">Total Prendas</span>
+                                    <span class="detalle-valor">{{ detalleOrden.totalPrendas }}</span>
+                                </div>
+                                <div class="detalle-item">
+                                    <span class="detalle-label">Fecha Ingreso</span>
+                                    <span class="detalle-valor">{{ detalleOrden.fechaIngreso }}</span>
+                                </div>
+                                <div class="detalle-item">
+                                    <span class="detalle-label">Fecha Entrega</span>
+                                    <span class="detalle-valor">{{ detalleOrden.fechaEntrega || '—' }}</span>
+                                </div>
+                                <div class="detalle-item full-width">
+                                    <span class="detalle-label">Observaciones</span>
+                                    <span class="detalle-valor">{{ detalleOrden.observaciones || '—' }}</span>
+                                </div>
 
-                </div>
-              </td>
-            </tr>
-          }
+                                <!-- Prendas -->
+                                @if(detalleOrden.ordenesDetalleDto && detalleOrden.ordenesDetalleDto.length > 0) {
+                                <div class="detalle-item full-width">
+                                    <span class="detalle-label">Prendas</span>
+                                    <div class="prendas-lista">
+                                        @for(prenda of detalleOrden.ordenesDetalleDto; track prenda.idDetalleOrden) {
+                                        <div class="prenda-item">
+                                            <span>{{ prenda.tipoPrenda }}</span>
+                                            <span>Cant: {{ prenda.cantidad }}</span>
+                                            <span>Color: {{ prenda.colorReferencia }}</span>
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                                }
 
-        } @empty {
-          <tr>
-            <td colspan="7" class="empty-msg">No hay registros</td>
-          </tr>
-        }
-      </tbody>
-    </table>
-  </div>
+                            </div>
+                            } @else {
+                            <span class="detalle-empty">Sin detalle disponible para esta orden.</span>
+                            }
+
+                        </div>
+                    </td>
+                </tr>
+                }
+
+                } @empty {
+                <tr>
+                    <td colspan="7" class="empty-msg">No hay registros</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
