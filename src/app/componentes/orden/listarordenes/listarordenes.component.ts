@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrdenService } from '../../../servidor/orden.service';
 import { Orden } from '../../../models/ordenservicio/orden';
-import { OrdenResponse } from '../../../models//ordenservicio/ordenrespuesta';
+import { OrdenResponse } from '../../../models/ordenservicio/ordenrespuesta';
+import { OrdenDetalle } from '../../../models/ordenservicio/orden-detalle';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -12,7 +13,11 @@ import { CommonModule } from '@angular/common';
   styleUrl: './listarordenes.component.css',
 })
 export class ListarordenesComponent implements OnInit {
+
   listadoOrdenServicio: Orden[] = [];
+  ordenExpandida: string | null = null;
+  detalleOrden: OrdenDetalle | null = null;
+  cargandoDetalle = false;
 
   constructor(private ordenService: OrdenService, private router: Router) { }
 
@@ -46,6 +51,27 @@ export class ListarordenesComponent implements OnInit {
       next: () => this.listarOrdenesServicioComponent(),
       error: (err) => console.error('Error al eliminar:', err)
     });
+  }
+
+  toggleDetalle(orden: Orden) {
+    if (this.ordenExpandida === orden.idOrden) {
+      this.ordenExpandida = null;
+      this.detalleOrden = null;
+      return;
+    }
+
+    this.ordenExpandida = orden.idOrden;
+    this.detalleOrden = null;
+    this.cargandoDetalle = true;
+
+    // Conecta aquí tu servicio cuando lo tengas listo:
+    // this.ordenService.buscarDetalle(orden.idOrden, orden.folio).subscribe({
+    //   next: (res) => {
+    //     this.detalleOrden = res.data;
+    //     this.cargandoDetalle = false;
+    //   },
+    //   error: () => { this.cargandoDetalle = false; }
+    // });
   }
 
 }

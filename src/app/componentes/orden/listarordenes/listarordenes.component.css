@@ -118,3 +118,92 @@
     color: #999;
     font-style: italic;
 }
+
+/* ── Botón expandir ── */
+.btn-expand {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.75rem;
+    color: #aaa;
+    padding: 4px 6px;
+    border-radius: 4px;
+    transition: transform 0.25s ease, color 0.2s;
+    display: inline-block;
+}
+
+.btn-expand:hover {
+    color: rgb(13, 109, 252);
+}
+
+.btn-expand.rotado {
+    transform: rotate(90deg);
+    color: rgb(13, 109, 252);
+}
+
+/* ── Fila principal expandida ── */
+.fila-expandida td {
+    background: rgba(13, 109, 252, 0.04);
+    border-bottom: none;
+}
+
+/* ── Fila de detalle ── */
+.fila-detalle td {
+    padding: 0;
+    background: #f8faff;
+    border-bottom: 2px solid rgba(13, 109, 252, 0.15);
+}
+
+.detalle-wrapper {
+    padding: 20px 32px;
+    animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.detalle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.detalle-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detalle-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.detalle-valor {
+    font-size: 0.9rem;
+    color: #1a1a2e;
+    font-weight: 500;
+}
+
+.detalle-id {
+    font-size: 0.78rem;
+    color: #999;
+    font-family: monospace;
+}
+
+.detalle-loading {
+    font-size: 0.88rem;
+    color: #888;
+    font-style: italic;
+}
+
+.detalle-empty {
+    font-size: 0.88rem;
+    color: #bbb;
+    font-style: italic;
+}
