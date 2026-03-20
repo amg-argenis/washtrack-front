@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrdenService } from '../../../servidor/orden.service';
 import { Orden } from '../../../models/ordenservicio/orden';
@@ -26,7 +26,10 @@ export class ListarordenesComponent implements OnInit {
   ordenConDetalleResponse: BuscarOrdenConDetalleResponse = new BuscarOrdenConDetalleResponse();
   orden: Orden = new Orden();
 
-  constructor(private ordenService: OrdenService, private router: Router) { }
+  constructor(
+    private ordenService: OrdenService,
+    private router: Router,
+    private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.listarOrdenesServicioComponent();
@@ -63,9 +66,11 @@ export class ListarordenesComponent implements OnInit {
   // Mostrar detalle en la tabla "ListarOrdenes"
 
   toggleDetalle(orden: Orden) {
+
     if (this.idOrdenExpand === orden.idOrden) {
       this.idOrdenExpand = null;
       this.detalleOrden = null;
+      console.log('Contraer el detalle de la orden servicio.');
       return;
     }
 
@@ -75,35 +80,41 @@ export class ListarordenesComponent implements OnInit {
     this.detalleOrden = null;
     this.cargandoDetalle = true;
 
-    this.buscarOrdenConDetalle(orden.idOrden, orden.folio);
+    this.buscarOrdenConDetalleComponent(orden.idOrden, orden.folio);
 
 
   }
 
   // Metodo para buscar la orden con detalle
-  private buscarOrdenConDetalle(idOrdenExpand: string, folioOrden: string) {
+  private buscarOrdenConDetalleComponent(idOrdenExpand: string, folioOrden: string) {
 
-    console.log('Inicia buscar orden con detalle...');
-    console.log(`Id orden: ${idOrdenExpand} | Folio: ${folioOrden}`);
-
-
+    console.log('1. Inicia buscar orden con detalle...');
 
     this.ordenReq.idOrden = idOrdenExpand;
     this.ordenReq.folio = folioOrden;
 
-    // Invocar al service y llamar al endpoint del BKN
-    this.ordenService.buscarOrdenConDetalle(this.ordenReq).subscribe(data => {
-      this.ordenConDetalleResponse = data;
+    console.log('2. Request a enviar:', this.ordenReq);
 
-      if (data.success) {
-        alert('Informacion obtenida');
-        this.detalleOrden = data.data;
-        console.log(this.detalleOrden);
-      }
-      else {
-        alert(`No hay informacion para el folio ${folioOrden}`);
-      }
+    this.ordenService.buscarOrdenConDetalle(this.ordenReq).subscribe({
+      next: (data) => {
+        this.ordenConDetalleResponse = data;
 
+        if (data.success) {
+          this.detalleOrden = data.data;
+          console.log('6. detalleOrden seteado:', this.detalleOrden);
+        } else {
+          this.detalleOrden = null;
+          alert(`No hay informacion para el folio ${folioOrden}`);
+        }
+
+        this.cargandoDetalle = false;
+        this.cdr.detectChanges(); // 👈 fuerza a Angular a re-evaluar el template
+      },
+      error: (err) => {
+        this.cargandoDetalle = false;
+        this.cdr.detectChanges(); // 👈 también aquí
+        console.error('Error al obtener detalle:', err);
+      }
     });
   }
 
