@@ -4,10 +4,10 @@ import { Observable } from 'rxjs';
 import { OrdenResponse } from '../models/ordenservicio/ordenrespuesta';
 import { InsertarOrdenRequest } from '../models/ordenservicio/insertar-orden-request';
 import { ActualizarOrdenRequest } from '../models/ordenservicio/actualizar-orden-request';
-import { EliminarOrdenRequest } from '../models/ordenservicio/eliminar-orden-request';
 import { BuscarOrdenRequest } from '../models/ordenservicio/BuscarOrdenRequest';
 import { BuscarOrdenResponse } from '../models/ordenservicio/BuscarOrdenResponse';
 import { BuscarOrdenConDetalleResponse } from '../models/ordenservicio/BuscarOrdenConDetalleResponse';
+import { EliminarOrdenRequest } from '../models/ordenservicio/EliminarOrdenRequest';
 
 @Injectable({
   providedIn: 'root'

@@ -7,6 +7,7 @@ import { OrdenConDetalles } from '../../../models/ordenservicio/orden-detalle';
 import { CommonModule } from '@angular/common';
 import { BuscarOrdenRequest } from '../../../models/ordenservicio/BuscarOrdenRequest';
 import { BuscarOrdenConDetalleResponse } from '../../../models/ordenservicio/BuscarOrdenConDetalleResponse';
+import { EliminarOrdenRequest } from '../../../models/ordenservicio/EliminarOrdenRequest';
 
 @Component({
   selector: 'app-listarordenes',
@@ -39,6 +40,7 @@ export class ListarordenesComponent implements OnInit {
     this.ordenService.listarOrdenesServicio().subscribe({
       next: (response: OrdenResponse) => {
         this.listadoOrdenServicio = response.data;
+        this.cdr.detectChanges();
       },
       error: (err) => console.error('Error:', err)
     });
@@ -57,14 +59,19 @@ export class ListarordenesComponent implements OnInit {
   eliminarOrden(orden: Orden) {
     if (!confirm(`¿Eliminar la orden ${orden.folio}?`)) return;
 
-    this.ordenService.eliminarOrden({ idOrden: orden.idOrden, folio: orden.folio }).subscribe({
+    const eliminarRequest: EliminarOrdenRequest = {
+      idOrden: orden.idOrden,
+      folio: orden.folio
+    };
+
+
+    this.ordenService.eliminarOrden(eliminarRequest).subscribe({
       next: () => this.listarOrdenesServicioComponent(),
       error: (err) => console.error('Error al eliminar:', err)
     });
   }
 
   // Mostrar detalle en la tabla "ListarOrdenes"
-
   toggleDetalle(orden: Orden) {
 
     if (this.idOrdenExpand === orden.idOrden) {
@@ -107,8 +114,8 @@ export class ListarordenesComponent implements OnInit {
       },
       error: (err) => {
         this.cargandoDetalle = false;
-        this.cdr.detectChanges(); // 👈 también aquí
-        console.error('Error al obtener detalle:', err);
+        this.cdr.detectChanges();
+        console.error(`La orden '${folioOrden}' no cuenta con detalle.`);
       }
     });
 

@@ -57,9 +57,9 @@ export class ActualizarordenComponent implements OnInit {
         this.ordenResponse = data;
 
         if (data.success) {
+          this.cdr.detectChanges();
           alert('Informacion obtenida correctamente');
           this.orden = data.data;
-          this.cdr.detectChanges();
         }
         else {
           alert(`No hay informacion para el folio ${folio}`);
