@@ -49,7 +49,7 @@
 
                             @if(cargandoDetalle) {
                             <span class="detalle-loading">Cargando detalle...</span>
-                            } @else if(detalleOrden) {
+                            } @else if(detalleOrden && !cargandoDetalle) {
                             <div class="detalle-grid">
                                 <div class="detalle-item">
                                     <span class="detalle-label">Folio</span>

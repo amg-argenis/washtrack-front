@@ -88,12 +88,8 @@ export class ListarordenesComponent implements OnInit {
   // Metodo para buscar la orden con detalle
   private buscarOrdenConDetalleComponent(idOrdenExpand: string, folioOrden: string) {
 
-    console.log('1. Inicia buscar orden con detalle...');
-
     this.ordenReq.idOrden = idOrdenExpand;
     this.ordenReq.folio = folioOrden;
-
-    console.log('2. Request a enviar:', this.ordenReq);
 
     this.ordenService.buscarOrdenConDetalle(this.ordenReq).subscribe({
       next: (data) => {
@@ -101,7 +97,6 @@ export class ListarordenesComponent implements OnInit {
 
         if (data.success) {
           this.detalleOrden = data.data;
-          console.log('6. detalleOrden seteado:', this.detalleOrden);
         } else {
           this.detalleOrden = null;
           alert(`No hay informacion para el folio ${folioOrden}`);
@@ -116,6 +111,7 @@ export class ListarordenesComponent implements OnInit {
         console.error('Error al obtener detalle:', err);
       }
     });
+
   }
 
   getSumaPrendasDetalle(): number {

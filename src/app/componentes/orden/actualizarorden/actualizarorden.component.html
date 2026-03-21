@@ -40,7 +40,12 @@
 
             <div class="form-group">
                 <label>Fecha Entrega</label>
+                @if (orden.fechaEntrega && orden.fechaEntrega !== 'null') {
                 <input type="date" [(ngModel)]="orden.fechaEntrega" />
+                } @else {
+                <span class="detalle-valor-msg">⚠️ No especificado</span>
+                <input type="date" [(ngModel)]="orden.fechaEntrega" placeholder="Agregar fecha" />
+                }
             </div>
 
             <div class="form-group full-width">

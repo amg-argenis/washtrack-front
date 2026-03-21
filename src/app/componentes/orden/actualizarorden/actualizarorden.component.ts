@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { OrdenService } from '../../../servidor/orden.service';
@@ -35,7 +35,10 @@ export class ActualizarordenComponent implements OnInit {
   ordenResponse: BuscarOrdenResponse = new BuscarOrdenResponse();
   orden: Orden = new Orden();
 
-  constructor(private ordenService: OrdenService, private router: Router) { }
+  constructor(
+    private ordenService: OrdenService,
+    private router: Router,
+    private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.buscarOrdenServicio();
@@ -49,17 +52,23 @@ export class ActualizarordenComponent implements OnInit {
     this.ordenReq.folio = String(folio);
 
     // Invocar al service y llamar al endpoint del BKN
-    this.ordenService.buscarOrden(this.ordenReq).subscribe(data => {
-      this.ordenResponse = data;
+    this.ordenService.buscarOrden(this.ordenReq).subscribe({
+      next: (data) => {
+        this.ordenResponse = data;
 
-      if (data.success) {
-        alert('Informacion obtenida');
-        this.orden = data.data;
+        if (data.success) {
+          alert('Informacion obtenida correctamente');
+          this.orden = data.data;
+          this.cdr.detectChanges();
+        }
+        else {
+          alert(`No hay informacion para el folio ${folio}`);
+        }
+      },
+      error: (err) => {
+        this.cdr.detectChanges();
+        console.error('Error al obtener detalle:', err);
       }
-      else {
-        alert(`No hay informacion para el folio ${folio}`);
-      }
-
     });
   }
 
