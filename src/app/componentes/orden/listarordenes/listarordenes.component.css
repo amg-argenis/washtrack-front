@@ -160,8 +160,15 @@
 }
 
 @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-6px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .detalle-grid {
@@ -209,25 +216,39 @@
 }
 
 .prendas-lista {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 6px;
 }
 
 .prenda-item {
-  display: flex;
-  gap: 24px;
-  background: white;
-  border: 1px solid #e8ecf4;
-  border-radius: 8px;
-  padding: 8px 14px;
-  font-size: 0.88rem;
-  color: #333;
+    display: flex;
+    gap: 24px;
+    background: white;
+    border: 1px solid #e8ecf4;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 0.88rem;
+    color: #333;
 }
 
 .prenda-item span:first-child {
-  font-weight: 600;
-  color: #1a1a2e;
-  flex: 1;
+    font-weight: 600;
+    color: #1a1a2e;
+    flex: 1;
+}
+
+/* Este bloque es para mostrar discrepancias en totales */
+.total-prendas-error {
+    color: #d32f2f;
+    font-weight: 700;
+}
+
+.total-prendas-msg {
+    display: block;
+    color: #d32f2f;
+    font-size: 0.78rem;
+    margin-top: 4px;
+    font-style: italic;
 }

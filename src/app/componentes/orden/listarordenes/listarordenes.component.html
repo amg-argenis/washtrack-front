@@ -65,7 +65,15 @@
                                 </div>
                                 <div class="detalle-item">
                                     <span class="detalle-label">Total Prendas</span>
-                                    <span class="detalle-valor">{{ detalleOrden.totalPrendas }}</span>
+                                    <span class="detalle-valor" [class.total-prendas-error]="hayDiscrepanciaPrendas()">
+                                        {{ detalleOrden.totalPrendas }}
+                                    </span>
+                                    @if(hayDiscrepanciaPrendas()) {
+                                    <span class="total-prendas-msg">
+                                        ⚠️ La suma de prendas en detalle es {{ getSumaPrendasDetalle() }}, no coincide
+                                        con el total registrado.
+                                    </span>
+                                    }
                                 </div>
                                 <div class="detalle-item">
                                     <span class="detalle-label">Fecha Ingreso</span>

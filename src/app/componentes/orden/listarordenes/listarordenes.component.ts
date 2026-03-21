@@ -118,4 +118,14 @@ export class ListarordenesComponent implements OnInit {
     });
   }
 
+  getSumaPrendasDetalle(): number {
+    if (!this.detalleOrden?.ordenesDetalleDto) return 0;
+    return this.detalleOrden.ordenesDetalleDto.reduce((acc, p) => acc + (p.cantidad || 0), 0);
+  }
+
+  hayDiscrepanciaPrendas(): boolean {
+    if (!this.detalleOrden) return false;
+    return this.getSumaPrendasDetalle() !== this.detalleOrden.totalPrendas;
+  }
+
 }
