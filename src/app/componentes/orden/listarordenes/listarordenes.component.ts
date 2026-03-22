@@ -38,7 +38,12 @@ export class ListarordenesComponent implements OnInit {
 
   listarOrdenesServicioComponent() {
     this.ordenService.listarOrdenesServicio().subscribe({
-      next: (response: OrdenResponse) => {
+      next: (response: OrdenResponse | null) => {
+        if (!response) {
+          this.listadoOrdenServicio = [];
+          this.cdr.detectChanges();
+          return;
+        }
         this.listadoOrdenServicio = response.data;
         this.cdr.detectChanges();
       },

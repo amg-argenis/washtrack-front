@@ -51,17 +51,20 @@ export class ActualizarordenComponent implements OnInit {
     this.ordenReq.idOrden = String(idorden);
     this.ordenReq.folio = String(folio);
 
-    // Invocar al service y llamar al endpoint del BKN
     this.ordenService.buscarOrden(this.ordenReq).subscribe({
-      next: (data) => {
+      next: (data: BuscarOrdenResponse | null) => {
+        if (!data) {
+          alert(`No hay informacion para el folio ${folio}`);
+          this.cdr.detectChanges();
+          return;
+        }
+
         this.ordenResponse = data;
 
         if (data.success) {
-          this.cdr.detectChanges();
-          alert('Informacion obtenida correctamente');
           this.orden = data.data;
-        }
-        else {
+          this.cdr.detectChanges();
+        } else {
           alert(`No hay informacion para el folio ${folio}`);
         }
       },
