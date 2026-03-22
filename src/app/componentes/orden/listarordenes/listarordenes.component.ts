@@ -100,6 +100,14 @@ export class ListarordenesComponent implements OnInit {
 
     this.ordenService.buscarOrdenConDetalle(this.ordenReq).subscribe({
       next: (data) => {
+        if (!data) {
+          // 204 - sin contenido
+          this.detalleOrden = null;
+          this.cargandoDetalle = false;
+          this.cdr.detectChanges();
+          return;
+        }
+
         this.ordenConDetalleResponse = data;
 
         if (data.success) {
@@ -110,7 +118,7 @@ export class ListarordenesComponent implements OnInit {
         }
 
         this.cargandoDetalle = false;
-        this.cdr.detectChanges(); // 👈 fuerza a Angular a re-evaluar el template
+        this.cdr.detectChanges();
       },
       error: (err) => {
         this.cargandoDetalle = false;

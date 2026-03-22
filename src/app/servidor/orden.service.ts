@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { OrdenResponse } from '../models/ordenservicio/ordenrespuesta';
 import { InsertarOrdenRequest } from '../models/ordenservicio/insertar-orden-request';
 import { ActualizarOrdenRequest } from '../models/ordenservicio/actualizar-orden-request';
@@ -26,8 +26,19 @@ export class OrdenService {
     return this.http.post<BuscarOrdenResponse>(`${this.apiUrl}/ordenes/buscar`, orden);
   }
 
-  buscarOrdenConDetalle(orden: BuscarOrdenRequest): Observable<BuscarOrdenConDetalleResponse> {
-    return this.http.post<BuscarOrdenConDetalleResponse>(`${this.apiUrl}/ordenes/orden-detalle`, orden);
+  buscarOrdenConDetalle(orden: BuscarOrdenRequest): Observable<BuscarOrdenConDetalleResponse | null> {
+    return this.http.post<BuscarOrdenConDetalleResponse>(
+      `${this.apiUrl}/ordenes/orden-detalle`,
+      orden,
+      { observe: 'response' }  // 👈 observamos la respuesta completa
+    ).pipe(
+      map(response => {
+        if (response.status === 204 || !response.body) {
+          return null;  // 👈 si es 204, regresamos null explicitamente
+        }
+        return response.body;
+      })
+    );
   }
 
   crearOrden(orden: InsertarOrdenRequest): Observable<OrdenResponse> {
