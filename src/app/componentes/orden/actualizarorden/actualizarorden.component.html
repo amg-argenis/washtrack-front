@@ -11,17 +11,17 @@
         <div class="form-grid">
             <div class="form-group">
                 <label>Folio</label>
-                <input type="text" [value]="orden.folio" disabled />
+                <input type="text" [value]="ordenCrearActualizar.folio" disabled />
             </div>
 
             <div class="form-group">
                 <label>ID Cliente</label>
-                <input type="text" [(ngModel)]="orden.clienteId" />
+                <input type="text" [(ngModel)]="ordenCrearActualizar.clienteId" />
             </div>
 
             <div class="form-group">
                 <label>Estado</label>
-                <select [(ngModel)]="orden.estado">
+                <select [(ngModel)]="ordenCrearActualizar.estado">
                     @for(estado of estados; track estado) {
                     <option [value]="estado">{{ estado }}</option>
                     }
@@ -30,27 +30,27 @@
 
             <div class="form-group">
                 <label>Total Prendas</label>
-                <input type="number" [(ngModel)]="orden.totalPrendas" min="1" />
+                <input type="number" [(ngModel)]="ordenCrearActualizar.totalPrendas" min="1" />
             </div>
 
             <div class="form-group">
                 <label>Fecha Ingreso</label>
-                <input type="date" [(ngModel)]="orden.fechaIngreso" />
+                <input type="date" [(ngModel)]="ordenCrearActualizar.fechaIngreso" />
             </div>
 
             <div class="form-group">
                 <label>Fecha Entrega</label>
-                @if (orden.fechaEntrega && orden.fechaEntrega !== 'null') {
-                <input type="date" [(ngModel)]="orden.fechaEntrega" />
+                @if (ordenCrearActualizar.fechaEntrega && ordenCrearActualizar.fechaEntrega !== 'null') {
+                <input type="date" [(ngModel)]="ordenCrearActualizar.fechaEntrega" />
                 } @else {
                 <span class="detalle-valor-msg">⚠️ No especificado</span>
-                <input type="date" [(ngModel)]="orden.fechaEntrega" placeholder="Agregar fecha" />
+                <input type="date" [(ngModel)]="ordenCrearActualizar.fechaEntrega" />
                 }
             </div>
 
             <div class="form-group full-width">
                 <label>Observaciones</label>
-                <textarea [(ngModel)]="orden.observaciones" rows="3"></textarea>
+                <textarea [(ngModel)]="ordenCrearActualizar.observaciones" rows="3"></textarea>
             </div>
         </div>
 
