@@ -10,6 +10,8 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         alert('❌ Recurso no encontrado.');
       } else if (err.status === 0) {
         alert('❌ Sin conexión al servidor. Verifica que el backend esté corriendo.');
+      } else {
+        alert('❌ Hubo un error en el servidor, contacta al administrador.');
       }
 
       console.error(`Error ${err.status}:`, err.message);
