@@ -1,9 +1,58 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { ClienteService } from '../../../servidor/cliente.service';
+import { InsertarClienteRequest } from '../../../models/clientes/insertar-cliente-request';
 
 @Component({
   selector: 'app-crear-cliente',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './crear-cliente.component.html',
-  styleUrl: './crear-cliente.component.css',
+  styleUrl: './crear-cliente.component.css'
 })
-export class CrearClienteComponent {}
+export class CrearClienteComponent {
+
+  guardando = false;
+  errorMsg = '';
+
+  clienteRequest: InsertarClienteRequest = {
+    idCliente: '',
+    tenantId: '',
+    nombre: '',
+    contacto: '',
+    telefono: '',
+    email: '',
+    creditoHabilitado: false,
+    limiteCredito: 0
+  };
+
+  constructor(
+    private clienteService: ClienteService,
+    private router: Router,
+    private cdr: ChangeDetectorRef) { }
+
+  guardar() {
+    this.guardando = true;
+    this.errorMsg = '';
+
+    this.clienteService.insertarCliente(this.clienteRequest).subscribe({
+      next: (data) => {
+        this.guardando = false;
+        if (!data) {
+          this.errorMsg = 'No se recibio respuesta del servidor.';
+          return;
+        }
+        this.router.navigate(['/clientes/listar']);
+      },
+      error: (err) => {
+        this.guardando = false;
+        this.errorMsg = 'Error al crear el cliente. Verifica los datos.';
+        console.error('Error al crear cliente:', err);
+      }
+    });
+  }
+
+  cancelar() {
+    this.router.navigate(['/clientes/listar']);
+  }
+}

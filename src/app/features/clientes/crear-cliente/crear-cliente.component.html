@@ -1,1 +1,53 @@
-<p>crear-cliente works!</p>
+<div class="page-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">Nuevo Cliente</h3>
+    </div>
+
+    <div class="form-card">
+        @if(errorMsg) {
+        <div class="alert-error">{{ errorMsg }}</div>
+        }
+
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" [(ngModel)]="clienteRequest.nombre" placeholder="Nombre del cliente" />
+            </div>
+
+            <div class="form-group">
+                <label>Contacto</label>
+                <input type="text" [(ngModel)]="clienteRequest.contacto" placeholder="Nombre del contacto" />
+            </div>
+
+            <div class="form-group">
+                <label>Telefono</label>
+                <input type="text" [(ngModel)]="clienteRequest.telefono" placeholder="Telefono" />
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" [(ngModel)]="clienteRequest.email" placeholder="correo@ejemplo.com" />
+            </div>
+
+            <div class="form-group">
+                <label>Credito Habilitado</label>
+                <select [(ngModel)]="clienteRequest.creditoHabilitado">
+                    <option [value]="true">Si</option>
+                    <option [value]="false">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Limite de Credito</label>
+                <input type="number" [(ngModel)]="clienteRequest.limiteCredito" min="0" />
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button class="btn-secondary" (click)="cancelar()">Cancelar</button>
+            <button class="btn-primary" (click)="guardar()" [disabled]="guardando">
+                {{ guardando ? 'Guardando...' : '💾 Guardar Cliente' }}
+            </button>
+        </div>
+    </div>
+</div>

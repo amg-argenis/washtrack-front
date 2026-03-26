@@ -43,7 +43,7 @@ export class ClienteService {
 
   insertarCliente(request: InsertarClienteRequest): Observable<ClienteResponse | null> {
     return this.http.post<ClienteResponse>(
-      `${this.apiUrl}/clientes/insertar`,
+      `${this.apiUrl}/clientes/crear`,
       request,
       { observe: 'response' }
     ).pipe(
