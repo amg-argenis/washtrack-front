@@ -1,1 +1,4 @@
-export interface BuscarClienteRequest {}
+export interface BuscarClienteRequest {
+    idCliente: string;
+    tenantId: string;
+}

@@ -1,1 +1,4 @@
-export interface EliminarClienteRequest {}
+export interface EliminarClienteRequest {
+    idCliente: string;
+    tenantId: string;
+}

@@ -1,1 +1,10 @@
-export interface InsertarClienteRequest {}
+export interface InsertarClienteRequest {
+    idCliente: string;
+    tenantId: string;
+    nombre: string;
+    contacto: string;
+    telefono: string;
+    email: string;
+    creditoHabilitado: boolean;
+    limiteCredito: number;
+}

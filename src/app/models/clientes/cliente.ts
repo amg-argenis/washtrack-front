@@ -1,1 +1,12 @@
-export interface Cliente {}
+export interface Cliente {
+    idCliente: string;
+    tenantId: string;
+    nombre: string;
+    contacto: string;
+    telefono: string;
+    email: string;
+    creditoHabilitado: boolean;
+    limiteCredito: number;
+    activo: boolean;
+    createdAt: string;
+}
