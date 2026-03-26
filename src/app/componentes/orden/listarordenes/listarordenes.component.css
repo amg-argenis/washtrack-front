@@ -326,3 +326,13 @@
     background: rgba(108, 117, 125, 0.15);
     color: rgb(88, 96, 105);
 }
+
+.total-registros {
+    font-size: 0.88rem;
+    color: #555;
+}
+
+.total-registros strong {
+    color: rgb(13, 109, 252);
+    font-weight: 700;
+}
