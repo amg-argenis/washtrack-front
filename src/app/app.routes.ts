@@ -5,6 +5,7 @@ import { ActualizarordenComponent } from './componentes/orden/actualizarorden/ac
 import { ListarClientesComponent } from './features/clientes/listar-clientes/listar-clientes.component';
 import { CrearClienteComponent } from './features/clientes/crear-cliente/crear-cliente.component';
 import { EditarClienteComponent } from './features/clientes/editar-cliente/editar-cliente.component';
+import { AgregarDetalleComponent } from './features/ordenes/agregar-detalle/agregar-detalle.component';
 
 export const routes: Routes = [
     // Ordenes
@@ -16,5 +17,7 @@ export const routes: Routes = [
     { path: 'clientes/crear', component: CrearClienteComponent },
     { path: 'clientes/editar', component: EditarClienteComponent },
     // Default
-    { path: '', redirectTo: 'ordenes/listar', pathMatch: 'full' }
+    { path: '', redirectTo: 'ordenes/listar', pathMatch: 'full' },
+    // Detalle orden
+    { path: 'ordenes/agregar-detalle', component: AgregarDetalleComponent }
 ];

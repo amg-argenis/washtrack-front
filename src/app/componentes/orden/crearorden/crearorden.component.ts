@@ -1,16 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { OrdenService } from '../../../servidor/orden.service';
+import { ClienteService } from '../../../servidor/cliente.service';
 import { InsertarOrdenRequest } from '../../../models/ordenservicio/insertar-orden-request';
+import { Cliente } from '../../../models/clientes/cliente';
+import { ClienteResponse } from '../../../models/clientes/cliente-response';
+import { InsertarOrdenResponse } from '../../../models/ordenservicio/orden-response';
 
 @Component({
   selector: 'app-crearorden',
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './crearorden.component.html',
   styleUrl: './crearorden.component.css',
 })
-export class CrearordenComponent {
+export class CrearordenComponent implements OnInit {
 
   orden: InsertarOrdenRequest = {
     clienteId: '',
@@ -25,17 +30,48 @@ export class CrearordenComponent {
   estados = ['RECIBIDO', 'EN_PROCESO', 'LISTO', 'ENTREGADO'];
   guardando = false;
   errorMsg = '';
+  listadoClientes: Cliente[] = [];
+  clienteSeleccionado: string = ''; // nombre del cliente seleccionado
 
-  constructor(private ordenService: OrdenService, private router: Router) { }
+  constructor(
+    private ordenService: OrdenService,
+    private clienteService: ClienteService,
+    private router: Router) { }
+
+  ngOnInit(): void {
+    this.cargarClientes();
+  }
+
+  cargarClientes() {
+    this.clienteService.listarClientes().subscribe({
+      next: (response: ClienteResponse | null) => {
+        if (!response) return;
+        this.listadoClientes = response.data;
+      },
+      error: (err) => console.error('Error al cargar clientes:', err)
+    });
+  }
+
+  onClienteChange(idCliente: string) {
+    const cliente = this.listadoClientes.find(c => c.idCliente === idCliente);
+    this.clienteSeleccionado = cliente ? cliente.nombre : '';
+    this.orden.clienteId = idCliente;
+  }
 
   guardar() {
     this.guardando = true;
     this.errorMsg = '';
 
     this.ordenService.crearOrden(this.orden).subscribe({
-      next: () => {
+      next: (data: InsertarOrdenResponse | null) => {
         this.guardando = false;
-        this.router.navigate(['/ordenes/listar']);
+        if (!data) {
+          this.errorMsg = 'No se recibio respuesta del servidor.';
+          return;
+        }
+        localStorage.setItem('idOrdenLocal', data.data.idOrden);
+        localStorage.setItem('folioLocal', data.data.folio);
+        this.router.navigate(['/ordenes/agregar-detalle']);
       },
       error: (err) => {
         this.guardando = false;
