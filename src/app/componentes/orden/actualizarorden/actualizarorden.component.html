@@ -1,6 +1,6 @@
 <div class="page-wrapper">
     <div class="page-header">
-        <h3 class="page-title">Editar Orden {{ orden.folio }}</h3>
+        <h3 class="page-title">Editar Orden {{ ordenCrearActualizar.folio }}</h3>
     </div>
 
     <div class="form-card">
@@ -15,8 +15,8 @@
             </div>
 
             <div class="form-group">
-                <label>ID Cliente</label>
-                <input type="text" [(ngModel)]="ordenCrearActualizar.clienteId" />
+                <label>Cliente</label>
+                <input type="text" [value]="ordenCrearActualizar.clienteId" disabled />
             </div>
 
             <div class="form-group">
@@ -60,5 +60,84 @@
                 {{ guardando ? 'Actualizando...' : '💾 Actualizar Orden' }}
             </button>
         </div>
+    </div>
+
+    <!-- Seccion de detalles -->
+    <div class="card-table">
+        <div class="detalle-header">
+            <h4 class="detalle-title">Prendas de la Orden</h4>
+            <button class="btn-primary" (click)="mostrarFormDetalle()">➕ Agregar Prenda</button>
+        </div>
+
+        <!-- Formulario agregar detalle -->
+        @if(agregandoDetalle) {
+        <div class="form-detalle">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Proceso</label>
+                    <select [(ngModel)]="nuevoDetalle.procesoId">
+                        <option value="" disabled>Selecciona un proceso</option>
+                        @for(proceso of procesos; track proceso.id) {
+                        <option [value]="proceso.id">{{ proceso.nombre }}</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Tipo de Prenda</label>
+                    <input type="text" [(ngModel)]="nuevoDetalle.tipoPrenda" placeholder="Ej: Pantalon de mezclilla" />
+                </div>
+
+                <div class="form-group">
+                    <label>Cantidad</label>
+                    <input type="number" [(ngModel)]="nuevoDetalle.cantidad" min="1" />
+                </div>
+
+                <div class="form-group">
+                    <label>Color / Referencia</label>
+                    <input type="text" [(ngModel)]="nuevoDetalle.colorReferencia" placeholder="Ej: Azul marino" />
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button class="btn-secondary" (click)="cancelarDetalle()">Cancelar</button>
+                <button class="btn-primary" (click)="guardarDetalle()" [disabled]="guardandoDetalle">
+                    {{ guardandoDetalle ? 'Guardando...' : '💾 Guardar Prenda' }}
+                </button>
+            </div>
+        </div>
+        }
+
+        <!-- Tabla de detalles -->
+        <table class="tabla">
+            <thead>
+                <tr>
+                    <th>Tipo Prenda</th>
+                    <th>Proceso</th>
+                    <th>Cantidad</th>
+                    <th>Color / Referencia</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(ordenConDetalles && ordenConDetalles.ordenesDetalleDto.length > 0) {
+                @for(detalle of ordenConDetalles.ordenesDetalleDto; track detalle.idDetalleOrden) {
+                <tr>
+                    <td>{{ detalle.tipoPrenda }}</td>
+                    <td>{{ getNombreProceso(detalle.procesoId) }}</td>
+                    <td>{{ detalle.cantidad }}</td>
+                    <td>{{ detalle.colorReferencia }}</td>
+                    <td>
+                        <button class="btn-delete" (click)="eliminarDetalle(detalle)">🗑️ Eliminar</button>
+                    </td>
+                </tr>
+                }
+                } @else {
+                <tr>
+                    <td colspan="5" class="empty-msg">No hay prendas registradas</td>
+                </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>

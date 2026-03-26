@@ -130,3 +130,81 @@
     margin-top: 4px;
     font-style: italic;
 }
+
+.detalle-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid #f0f2f8;
+}
+
+.detalle-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a2e;
+}
+
+.form-detalle {
+    padding: 20px;
+    background: #f8faff;
+    border-bottom: 1px solid #e8ecf4;
+}
+
+.btn-delete {
+    background: rgba(220, 53, 69, 0.1);
+    color: rgb(220, 53, 69);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-delete:hover {
+    background: rgba(220, 53, 69, 0.2);
+}
+
+/* Tabla detalle orden */
+.card-table {
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+    overflow: hidden;
+}
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.tabla thead tr {
+    background: rgb(13, 109, 252);
+    color: white;
+}
+
+.tabla th {
+    padding: 14px 18px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.tabla td {
+    padding: 13px 18px;
+    border-bottom: 1px solid #f0f2f8;
+    color: #333;
+}
+
+.tabla tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.empty-msg {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+    font-style: italic;
+}
