@@ -6,6 +6,7 @@ import { InsertarClienteRequest } from '../models/clientes/insertar-cliente-requ
 import { ActualizarClienteRequest } from '../models/clientes/actualizar-cliente-request';
 import { EliminarClienteRequest } from '../models/clientes/eliminar-cliente-request';
 import { BuscarClienteRequest } from '../models/clientes/buscar-cliente-request';
+import { ClienteResponseOne } from '../models/clientes/cliente-response-one';
 
 @Injectable({
   providedIn: 'root'
@@ -28,8 +29,8 @@ export class ClienteService {
     );
   }
 
-  buscarCliente(request: BuscarClienteRequest): Observable<ClienteResponse | null> {
-    return this.http.post<ClienteResponse>(
+  buscarCliente(request: BuscarClienteRequest): Observable<ClienteResponseOne | null> {
+    return this.http.post<ClienteResponseOne>(
       `${this.apiUrl}/clientes/buscar`,
       request,
       { observe: 'response' }

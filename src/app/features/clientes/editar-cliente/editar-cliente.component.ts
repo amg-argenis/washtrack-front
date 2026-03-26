@@ -6,6 +6,7 @@ import { ActualizarClienteRequest } from '../../../models/clientes/actualizar-cl
 import { BuscarClienteRequest } from '../../../models/clientes/buscar-cliente-request';
 import { ClienteResponse } from '../../../models/clientes/cliente-response';
 import { Cliente } from '../../../models/clientes/cliente';
+import { ClienteResponseOne } from '../../../models/clientes/cliente-response-one';
 
 @Component({
   selector: 'app-editar-cliente',
@@ -53,8 +54,7 @@ export class EditarClienteComponent implements OnInit {
     };
 
     this.clienteService.buscarCliente(request).subscribe({
-      next: (data: ClienteResponse | null) => {
-        console.log('Respuesta buscar cliente:', data);
+      next: (data: ClienteResponseOne | null) => {
         if (!data) {
           alert('No hay informacion para este cliente !');
           this.cdr.detectChanges();
@@ -64,7 +64,7 @@ export class EditarClienteComponent implements OnInit {
         if (data.success) {
           console.log('Informacion del cliente obtenida');
 
-          this.cliente = Array.isArray(data.data) ? data.data[0] : data.data as Cliente;
+          this.cliente = data.data;
 
           this.clienteRequest.idCliente = this.cliente.idCliente;
           this.clienteRequest.tenantId = this.cliente.tenantId;
