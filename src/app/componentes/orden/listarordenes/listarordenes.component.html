@@ -40,7 +40,14 @@
                         </button>
                     </td>
                     <td>{{ orden.folio }}</td>
-                    <td><span class="badge-estado">{{ orden.estado }}</span></td>
+                    <td>
+                        <span class="badge-estado" [class.badge-entregado]="orden.estado === 'ENTREGADO'"
+                            [class.badge-listo]="orden.estado === 'LISTO'"
+                            [class.badge-en-proceso]="orden.estado === 'EN_PROCESO'"
+                            [class.badge-recibido]="orden.estado === 'RECIBIDO'">
+                            {{ orden.estado }}
+                        </span>
+                    </td>
                     <td>{{ orden.totalPrendas }}</td>
                     <td>{{ orden.fechaIngreso && orden.fechaIngreso !== 'null' ? orden.fechaIngreso : 'No especificado'
                         }}</td>

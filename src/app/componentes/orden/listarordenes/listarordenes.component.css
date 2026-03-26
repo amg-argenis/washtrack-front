@@ -306,3 +306,23 @@
 .btn-limpiar:hover {
     background: rgba(220, 53, 69, 0.2);
 }
+
+.badge-entregado {
+    background: rgba(25, 135, 84, 0.15);
+    color: rgb(25, 135, 84);
+}
+
+.badge-listo {
+    background: rgba(13, 109, 252, 0.15);
+    color: rgb(13, 109, 252);
+}
+
+.badge-en-proceso {
+    background: rgba(255, 153, 0, 0.15);
+    color: rgb(204, 120, 0);
+}
+
+.badge-recibido {
+    background: rgba(108, 117, 125, 0.15);
+    color: rgb(88, 96, 105);
+}
