@@ -1,1 +1,74 @@
-<p>agregar-detalle works!</p>
+<div class="page-wrapper">
+    <div class="page-header">
+        <div>
+            <h3 class="page-title">Agregar Detalle</h3>
+            <span class="folio-badge">{{ folio }}</span>
+        </div>
+        <button class="btn-terminar" (click)="terminar()">✅ Terminar</button>
+    </div>
+
+    <div class="form-card">
+        @if(errorMsg) {
+        <div class="alert-error">{{ errorMsg }}</div>
+        }
+
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Proceso</label>
+                <select [(ngModel)]="detalleRequest.procesoId">
+                    <option value="" disabled>Selecciona un proceso</option>
+                    @for(proceso of procesos; track proceso.id) {
+                    <option [value]="proceso.id">{{ proceso.nombre }}</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Tipo de Prenda</label>
+                <input type="text" [(ngModel)]="detalleRequest.tipoPrenda" placeholder="Ej: Pantalon de mezclilla" />
+            </div>
+
+            <div class="form-group">
+                <label>Cantidad</label>
+                <input type="number" [(ngModel)]="detalleRequest.cantidad" min="1" />
+            </div>
+
+            <div class="form-group">
+                <label>Color / Referencia</label>
+                <input type="text" [(ngModel)]="detalleRequest.colorReferencia" placeholder="Ej: Azul marino" />
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button class="btn-primary" (click)="agregarDetalle()" [disabled]="guardando">
+                {{ guardando ? 'Agregando...' : '➕ Agregar Prenda' }}
+            </button>
+        </div>
+    </div>
+
+    <!-- Lista de detalles agregados -->
+    @if(detallesAgregados.length > 0) {
+    <div class="card-table">
+        <table class="tabla">
+            <thead>
+                <tr>
+                    <th>Tipo Prenda</th>
+                    <th>Proceso</th>
+                    <th>Cantidad</th>
+                    <th>Color / Referencia</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(detalle of detallesAgregados; track detalle.idDetalleOrden) {
+                <tr>
+                    <td>{{ detalle.tipoPrenda }}</td>
+                    <td>{{ getNombreProceso(detalle.procesoId) }}</td>
+                    <td>{{ detalle.cantidad }}</td>
+                    <td>{{ detalle.colorReferencia }}</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    }
+</div>
