@@ -6,6 +6,17 @@
         </button>
     </div>
 
+    <!-- Filtro por fecha -->
+    <div class="filtro-wrapper">
+        <label class="filtro-label">Filtrar por Fecha de Ingreso</label>
+        <div class="filtro-controls">
+            <input type="date" class="filtro-input" [(ngModel)]="fechaFiltro" (change)="onFechaChange()" />
+            @if(fechaFiltro) {
+            <button class="btn-limpiar" (click)="limpiarFiltro()">✕ Limpiar</button>
+            }
+        </div>
+    </div>
+
     <div class="card-table">
         <table class="tabla">
             <thead>

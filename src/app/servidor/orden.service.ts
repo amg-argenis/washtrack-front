@@ -94,4 +94,17 @@ export class OrdenService {
       })
     );
   }
+
+  listarOrdenesPorFecha(fecha: string): Observable<OrdenResponse | null> {
+    return this.http.get<OrdenResponse>(
+      `${this.apiUrl}/ordenes/fechaingreso?fechaIngreso=${fecha}`,
+      { observe: 'response' }
+    ).pipe(
+      map(response => {
+        if (response.status === 204 || !response.body) return null;
+        return response.body;
+      })
+    );
+  }
+
 }

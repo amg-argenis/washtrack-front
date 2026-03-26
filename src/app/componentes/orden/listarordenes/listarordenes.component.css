@@ -252,3 +252,57 @@
     margin-top: 4px;
     font-style: italic;
 }
+
+/* Filtro por fecha de ingreso */
+.filtro-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: white;
+    padding: 14px 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.filtro-label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #555;
+    white-space: nowrap;
+}
+
+.filtro-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filtro-input {
+    padding: 8px 12px;
+    border: 1px solid #dde2f0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #1a1a2e;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.filtro-input:focus {
+    border-color: rgb(13, 109, 252);
+}
+
+.btn-limpiar {
+    background: rgba(220, 53, 69, 0.1);
+    color: rgb(220, 53, 69);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-limpiar:hover {
+    background: rgba(220, 53, 69, 0.2);
+}

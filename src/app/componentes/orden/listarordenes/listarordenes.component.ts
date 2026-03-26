@@ -8,10 +8,11 @@ import { CommonModule } from '@angular/common';
 import { BuscarOrdenRequest } from '../../../models/ordenservicio/BuscarOrdenRequest';
 import { BuscarOrdenConDetalleResponse } from '../../../models/ordenservicio/BuscarOrdenConDetalleResponse';
 import { EliminarOrdenRequest } from '../../../models/ordenservicio/EliminarOrdenRequest';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-listarordenes',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './listarordenes.component.html',
   styleUrl: './listarordenes.component.css',
 })
@@ -26,6 +27,7 @@ export class ListarordenesComponent implements OnInit {
   ordenReq: BuscarOrdenRequest = new BuscarOrdenRequest();
   ordenConDetalleResponse: BuscarOrdenConDetalleResponse = new BuscarOrdenConDetalleResponse();
   orden: Orden = new Orden();
+  fechaFiltro: string = ''; // para filtro por fecha
 
   constructor(
     private ordenService: OrdenService,
@@ -142,6 +144,34 @@ export class ListarordenesComponent implements OnInit {
   hayDiscrepanciaPrendas(): boolean {
     if (!this.detalleOrden) return false;
     return this.getSumaPrendasDetalle() !== this.detalleOrden.totalPrendas;
+  }
+
+
+  // Seccion para filtrar por fecha de ingreso
+  onFechaChange() {
+    if (this.fechaFiltro) {
+      this.listarOrdenesPorFecha(this.fechaFiltro);
+    }
+  }
+
+  limpiarFiltro() {
+    this.fechaFiltro = '';
+    this.listarOrdenesServicioComponent();
+  }
+
+  listarOrdenesPorFecha(fecha: string) {
+    this.ordenService.listarOrdenesPorFecha(fecha).subscribe({
+      next: (response: OrdenResponse | null) => {
+        if (!response) {
+          this.listadoOrdenServicio = [];
+          this.cdr.detectChanges();
+          return;
+        }
+        this.listadoOrdenServicio = response.data;
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Error al filtrar por fecha:', err)
+    });
   }
 
 }
