@@ -1,3 +1,98 @@
+.card-table {
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+    overflow: hidden;
+}
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.tabla thead tr {
+    background: rgb(13, 109, 252);
+    color: white;
+}
+
+.tabla th {
+    padding: 14px 18px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.tabla td {
+    padding: 13px 18px;
+    border-bottom: 1px solid #f0f2f8;
+    color: #333;
+}
+
+.tabla tbody tr:hover {
+    background: rgba(13, 109, 252, 0.04);
+}
+
+.tabla tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.empty-msg {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+    font-style: italic;
+}
+
+.btn-edit {
+    background: rgba(13, 109, 252, 0.1);
+    color: rgb(13, 109, 252);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-right: 6px;
+    transition: background 0.2s;
+}
+
+.btn-edit:hover {
+    background: rgba(13, 109, 252, 0.2);
+}
+
+.btn-delete {
+    background: rgba(220, 53, 69, 0.1);
+    color: rgb(220, 53, 69);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-delete:hover {
+    background: rgba(220, 53, 69, 0.2);
+}
+
+.badge-credito {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-credito-si {
+    background: rgba(25, 135, 84, 0.1);
+    color: rgb(25, 135, 84);
+}
+
+.badge-credito-no {
+    background: rgba(220, 53, 69, 0.1);
+    color: rgb(220, 53, 69);
+}
+
 .page-wrapper {
     display: flex;
     flex-direction: column;
@@ -16,19 +111,18 @@
     color: #1a1a2e;
 }
 
-.badge-credito {
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.8rem;
+.btn-primary {
+    background: rgb(13, 109, 252);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
     font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
 }
 
-.badge-credito-si {
-    background: rgba(25, 135, 84, 0.1);
-    color: rgb(25, 135, 84);
-}
-
-.badge-credito-no {
-    background: rgba(220, 53, 69, 0.1);
-    color: rgb(220, 53, 69);
+.btn-primary:hover {
+    background: rgb(10, 88, 202);
 }

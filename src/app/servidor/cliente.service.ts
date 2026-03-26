@@ -17,9 +17,8 @@ export class ClienteService {
   constructor(private http: HttpClient) { }
 
   listarClientes(): Observable<ClienteResponse | null> {
-    return this.http.post<ClienteResponse>(
+    return this.http.get<ClienteResponse>(
       `${this.apiUrl}/clientes/listar`,
-      {},
       { observe: 'response' }
     ).pipe(
       map(response => {
