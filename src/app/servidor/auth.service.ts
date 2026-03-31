@@ -14,10 +14,10 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  login(request: LoginRequest): Observable<LoginResponse> {
+  login(request: LoginRequest): Observable<LoginResponse | null> {
     return this.http.post<LoginResponse>(
       `${this.apiUrl}/usuarios/login`,
-      { body: request } as any
+      request  // 👈 solo el request, sin observe
     );
   }
 

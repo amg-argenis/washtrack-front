@@ -1,1 +1,29 @@
-<p>login works!</p>
+<div class="login-wrapper">
+    <div class="login-card">
+        <div class="login-brand">
+            <span class="brand-icon">🫧</span>
+            <h1 class="brand-name">WashTrack</h1>
+            <p class="brand-subtitle">Sistema de Lavanderia Industrial</p>
+        </div>
+
+        @if(errorMsg) {
+        <div class="alert-error">{{ errorMsg }}</div>
+        }
+
+        <div class="form-group">
+            <label>Correo electronico</label>
+            <input type="email" [(ngModel)]="loginRequest.email" placeholder="correo@ejemplo.com"
+                (keyup.enter)="iniciarSesion()" />
+        </div>
+
+        <div class="form-group">
+            <label>Contrasena</label>
+            <input type="password" [(ngModel)]="loginRequest.password" placeholder="••••••••"
+                (keyup.enter)="iniciarSesion()" />
+        </div>
+
+        <button class="btn-login" (click)="iniciarSesion()" [disabled]="cargando">
+            {{ cargando ? 'Iniciando sesion...' : 'Iniciar Sesion' }}
+        </button>
+    </div>
+</div>

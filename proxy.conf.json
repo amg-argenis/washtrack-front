@@ -1,7 +1,8 @@
 {
-  "/washtrack/api/v1": {
+  "/washtrack": {
     "target": "http://localhost:8080",
     "secure": false,
-    "changeOrigin": true
+    "changeOrigin": true,
+    "logLevel": "debug"
   }
 }
