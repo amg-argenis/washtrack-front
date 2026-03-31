@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { LoginComponent } from './features/auth/login/login.component';
 import { ListarordenesComponent } from './componentes/orden/listarordenes/listarordenes.component';
 import { CrearordenComponent } from './componentes/orden/crearorden/crearorden.component';
 import { ActualizarordenComponent } from './componentes/orden/actualizarorden/actualizarorden.component';
@@ -6,18 +7,21 @@ import { ListarClientesComponent } from './features/clientes/listar-clientes/lis
 import { CrearClienteComponent } from './features/clientes/crear-cliente/crear-cliente.component';
 import { EditarClienteComponent } from './features/clientes/editar-cliente/editar-cliente.component';
 import { AgregarDetalleComponent } from './features/ordenes/agregar-detalle/agregar-detalle.component';
+import { authGuard } from './servidor/auth-guard';
 
 export const routes: Routes = [
-    // Ordenes
-    { path: 'ordenes/listar', component: ListarordenesComponent },
-    { path: 'ordenes/crear', component: CrearordenComponent },
-    { path: 'ordenes/editar', component: ActualizarordenComponent },
-    // Clientes
-    { path: 'clientes/listar', component: ListarClientesComponent },
-    { path: 'clientes/crear', component: CrearClienteComponent },
-    { path: 'clientes/editar', component: EditarClienteComponent },
+    // Publica
+    { path: 'login', component: LoginComponent },
+
+    // Protegidas con guard
+    { path: 'ordenes/listar', component: ListarordenesComponent, canActivate: [authGuard] },
+    { path: 'ordenes/crear', component: CrearordenComponent, canActivate: [authGuard] },
+    { path: 'ordenes/editar', component: ActualizarordenComponent, canActivate: [authGuard] },
+    { path: 'ordenes/agregar-detalle', component: AgregarDetalleComponent, canActivate: [authGuard] },
+    { path: 'clientes/listar', component: ListarClientesComponent, canActivate: [authGuard] },
+    { path: 'clientes/crear', component: CrearClienteComponent, canActivate: [authGuard] },
+    { path: 'clientes/editar', component: EditarClienteComponent, canActivate: [authGuard] },
+
     // Default
-    { path: '', redirectTo: 'ordenes/listar', pathMatch: 'full' },
-    // Detalle orden
-    { path: 'ordenes/agregar-detalle', component: AgregarDetalleComponent }
+    { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
