@@ -8,10 +8,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   // No agregar token al endpoint de login
   if (req.url.includes('/usuarios/login')) {
-    console.log('URL completa:', req.url);
-    console.log('Method:', req.method);
-    console.log('Body:', req.body);
-    console.log('Headers:', req.headers.keys());
+    // console.log('URL completa:', req.url);
+    // console.log('Method:', req.method);
+    // console.log('Body:', req.body);
+    // console.log('Headers:', req.headers.keys());
     const reqConHeader = req.clone({
       setHeaders: {
         'Content-Type': 'application/json'

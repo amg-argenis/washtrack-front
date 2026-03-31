@@ -7,4 +7,14 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App { }
+export class App {
+
+  nombre: string = '';
+
+  ngOnInit(): void {
+    this.nombre = String(localStorage.getItem('nombre'));
+  }
+
+
+
+}
