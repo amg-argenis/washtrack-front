@@ -336,3 +336,8 @@
     color: rgb(13, 109, 252);
     font-weight: 700;
 }
+
+.user-menu {
+    cursor: pointer;
+    /* 👈 ya lo tienes pero verifica */
+}

@@ -1,4 +1,6 @@
 <div class="app-layout">
+
+  @if(!esLogin) {
   <aside class="sidebar">
     <div class="sidebar-brand">
       <span class="brand-icon">🫧</span>
@@ -28,21 +30,41 @@
 
     <div class="sidebar-footer">
       <a routerLink="/configuracion" class="nav-item">
-        <span class="nav-icon">⚙️</span> Configuración
+        <span class="nav-icon">⚙️</span> Configuracion
       </a>
     </div>
   </aside>
+  }
 
-  <main class="main-content">
+  <main [class.main-content]="!esLogin" [class.main-login]="esLogin">
+
+    @if(!esLogin) {
     <header class="topbar">
-      <h2 class="page-title">Sistema de Lavandería</h2>
+      <h2 class="page-title">Sistema de Lavanderia</h2>
       <div class="topbar-right">
-        <span class="user-badge">👤 {{this.nombre}}</span>
+        <div class="user-menu" (click)="toggleMenu()">
+          <span class="user-badge">👤 {{ nombre }}</span>
+          <span class="user-arrow">▾</span>
+          @if(menuAbierto) {
+          <div class="user-dropdown">
+            <div class="dropdown-info">
+              <span class="dropdown-nombre">{{ nombre }}</span>
+              <span class="dropdown-rol">{{ rol }}</span>
+            </div>
+            <hr class="dropdown-divider">
+            <button class="dropdown-item logout" (click)="cerrarSesion()">
+              🚪 Cerrar Sesion
+            </button>
+          </div>
+          }
+        </div>
       </div>
     </header>
+    }
 
     <div class="content-area">
       <router-outlet></router-outlet>
     </div>
   </main>
+
 </div>

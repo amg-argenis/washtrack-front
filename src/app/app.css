@@ -157,3 +157,65 @@ body {
     flex: 1;
     min-width: 0;
 }
+
+.topbar {
+    overflow: visible;
+    /* 👈 agrega esto */
+    position: relative;
+}
+
+.topbar-right {
+    position: relative;
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 110%;
+    right: 0;
+    z-index: 9999;
+    /* 👈 sube el z-index */
+    /* resto del css */
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 110%;
+    right: 0;
+    background: white;
+    /* 👈 fondo blanco sólido */
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    min-width: 200px;
+    z-index: 9999;
+    overflow: hidden;
+    border: 1px solid #e8ecf4;
+    /* 👈 borde sutil */
+}
+
+.main-login {
+    flex: 1;
+    min-width: 0;
+}
+
+.dropdown-nombre {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #1a1a2e;
+    display: block;
+    /* 👈 fuerza salto de linea */
+}
+
+.dropdown-rol {
+    font-size: 0.78rem;
+    color: #888;
+    display: block;
+    /* 👈 fuerza salto de linea */
+}
+
+.nav-item {
+    cursor: pointer;
+}
+
+.nav-item * {
+    cursor: pointer;
+}
