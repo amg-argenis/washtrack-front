@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { LoginRequest } from '../models/auth/login-request';
 import { LoginResponse } from '../models/auth/login-response';
 import { Router } from '@angular/router';
@@ -17,7 +17,13 @@ export class AuthService {
   login(request: LoginRequest): Observable<LoginResponse | null> {
     return this.http.post<LoginResponse>(
       `${this.apiUrl}/usuarios/login`,
-      request  // 👈 solo el request, sin observe
+      request,
+      { observe: 'response' }  // 👈 agrega esto
+    ).pipe(
+      map(response => {
+        if (response.status === 204 || !response.body) return null;
+        return response.body;
+      })
     );
   }
 

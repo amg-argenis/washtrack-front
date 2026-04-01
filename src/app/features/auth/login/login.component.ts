@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -24,7 +24,8 @@ export class LoginComponent {
 
   constructor(
     private authService: AuthService,
-    private router: Router) { }
+    private router: Router,
+    private cdr: ChangeDetectorRef) { }
 
 
   iniciarSesion() {
@@ -36,7 +37,8 @@ export class LoginComponent {
         this.cargando = false;
 
         if (!response) {
-          this.errorMsg = 'No se recibio respuesta del servidor.';
+          this.errorMsg = 'Sin acceso al sistema, favor de verificar.';
+          this.cdr.detectChanges();
           return;
         }
 
