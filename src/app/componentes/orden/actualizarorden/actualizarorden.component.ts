@@ -19,7 +19,7 @@ import { InsertarDetalleOrdenRequest } from '../../../models/detalleorden/insert
 export class ActualizarordenComponent implements OnInit {
 
   ordenCrearActualizar: ActualizarOrdenRequest = {
-    idOrden: '', clienteId: '', folio: '', fechaIngreso: '',
+    idOrden: '', clienteId: '', nombreCliente: '', folio: '', fechaIngreso: '',
     estado: '', totalPrendas: 1, observaciones: '', fechaEntrega: ''
   };
 
@@ -81,6 +81,7 @@ export class ActualizarordenComponent implements OnInit {
           // Mapear al request de actualizacion
           this.ordenCrearActualizar.idOrden = data.data.idOrden;
           this.ordenCrearActualizar.clienteId = data.data.clienteId;
+          this.ordenCrearActualizar.nombreCliente = data.data.nombreCliente;
           this.ordenCrearActualizar.folio = data.data.folio;
           this.ordenCrearActualizar.fechaIngreso = data.data.fechaIngreso;
           this.ordenCrearActualizar.estado = data.data.estado;
@@ -154,7 +155,7 @@ export class ActualizarordenComponent implements OnInit {
   }
 
   eliminarDetalle(detalle: OrdenDetalleDto) {
-    if (!confirm(`Eliminar la prenda ${detalle.tipoPrenda}?`)) return;
+    if (!confirm(`Eliminar el detalle de la orden '${detalle.tipoPrenda}' ?`)) return;
 
     this.detalleOrdenService.eliminarDetalle({
       idDetalleOrden: detalle.idDetalleOrden,

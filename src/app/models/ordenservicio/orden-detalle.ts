@@ -11,6 +11,7 @@ export interface OrdenDetalleDto {
 export interface OrdenConDetalles {
   idOrden: string;
   clienteId: string;
+  nombreCliente: string;
   folio: string;
   fechaIngreso: string;
   estado: string;

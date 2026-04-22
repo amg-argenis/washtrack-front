@@ -97,8 +97,11 @@ export class OrdenService {
   }
 
   listarOrdenesPorFecha(fecha: string): Observable<OrdenResponse | null> {
+    // Convert from mm/dd/yyyy to yyyy-MM-dd
+    const fechaFormateada = new Date(fecha).toISOString().split('T')[0];
+
     return this.http.get<OrdenResponse>(
-      `${this.apiUrl}/ordenes/fechaingreso?fechaIngreso=${fecha}`,
+      `${this.apiUrl}/ordenes/fechaingreso?fechaIngreso=${fechaFormateada}`,
       { observe: 'response' }
     ).pipe(
       map(response => {
