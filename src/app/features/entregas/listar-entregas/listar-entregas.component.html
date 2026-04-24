@@ -1,1 +1,58 @@
-<p>listar-entregas works!</p>
+<div class="page-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">Listado de Entregas</h3>
+        <button class="btn-primary" (click)="registrarEntrega()">
+            ➕ Registrar Entrega
+        </button>
+    </div>
+
+    <div class="total-registros">
+        <span>Total de registros: <strong>{{ listadoEntregas.length }}</strong></span>
+    </div>
+
+    <div class="card-table">
+        <table class="tabla">
+            <thead>
+                <tr>
+                    <th>Orden ID</th>
+                    <th>Fecha Entrega</th>
+                    <th>Total Entregado</th>
+                    <th>Conformidad</th>
+                    <th>Observaciones</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(entrega of listadoEntregas; track entrega.idEntrega) {
+                <tr>
+                    <td class="detalle-id">{{ entrega.ordenId }}</td>
+                    <td>{{ entrega.fechaEntrega }}</td>
+                    <td>{{ entrega.totalEntregado }}</td>
+                    <td>
+                        <span class="badge-conformidad" [class.badge-si]="entrega.conformidadCliente"
+                            [class.badge-no]="!entrega.conformidadCliente">
+                            {{ entrega.conformidadCliente ? 'Si' : 'No' }}
+                        </span>
+                    </td>
+                    <td>{{ entrega.observaciones || '—' }}</td>
+                    <td>
+                        <span class="badge-estado badge-activo">
+                            {{ entrega.estado }}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn-delete" (click)="eliminarEntrega(entrega)">
+                            🗑️ Eliminar
+                        </button>
+                    </td>
+                </tr>
+                } @empty {
+                <tr>
+                    <td colspan="7" class="empty-msg">No hay entregas registradas</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
