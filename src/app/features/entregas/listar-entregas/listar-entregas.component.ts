@@ -14,6 +14,7 @@ import { EliminarEntregaRequest } from '../../../models/entregas/eliminar-entreg
 export class ListarEntregasComponent implements OnInit {
 
   listadoEntregas: Entrega[] = [];
+  registros: number = 0;
 
   constructor(
     private entregaService: EntregaService,
@@ -32,7 +33,9 @@ export class ListarEntregasComponent implements OnInit {
           this.cdr.detectChanges();
           return;
         }
+        
         // Handle both array and single object
+        this.registros = response.registros;
         this.listadoEntregas = Array.isArray(response.data)
           ? response.data
           : [response.data];
