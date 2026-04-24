@@ -32,7 +32,10 @@ export class ListarEntregasComponent implements OnInit {
           this.cdr.detectChanges();
           return;
         }
-        this.listadoEntregas = response.data;
+        // Handle both array and single object
+        this.listadoEntregas = Array.isArray(response.data)
+          ? response.data
+          : [response.data];
         this.cdr.detectChanges();
       },
       error: (err) => console.error('Error al listar entregas:', err)

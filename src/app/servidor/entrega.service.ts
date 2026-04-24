@@ -17,7 +17,7 @@ export class EntregaService {
 
   listarEntregas(): Observable<EntregaResponse | null> {
     return this.http.get<EntregaResponse>(
-      `${this.apiUrl}/entregas/listar`,
+      `${this.apiUrl}/entregas/busquedas/listar`,
       { observe: 'response' }
     ).pipe(
       map(response => {
