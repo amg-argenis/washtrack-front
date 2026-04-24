@@ -1,1 +1,3 @@
-export interface EliminarEntregaRequest {}
+export interface EliminarEntregaRequest {
+    idEntrega: string;
+}
