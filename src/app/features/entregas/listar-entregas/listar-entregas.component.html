@@ -14,7 +14,8 @@
         <table class="tabla">
             <thead>
                 <tr>
-                    <th>Orden ID</th>
+                    <th>Folio</th>
+                    <th>Cliente</th>
                     <th>Fecha Entrega</th>
                     <th>Total Entregado</th>
                     <th>Conformidad</th>
@@ -26,7 +27,8 @@
             <tbody>
                 @for(entrega of listadoEntregas; track entrega.idEntrega) {
                 <tr>
-                    <td class="detalle-id">{{ entrega.ordenId }}</td>
+                    <td class="detalle-id">{{ entrega.folio }}</td>
+                    <td>{{ entrega.cliente }}</td>
                     <td>{{ entrega.fechaEntrega }}</td>
                     <td>{{ entrega.totalEntregado }}</td>
                     <td>
