@@ -50,7 +50,12 @@ export class RegistrarEntregaComponent implements OnInit {
     this.guardando = true;
     this.errorMsg = '';
 
-    this.entregaService.insertarEntrega(this.entregaRequest).subscribe({
+    const request: InsertarEntregaRequest = {
+      ...this.entregaRequest,
+      conformidadCliente: String(this.entregaRequest.conformidadCliente) === 'true'
+    };
+
+    this.entregaService.insertarEntrega(request).subscribe({
       next: (data) => {
         this.guardando = false;
         if (!data) {

@@ -336,3 +336,29 @@
     color: rgb(13, 109, 252);
     font-weight: 700;
 }
+
+/* CSS para boton registrar entrega */
+.btn-entrega {
+    background: rgba(25, 135, 84, 0.1);
+    color: rgb(25, 135, 84);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 6px;
+    transition: background 0.2s;
+}
+
+.btn-entrega:hover {
+    background: rgba(25, 135, 84, 0.2);
+}
+
+.sin-entrega {
+    color: #ccc;
+    font-size: 0.9rem;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}

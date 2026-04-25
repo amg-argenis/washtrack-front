@@ -67,7 +67,7 @@ export class EntregaService {
 
   eliminarEntrega(request: EliminarEntregaRequest): Observable<EntregaResponse | null> {
     return this.http.post<EntregaResponse>(
-      `${this.apiUrl}/entregas/eliminar`,
+      `${this.apiUrl}/entregas/eliminar/entregaRequest?entregaRequest=${request.idEntrega}`,
       request,
       { observe: 'response' }
     ).pipe(
@@ -77,4 +77,5 @@ export class EntregaService {
       })
     );
   }
+  
 }

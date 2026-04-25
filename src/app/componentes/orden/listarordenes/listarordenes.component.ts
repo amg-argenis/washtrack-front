@@ -174,4 +174,11 @@ export class ListarordenesComponent implements OnInit {
     });
   }
 
+  // Registrar entregas
+  registrarEntrega(orden: Orden) {
+    localStorage.setItem('idOrdenLocal', orden.idOrden);
+    localStorage.setItem('folioLocal', orden.folio);
+    this.router.navigate(['/entregas/registrar']);
+  }
+
 }
