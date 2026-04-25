@@ -1,1 +1,57 @@
-<p>registrar-entrega works!</p>
+<div class="page-wrapper">
+    <div class="page-header">
+        <div>
+            <h3 class="page-title">Registrar Entrega</h3>
+            <span class="folio-badge">{{ folio }}</span>
+        </div>
+        <button class="btn-secondary" (click)="cancelar()">Cancelar</button>
+    </div>
+
+    <div class="form-card">
+        @if(errorMsg) {
+        <div class="alert-error">{{ errorMsg }}</div>
+        }
+
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Tipo de Entrega</label>
+                <select [(ngModel)]="entregaRequest.tipo">
+                    @for(tipo of tipos; track tipo) {
+                    <option [value]="tipo">{{ tipo }}</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Fecha de Entrega</label>
+                <input type="date" [(ngModel)]="entregaRequest.fechaEntrega" />
+            </div>
+
+            <div class="form-group">
+                <label>Total Entregado</label>
+                <input type="number" [(ngModel)]="entregaRequest.totalEntregado" min="1" />
+            </div>
+
+            <div class="form-group">
+                <label>Conformidad del Cliente</label>
+                <select [(ngModel)]="entregaRequest.conformidadCliente">
+                    <option [value]="true">Si</option>
+                    <option [value]="false">No</option>
+                </select>
+            </div>
+
+            <div class="form-group full-width">
+                <label>Observaciones</label>
+                <textarea [(ngModel)]="entregaRequest.observaciones" rows="3"
+                    placeholder="Observaciones de la entrega..."></textarea>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button class="btn-secondary" (click)="cancelar()">Cancelar</button>
+            <button class="btn-primary" (click)="guardar()" [disabled]="guardando">
+                {{ guardando ? 'Registrando...' : '💾 Registrar Entrega' }}
+            </button>
+        </div>
+    </div>
+</div>
