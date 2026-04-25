@@ -4,4 +4,5 @@ export interface InsertarEntregaRequest {
     totalEntregado: number;
     conformidadCliente: boolean;
     observaciones: string;
+    tipo: string;
 }

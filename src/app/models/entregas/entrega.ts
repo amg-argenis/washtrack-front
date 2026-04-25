@@ -10,4 +10,5 @@ export interface Entrega {
     observaciones: string;
     estado: string;
     fechaCreacion: string;
+    tipo: string;
 }

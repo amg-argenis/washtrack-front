@@ -6,4 +6,5 @@ export interface ActualizarEntregaRequest {
     conformidadCliente: boolean;
     observaciones: string;
     estado: string;
+    tipo: string;
 }
