@@ -2,7 +2,7 @@
     <div class="page-header">
         <h3 class="page-title">Listado de Órdenes de Servicio</h3>
         <button class="btn-primary" (click)="nuevaOrden()">
-            ➕ Nueva Orden
+            <i class="fa-solid fa-plus"></i> Nueva Orden
         </button>
     </div>
 
@@ -41,7 +41,7 @@
                     <td>
                         <button class="btn-expand" (click)="toggleDetalle(orden)"
                             [class.rotado]="idOrdenExpand === orden.idOrden">
-                            ▶
+                            <i class="fa-solid fa-caret-down"></i>
                         </button>
                     </td>
                     <td>{{ orden.folio }}</td>
@@ -59,11 +59,15 @@
                     <td>{{ orden.fechaEntrega && orden.fechaEntrega !== 'null' ? orden.fechaEntrega : 'No especificado'
                         }}</td>
                     <td>
-                        <button class="btn-edit" (click)="editarOrden(orden)">✏️ Editar</button>
-                        <button class="btn-delete" (click)="eliminarOrden(orden)">🗑️ Eliminar</button>
+                        <button class="btn-edit" (click)="editarOrden(orden)"><i class="fa-solid fa-pen-to-square"></i>
+                            Editar</button>
+                        <button class="btn-delete" (click)="eliminarOrden(orden)"><i class="fa-solid fa-trash"></i>
+                            Eliminar</button>
                         @if(orden.estado !== 'ENTREGADO' && orden.estado !== 'ELIMINADO') {
-                        <button class="btn-entrega" (click)="registrarEntrega(orden)">🚚 Entrega</button>
-                        }                        
+                        <button class="btn-entrega" (click)="registrarEntrega(orden)"><i class="fa-solid fa-truck-fast"></i> 
+                            Entrega
+                        </button>
+                        }
                     </td>
                 </tr>
 
@@ -96,7 +100,8 @@
                                     </span>
                                     @if(hayDiscrepanciaPrendas()) {
                                     <span class="total-prendas-msg">
-                                        ⚠️ La suma de prendas en detalle es {{ getSumaPrendasDetalle() }}, no coincide
+                                        <i class="fa-solid fa-triangle-exclamation"></i> La suma de prendas en detalle
+                                        es {{ getSumaPrendasDetalle() }}, no coincide
                                         con el total registrado.
                                     </span>
                                     }

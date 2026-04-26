@@ -9,31 +9,31 @@
 
     <nav class="sidebar-nav">
       <a routerLink="/inicio" routerLinkActive="active" class="nav-item">
-        <span class="nav-icon"><i class="fa-regular fa-house"></i></span> Inicio
+        <span class="nav-icon"><i class="fa-solid fa-house"></i></span> Inicio
       </a>
       <a routerLink="/ordenes/listar" routerLinkActive="active" class="nav-item">
-        <span class="nav-icon">📋</span> Órdenes
+        <span class="nav-icon"><i class="fa-solid fa-clipboard"></i></span> Órdenes
       </a>
       <a routerLink="/clientes/listar" routerLinkActive="active" class="nav-item">
-        <span class="nav-icon">👥</span> Clientes
+        <span class="nav-icon"><i class="fa-solid fa-handshake"></i></span> Clientes
       </a>
       <a routerLink="/entregas/listar" routerLinkActive="active" class="nav-item">
-        <span class="nav-icon">🚚</span> Entregas
+        <span class="nav-icon"><i class="fa-solid fa-truck-fast"></i></span> Entregas
       </a>
       <a routerLink="/facturas" routerLinkActive="active" class="nav-item">
-        <span class="nav-icon">🧾</span> Facturas
+        <span class="nav-icon"><i class="fa-solid fa-file-invoice-dollar"></i></span> Facturas
       </a>
       <a routerLink="/empleados" routerLinkActive="active" class="nav-item">
-        <span class="nav-icon">👔</span> Empleados
+        <span class="nav-icon"><i class="fa-solid fa-user-tie"></i></span> Empleados
       </a>
       <a routerLink="/reportes" routerLinkActive="active" class="nav-item">
-        <span class="nav-icon">📊</span> Reportes
+        <span class="nav-icon"><i class="fa-solid fa-chart-line"></i></span> Reportes
       </a>
     </nav>
 
     <div class="sidebar-footer">
       <a routerLink="/configuracion" class="nav-item">
-        <span class="nav-icon">⚙️</span> Configuracion
+        <span class="nav-icon"><i class="fa-solid fa-gear"></i></span> Configuracion
       </a>
     </div>
   </aside>
@@ -46,7 +46,7 @@
       <h2 class="page-title">Sistema de Lavanderia - {{nombreTenant}}</h2>
       <div class="topbar-right">
         <div class="user-menu" (click)="toggleMenu()">
-          <span class="user-badge">👤 {{ nombre }}</span>
+          <span class="user-badge"><i class="fa-solid fa-user"></i> {{ nombre }}</span>
           <span class="user-arrow">▾</span>
           @if(menuAbierto) {
           <div class="user-dropdown">
@@ -56,7 +56,7 @@
             </div>
             <hr class="dropdown-divider">
             <button class="dropdown-item logout" (click)="cerrarSesion()">
-              🚪 Cerrar Sesion
+              <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesion
             </button>
           </div>
           }

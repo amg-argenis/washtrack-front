@@ -45,8 +45,8 @@
 
         <div class="form-actions">
             <button class="btn-secondary" (click)="cancelar()">Cancelar</button>
-            <button class="btn-primary" (click)="guardar()" [disabled]="guardando">
-                {{ guardando ? 'Actualizando...' : '💾 Actualizar Cliente' }}
+            <button class="btn-primary" (click)="guardar()" [disabled]="guardando"><i class="fa-solid fa-floppy-disk"></i>
+                {{ guardando ? 'Actualizando...' : ' Actualizar Cliente' }}
             </button>
         </div>
     </div>

@@ -43,7 +43,7 @@
                 @if (ordenCrearActualizar.fechaEntrega && ordenCrearActualizar.fechaEntrega !== 'null') {
                 <input type="date" [(ngModel)]="ordenCrearActualizar.fechaEntrega" />
                 } @else {
-                <span class="detalle-valor-msg">⚠️ No especificado</span>
+                <span class="detalle-valor-msg"><i class="fa-solid fa-triangle-exclamation"></i> No especificado</span>
                 <input type="date" [(ngModel)]="ordenCrearActualizar.fechaEntrega" />
                 }
             </div>
@@ -56,8 +56,8 @@
 
         <div class="form-actions">
             <button class="btn-secondary" (click)="cancelar()">Cancelar</button>
-            <button class="btn-primary" (click)="guardar()" [disabled]="guardando">
-                {{ guardando ? 'Actualizando...' : '💾 Actualizar Orden' }}
+            <button class="btn-primary" (click)="guardar()" [disabled]="guardando"><i class="fa-solid fa-floppy-disk"></i>
+                {{ guardando ? 'Actualizando...' : ' Actualizar Orden' }}
             </button>
         </div>
     </div>
@@ -66,7 +66,7 @@
     <div class="card-table">
         <div class="detalle-header">
             <h4 class="detalle-title">Prendas de la Orden</h4>
-            <button class="btn-primary" (click)="mostrarFormDetalle()">➕ Agregar Prenda</button>
+            <button class="btn-primary" (click)="mostrarFormDetalle()"><i class="fa-solid fa-plus"></i> Agregar Prenda</button>
         </div>
 
         <!-- Formulario agregar detalle -->
@@ -101,8 +101,8 @@
 
             <div class="form-actions">
                 <button class="btn-secondary" (click)="cancelarDetalle()">Cancelar</button>
-                <button class="btn-primary" (click)="guardarDetalle()" [disabled]="guardandoDetalle">
-                    {{ guardandoDetalle ? 'Guardando...' : '💾 Guardar Prenda' }}
+                <button class="btn-primary" (click)="guardarDetalle()" [disabled]="guardandoDetalle"><i class="fa-solid fa-floppy-disk"></i>
+                    {{ guardandoDetalle ? ' Guardando...' : 'Guardar Prenda' }}
                 </button>
             </div>
         </div>
@@ -128,7 +128,7 @@
                     <td>{{ detalle.cantidad }}</td>
                     <td>{{ detalle.colorReferencia }}</td>
                     <td>
-                        <button class="btn-delete" (click)="eliminarDetalle(detalle)">🗑️ Eliminar</button>
+                        <button class="btn-delete" (click)="eliminarDetalle(detalle)"><i class="fa-solid fa-trash"></i> Eliminar</button>
                     </td>
                 </tr>
                 }

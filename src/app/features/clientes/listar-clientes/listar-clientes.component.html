@@ -2,7 +2,7 @@
     <div class="page-header">
         <h3 class="page-title">Listado de Clientes</h3>
         <button class="btn-primary" (click)="nuevoCliente()">
-            ➕ Nuevo Cliente
+            <i class="fa-solid fa-plus"></i> Nuevo Cliente
         </button>
     </div>
 
@@ -39,8 +39,10 @@
                     </td>
                     <td>{{ cliente.limiteCredito | currency:'MXN':'symbol':'1.2-2' }}</td>
                     <td>
-                        <button class="btn-edit" (click)="editarCliente(cliente)">✏️ Editar</button>
-                        <button class="btn-delete" (click)="eliminarCliente(cliente)">🗑️ Eliminar</button>
+                        <button class="btn-edit" (click)="editarCliente(cliente)"><i class="fa-solid fa-pen-to-square"></i> Editar</button>
+                        <button class="btn-delete" (click)="eliminarCliente(cliente)"><i class="fa-solid fa-truck-fast"></i> 
+                            Eliminar
+                        </button>
                     </td>
                 </tr>
                 } @empty {
