@@ -33,6 +33,7 @@ export class AuthService {
     localStorage.setItem('email', response.data.email);
     localStorage.setItem('rol', response.data.rol);
     localStorage.setItem('tenantId', response.data.tenantId);
+    localStorage.setItem('nombreTenant', response.data.nombreTenant);
   }
 
   cerrarSesion() {
@@ -54,6 +55,10 @@ export class AuthService {
 
   getRol(): string | null {
     return localStorage.getItem('rol');
+  }
+
+  getNombreTenant(): string | null {
+    return localStorage.getItem('nombreTenant');
   }
 
   isLoggedIn(): boolean {

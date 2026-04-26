@@ -10,5 +10,6 @@ export interface LoginResponse {
         rol: string;
         activo: boolean;
         token: string;
+        nombreTenant: string;
     };
 }

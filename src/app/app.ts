@@ -14,6 +14,7 @@ export class App implements OnInit {
 
   nombre: string = '';
   rol: string = '';
+  nombreTenant: string = '';
   menuAbierto: boolean = false;
   esLogin: boolean = false;
 
@@ -30,6 +31,7 @@ export class App implements OnInit {
       if (!this.esLogin) {
         this.nombre = this.authService.getNombre() || '';
         this.rol = this.authService.getRol() || '';
+        this.nombreTenant = this.authService.getNombreTenant() || '';
       }
     });
   }
