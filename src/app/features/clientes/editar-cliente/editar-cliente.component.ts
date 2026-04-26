@@ -28,7 +28,8 @@ export class EditarClienteComponent implements OnInit {
     telefono: '',
     email: '',
     creditoHabilitado: false,
-    limiteCredito: 0
+    limiteCredito: 0,
+    activo: false
   };
 
   constructor(
@@ -49,8 +50,7 @@ export class EditarClienteComponent implements OnInit {
     }
 
     const request: BuscarClienteRequest = {
-      idCliente: idCliente,
-      tenantId: 'a051a168-fa2a-11f0-aab7-e66133dbb0de' // hardcodeado por ahora
+      idCliente: idCliente
     };
 
     this.clienteService.buscarCliente(request).subscribe({
@@ -74,6 +74,7 @@ export class EditarClienteComponent implements OnInit {
           this.clienteRequest.email = this.cliente.email;
           this.clienteRequest.creditoHabilitado = this.cliente.creditoHabilitado;
           this.clienteRequest.limiteCredito = this.cliente.limiteCredito;
+          this.clienteRequest.activo = this.cliente.activo;
           this.cdr.detectChanges();
         } else {
           alert('No hay informacion para este cliente.');

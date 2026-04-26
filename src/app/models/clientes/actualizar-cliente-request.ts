@@ -7,4 +7,5 @@ export interface ActualizarClienteRequest {
     email: string;
     creditoHabilitado: boolean;
     limiteCredito: number;
+    activo: boolean;
 }
