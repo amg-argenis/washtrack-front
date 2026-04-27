@@ -23,7 +23,7 @@ export class ActualizarordenComponent implements OnInit {
     estado: '', totalPrendas: 1, observaciones: '', fechaEntrega: ''
   };
 
-  estados = ['RECIBIDO', 'EN PROCESO', 'LISTO', 'ENTREGADO'];
+  estados = ['RECIBIDO', 'EN_PROCESO', 'LISTO', 'ENTREGADO'];
   guardando = false;
   errorMsg = '';
   ordenConDetalles: OrdenConDetalles | null = null;
