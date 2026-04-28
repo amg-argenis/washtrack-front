@@ -44,7 +44,7 @@ export class LoginComponent {
 
         if (response.success) {
           this.authService.guardarSesion(response);
-          this.router.navigate(['/ordenes/listar']);
+          this.router.navigate(['/inicio']);
         } else {
           this.errorMsg = 'Credenciales incorrectas, intenta de nuevo.';
         }
