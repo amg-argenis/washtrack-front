@@ -1,1 +1,64 @@
-<p>inicio works!</p>
+<div class="page-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">Dashboard</h3>
+        <span class="fecha-hoy">{{ hoy | date:'EEEE, d MMMM yyyy' }}</span>
+    </div>
+
+    @if(cargando) {
+    <div class="cargando">Cargando metricas...</div>
+    }
+
+    @if(dashboard) {
+    <div class="cards-grid">
+
+        <div class="card card-blue">
+            <div class="card-icon"><i class="fa-solid fa-clipboard"></i></div>
+            <div class="card-info">
+                <span class="card-value">{{ dashboard.ordenesActivas }}</span>
+                <span class="card-label">Ordenes Activas</span>
+            </div>
+        </div>
+
+        <div class="card card-green">
+            <div class="card-icon"><i class="fa-solid fa-handshake"></i></div>
+            <div class="card-info">
+                <span class="card-value">{{ dashboard.clientesActivos }}</span>
+                <span class="card-label">Clientes Activos</span>
+            </div>
+        </div>
+
+        <div class="card card-orange">
+            <div class="card-icon"><i class="fa-solid fa-gears"></i></div>
+            <div class="card-info">
+                <span class="card-value">{{ dashboard.prendasEnProceso }}</span>
+                <span class="card-label">Prendas en Proceso</span>
+            </div>
+        </div>
+
+        <div class="card card-purple">
+            <div class="card-icon"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="card-info">
+                <span class="card-value">{{ dashboard.ordenesListas }}</span>
+                <span class="card-label">Ordenes Listas</span>
+            </div>
+        </div>
+
+        <div class="card card-teal">
+            <div class="card-icon"><i class="fa-solid fa-truck-fast"></i></div>
+            <div class="card-info">
+                <span class="card-value">{{ dashboard.entregasMes }}</span>
+                <span class="card-label">Entregas este Mes</span>
+            </div>
+        </div>
+
+        <div class="card card-red">
+            <div class="card-icon"><i class="fa-solid fa-flag-checkered"></i></div>
+            <div class="card-info">
+                <span class="card-value">{{ dashboard.ordenesEntregadasMes }}</span>
+                <span class="card-label">Ordenes Entregadas este Mes</span>
+            </div>
+        </div>
+
+    </div>
+    }
+</div>
