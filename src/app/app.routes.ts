@@ -10,6 +10,8 @@ import { AgregarDetalleComponent } from './features/ordenes/agregar-detalle/agre
 import { authGuard } from './servidor/auth-guard';
 import { ListarEntregasComponent } from './features/entregas/listar-entregas/listar-entregas.component';
 import { RegistrarEntregaComponent } from './features/entregas/registrar-entrega/registrar-entrega.component';
+import { InicioComponent } from './features/dashboard/inicio/inicio.component';
+
 
 export const routes: Routes = [
     // Publica
@@ -29,5 +31,8 @@ export const routes: Routes = [
     { path: 'entregas/registrar', component: RegistrarEntregaComponent, canActivate: [authGuard] },
 
     // Default
-    { path: '', redirectTo: 'login', pathMatch: 'full' }
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
+    // Dashboard
+    { path: 'inicio', component: InicioComponent, canActivate: [authGuard] }
+
 ];
