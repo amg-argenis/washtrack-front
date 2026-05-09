@@ -11,6 +11,9 @@ import { authGuard } from './servidor/auth-guard';
 import { ListarEntregasComponent } from './features/entregas/listar-entregas/listar-entregas.component';
 import { RegistrarEntregaComponent } from './features/entregas/registrar-entrega/registrar-entrega.component';
 import { InicioComponent } from './features/dashboard/inicio/inicio.component';
+import { ListarProcesosComponent } from './features/procesos/listar-procesos/listar-procesos.component';
+import { CrearProcesoComponent } from './features/procesos/crear-proceso/crear-proceso.component';
+import { EditarProcesoComponent } from './features/procesos/editar-proceso/editar-proceso.component';
 
 
 export const routes: Routes = [
@@ -33,6 +36,11 @@ export const routes: Routes = [
     // Default
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     // Dashboard
-    { path: 'inicio', component: InicioComponent, canActivate: [authGuard] }
+    { path: 'inicio', component: InicioComponent, canActivate: [authGuard] },
+    // Procesos
+    // app.routes.ts
+    { path: 'procesos/listar', component: ListarProcesosComponent, canActivate: [authGuard] },
+    { path: 'procesos/crear', component: CrearProcesoComponent, canActivate: [authGuard] },
+    { path: 'procesos/editar', component: EditarProcesoComponent, canActivate: [authGuard] },
 
 ];
