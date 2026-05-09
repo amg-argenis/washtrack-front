@@ -1,9 +1,6 @@
-export interface Proceso {
+export interface ActualizarProcesoRequest {
     idproceso: string;
-    tenantid: string;
     nombre: string;
     descripcion: string;
     preciounitario: number;
-    activo: boolean;
-    codigo: string;
 }
