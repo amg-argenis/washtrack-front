@@ -1,1 +1,53 @@
-<p>listar-procesos works!</p>
+<div class="page-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">Listado de Procesos</h3>
+        <button class="btn-primary" (click)="crearProceso()">
+            ➕ Nuevo Proceso
+        </button>
+    </div>
+
+    <div class="total-registros">
+        <span>Total de registros: <strong>{{ listadoProcesos.length }}</strong></span>
+    </div>
+
+    <div class="card-table">
+        <table class="tabla">
+            <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                    <th>Precio Unitario</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(proceso of listadoProcesos; track proceso.idproceso) {
+                <tr>
+                    <td><span class="codigo-badge">{{ proceso.codigo }}</span></td>
+                    <td>{{ proceso.nombre }}</td>
+                    <td>{{ proceso.descripcion || '—' }}</td>
+                    <td>{{ proceso.preciounitario | currency:'MXN':'symbol':'1.2-2' }}</td>
+                    <td>
+                        <span class="badge-estado" [class.badge-activo]="proceso.activo"
+                            [class.badge-inactivo]="!proceso.activo">
+                            {{ proceso.activo ? 'Activo' : 'Inactivo' }}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn-edit" (click)="editarProceso(proceso)">✏️ Editar</button>
+                        @if(proceso.activo) {
+                        <button class="btn-delete" (click)="eliminarProceso(proceso)">🗑️ Eliminar</button>
+                        }
+                    </td>
+                </tr>
+                } @empty {
+                <tr>
+                    <td colspan="6" class="empty-msg">No hay procesos registrados</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
