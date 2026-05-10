@@ -36,9 +36,11 @@
                         </span>
                     </td>
                     <td>
-                        <button class="btn-edit" (click)="editarProceso(proceso)">✏️ Editar</button>
+                        <button class="btn-edit" (click)="editarProceso(proceso)">
+                            <i class="fa-solid fa-pen-to-square"></i>Editar</button>
                         @if(proceso.activo) {
-                        <button class="btn-delete" (click)="eliminarProceso(proceso)">🗑️ Eliminar</button>
+                        <button class="btn-delete" (click)="eliminarProceso(proceso)">
+                            <i class="fa-solid fa-trash"></i>Eliminar</button>
                         }
                     </td>
                 </tr>
