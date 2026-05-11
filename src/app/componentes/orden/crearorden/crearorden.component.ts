@@ -33,6 +33,11 @@ export class CrearordenComponent implements OnInit {
   listadoClientes: Cliente[] = [];
   clienteSeleccionado: string = ''; // nombre del cliente seleccionado
 
+  // Dropdown filter properties
+  listadoClientesFiltrado: Cliente[] = [];
+  textoBusquedaCliente: string = '';
+  mostrarDropdown: boolean = false;
+
   constructor(
     private ordenService: OrdenService,
     private clienteService: ClienteService,
@@ -46,7 +51,10 @@ export class CrearordenComponent implements OnInit {
     this.clienteService.listarClientes().subscribe({
       next: (response: ClienteResponse | null) => {
         if (!response) return;
-        this.listadoClientes = response.data;
+        this.listadoClientes = Array.isArray(response.data)
+          ? response.data
+          : [response.data];
+        this.listadoClientesFiltrado = [...this.listadoClientes];
       },
       error: (err) => console.error('Error al cargar clientes:', err)
     });
@@ -83,5 +91,40 @@ export class CrearordenComponent implements OnInit {
 
   cancelar() {
     this.router.navigate(['/ordenes/listar']);
+  }
+
+  // Dropdown with text filter
+  filtrarClientes() {
+    const texto = this.textoBusquedaCliente.toLowerCase().trim();
+    if (!texto) {
+      this.listadoClientesFiltrado = [...this.listadoClientes];
+      return;
+    }
+    this.listadoClientesFiltrado = this.listadoClientes.filter(c =>
+      c.nombre.toLowerCase().includes(texto)
+    );
+  }
+
+  seleccionarCliente(cliente: Cliente) {
+    this.orden.clienteId = cliente.idCliente;
+    this.clienteSeleccionado = cliente.nombre;
+    this.textoBusquedaCliente = cliente.nombre;
+    this.mostrarDropdown = false;
+  }
+
+  abrirDropdown() {
+    this.mostrarDropdown = true;
+    this.textoBusquedaCliente = '';
+    this.listadoClientesFiltrado = [...this.listadoClientes];
+  }
+
+  cerrarDropdown() {
+    setTimeout(() => {
+      this.mostrarDropdown = false;
+      // Restore selected client name if no new selection
+      if (this.clienteSeleccionado) {
+        this.textoBusquedaCliente = this.clienteSeleccionado;
+      }
+    }, 200);
   }
 }

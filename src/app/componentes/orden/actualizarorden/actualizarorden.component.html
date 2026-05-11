@@ -56,7 +56,8 @@
 
         <div class="form-actions">
             <button class="btn-secondary" (click)="cancelar()">Cancelar</button>
-            <button class="btn-primary" (click)="guardar()" [disabled]="guardando"><i class="fa-solid fa-floppy-disk"></i>
+            <button class="btn-primary" (click)="guardar()" [disabled]="guardando"><i
+                    class="fa-solid fa-floppy-disk"></i>
                 {{ guardando ? 'Actualizando...' : ' Actualizar Orden' }}
             </button>
         </div>
@@ -66,21 +67,34 @@
     <div class="card-table">
         <div class="detalle-header">
             <h4 class="detalle-title">Prendas de la Orden</h4>
-            <button class="btn-primary" (click)="mostrarFormDetalle()"><i class="fa-solid fa-plus"></i> Agregar Prenda</button>
+            <button class="btn-primary" (click)="mostrarFormDetalle()"><i class="fa-solid fa-plus"></i> Agregar
+                Prenda</button>
         </div>
 
         <!-- Formulario agregar detalle -->
         @if(agregandoDetalle) {
         <div class="form-detalle">
             <div class="form-grid">
+
                 <div class="form-group">
-                    <label>Proceso</label>
-                    <select [(ngModel)]="nuevoDetalle.procesoId">
-                        <option value="" disabled>Selecciona un proceso</option>
-                        @for(proceso of procesosListado; track proceso.idproceso) {
-                        <option [value]="proceso.idproceso">{{ proceso.nombre }}</option>
+                    <label>Tipo de proceso</label>
+                    <div class="dropdown-search-wrapper">
+                        <input type="text" class="dropdown-search-input" [(ngModel)]="textoBusquedaProceso"
+                            (focus)="abrirDropdown()" (blur)="cerrarDropdown()" (input)="filtrarProcesos()"
+                            placeholder="Buscar proceso..." />
+
+                        @if(mostrarDropdown) {
+                        <div class="dropdown-list">
+                            @for(proceso of listadoProcesosFiltrado; track proceso.idproceso) {
+                            <div class="dropdown-item" (mousedown)="seleccionarProceso(proceso)">
+                                {{ proceso.nombre }}
+                            </div>
+                            } @empty {
+                            <div class="dropdown-empty">No se encontraron clientes</div>
+                            }
+                        </div>
                         }
-                    </select>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -101,7 +115,8 @@
 
             <div class="form-actions">
                 <button class="btn-secondary" (click)="cancelarDetalle()">Cancelar</button>
-                <button class="btn-primary" (click)="guardarDetalle()" [disabled]="guardandoDetalle"><i class="fa-solid fa-floppy-disk"></i>
+                <button class="btn-primary" (click)="guardarDetalle()" [disabled]="guardandoDetalle"><i
+                        class="fa-solid fa-floppy-disk"></i>
                     {{ guardandoDetalle ? ' Guardando...' : 'Guardar Prenda' }}
                 </button>
             </div>
@@ -128,7 +143,8 @@
                     <td>{{ detalle.cantidad }}</td>
                     <td>{{ detalle.colorReferencia }}</td>
                     <td>
-                        <button class="btn-delete" (click)="eliminarDetalle(detalle)"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                        <button class="btn-delete" (click)="eliminarDetalle(detalle)"><i class="fa-solid fa-trash"></i>
+                            Eliminar</button>
                     </td>
                 </tr>
                 }

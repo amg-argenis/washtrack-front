@@ -40,6 +40,12 @@ export class ActualizarordenComponent implements OnInit {
 
   procesosListado: Proceso[] = [];
 
+  // Dropdown filter properties
+  listadoProcesosFiltrado: Proceso[] = [];
+  textoBusquedaProceso: string = '';
+  mostrarDropdown: boolean = false;
+  procesoSeleccionado: string = '';
+
   constructor(
     private ordenService: OrdenService,
     private detalleOrdenService: DetalleOrdenService,
@@ -206,4 +212,40 @@ export class ActualizarordenComponent implements OnInit {
   cancelar() {
     this.router.navigate(['/ordenes/listar']);
   }
+
+  // Dropdown with text filter
+  filtrarProcesos() {
+    const texto = this.textoBusquedaProceso.toLowerCase().trim();
+    if (!texto) {
+      this.listadoProcesosFiltrado = [...this.procesosListado];
+      return;
+    }
+    this.listadoProcesosFiltrado = this.procesosListado.filter(c =>
+      c.nombre.toLowerCase().includes(texto)
+    );
+  }
+
+  seleccionarProceso(proceso: Proceso) {
+    this.nuevoDetalle.procesoId = proceso.idproceso;
+    this.procesoSeleccionado = proceso.nombre;
+    this.textoBusquedaProceso = proceso.nombre;
+    this.mostrarDropdown = false;
+  }
+
+  abrirDropdown() {
+    this.mostrarDropdown = true;
+    this.textoBusquedaProceso = '';
+    this.listadoProcesosFiltrado = [...this.procesosListado];
+  }
+
+  cerrarDropdown() {
+    setTimeout(() => {
+      this.mostrarDropdown = false;
+      // Restore selected client name if no new selection
+      if (this.procesoSeleccionado) {
+        this.textoBusquedaProceso = this.procesoSeleccionado;
+      }
+    }, 200);
+  }
+
 }

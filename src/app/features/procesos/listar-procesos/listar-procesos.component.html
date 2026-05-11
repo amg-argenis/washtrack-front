@@ -2,12 +2,21 @@
     <div class="page-header">
         <h3 class="page-title">Listado de Procesos</h3>
         <button class="btn-primary" (click)="crearProceso()">
-            <i class="fa-solid fa-plus"></i>Nuevo Proceso
+            <i class="fa-solid fa-plus"></i> Nuevo Proceso
         </button>
     </div>
 
+    <!-- 👈 Search box -->
+    <div class="search-wrapper">
+        <input type="text" class="search-input" [(ngModel)]="textoBusqueda" (input)="filtrar()"
+            placeholder="Buscar por nombre, descripcion o codigo..." />
+        @if(textoBusqueda) {
+        <button class="btn-limpiar" (click)="limpiarBusqueda()"><i class="fa-solid fa-x"></i> Limpiar</button>
+        }
+    </div>
+
     <div class="total-registros">
-        <span>Total de registros: <strong>{{ listadoProcesos.length }}</strong></span>
+        <span>Total de registros: <strong>{{ listadoFiltrado.length }}</strong></span>
     </div>
 
     <div class="card-table">
@@ -23,7 +32,8 @@
                 </tr>
             </thead>
             <tbody>
-                @for(proceso of listadoProcesos; track proceso.idproceso) {
+                <!-- Use listadoFiltrado instead of listadoProcesos -->
+                @for(proceso of listadoFiltrado; track proceso.idproceso) {
                 <tr>
                     <td><span class="codigo-badge">{{ proceso.codigo }}</span></td>
                     <td>{{ proceso.nombre }}</td>
@@ -36,17 +46,21 @@
                         </span>
                     </td>
                     <td>
-                        <button class="btn-edit" (click)="editarProceso(proceso)">
-                            <i class="fa-solid fa-pen-to-square"></i>Editar</button>
+                        <button class="btn-edit" (click)="editarProceso(proceso)">✏️ Editar</button>
                         @if(proceso.activo) {
-                        <button class="btn-delete" (click)="eliminarProceso(proceso)">
-                            <i class="fa-solid fa-trash"></i>Eliminar</button>
+                        <button class="btn-delete" (click)="eliminarProceso(proceso)">🗑️ Eliminar</button>
                         }
                     </td>
                 </tr>
                 } @empty {
                 <tr>
-                    <td colspan="6" class="empty-msg">No hay procesos registrados</td>
+                    <td colspan="6" class="empty-msg">
+                        @if(textoBusqueda) {
+                        No se encontraron procesos con "{{ textoBusqueda }}"
+                        } @else {
+                        No hay procesos registrados
+                        }
+                    </td>
                 </tr>
                 }
             </tbody>

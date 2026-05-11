@@ -6,9 +6,18 @@
         </button>
     </div>
 
+    <!-- 👈 Search box -->
+    <div class="search-wrapper">
+        <input type="text" class="search-input" [(ngModel)]="textoBusqueda" (input)="filtrar()"
+            placeholder="Buscar por nombre, contaco o email..." />
+        @if(textoBusqueda) {
+        <button class="btn-limpiar" (click)="limpiarBusqueda()"><i class="fa-solid fa-x"></i> Limpiar</button>
+        }
+    </div>
+
     <!-- Total de registros -->
     <div class="total-registros">
-        <span>Total de registros: <strong>{{ listadoClientes.length }}</strong></span>
+        <span>Total de registros: <strong>{{ listadoFiltrado.length }}</strong></span>
     </div>
 
     <div class="card-table">
@@ -25,7 +34,7 @@
                 </tr>
             </thead>
             <tbody>
-                @for(cliente of listadoClientes; track cliente.idCliente) {
+                @for(cliente of listadoFiltrado; track cliente.idCliente) {
                 <tr>
                     <td>{{ cliente.nombre }}</td>
                     <td>{{ cliente.contacto || '—' }}</td>
@@ -39,8 +48,10 @@
                     </td>
                     <td>{{ cliente.limiteCredito | currency:'MXN':'symbol':'1.2-2' }}</td>
                     <td>
-                        <button class="btn-edit" (click)="editarCliente(cliente)"><i class="fa-solid fa-pen-to-square"></i> Editar</button>
-                        <button class="btn-delete" (click)="eliminarCliente(cliente)"><i class="fa-solid fa-truck-fast"></i> 
+                        <button class="btn-edit" (click)="editarCliente(cliente)"><i
+                                class="fa-solid fa-pen-to-square"></i> Editar</button>
+                        <button class="btn-delete" (click)="eliminarCliente(cliente)"><i
+                                class="fa-solid fa-truck-fast"></i>
                             Eliminar
                         </button>
                     </td>

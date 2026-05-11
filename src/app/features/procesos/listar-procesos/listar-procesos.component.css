@@ -146,3 +146,42 @@
 .btn-delete:hover {
     background: rgba(220, 53, 69, 0.2);
 }
+
+/* Filtrado de listado de procesos */
+.search-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 10px 16px;
+    border: 1px solid #dde2f0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #1a1a2e;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.search-input:focus {
+    border-color: rgb(13, 109, 252);
+}
+
+.btn-limpiar {
+    background: #f0f2f8;
+    color: #555;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.btn-limpiar:hover {
+    background: #e0e4f0;
+}
