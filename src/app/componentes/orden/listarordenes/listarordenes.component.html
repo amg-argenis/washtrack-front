@@ -17,9 +17,18 @@
         </div>
     </div>
 
+        <!-- Search box -->
+    <div class="search-wrapper">
+        <input type="text" class="search-input" [(ngModel)]="textoBusqueda" (input)="filtrar()"
+            placeholder="Buscar por folio o nombre cliente..." />
+        @if(textoBusqueda) {
+        <button class="btn-limpiar" (click)="limpiarBusqueda()"><i class="fa-solid fa-x"></i> Limpiar</button>
+        }
+    </div>
+
     <!-- Total de registros -->
     <div class="total-registros">
-        <span>Total de registros: <strong>{{ listadoOrdenServicio.length }}</strong></span>
+        <span>Total de registros: <strong>{{ listadoFiltrado.length }}</strong></span>
     </div>
 
     <div class="card-table">
@@ -36,7 +45,7 @@
                 </tr>
             </thead>
             <tbody>
-                @for(orden of listadoOrdenServicio; track orden.idOrden) {
+                @for(orden of listadoFiltrado; track orden.idOrden) {
                 <tr class="fila-orden" [class.fila-expandida]="idOrdenExpand === orden.idOrden">
                     <td>
                         <button class="btn-expand" (click)="toggleDetalle(orden)"

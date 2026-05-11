@@ -29,6 +29,11 @@ export class ListarordenesComponent implements OnInit {
   orden: Orden = new Orden();
   fechaFiltro: string = ''; // para filtro por fecha
 
+  // filtered list for display
+  listadoFiltrado: Orden[] = [];
+  // search text
+  textoBusqueda: string = '';
+
   constructor(
     private ordenService: OrdenService,
     private router: Router,
@@ -43,10 +48,12 @@ export class ListarordenesComponent implements OnInit {
       next: (response: OrdenResponse | null) => {
         if (!response) {
           this.listadoOrdenServicio = [];
+          this.listadoFiltrado = [...this.listadoOrdenServicio];
           this.cdr.detectChanges();
           return;
         }
         this.listadoOrdenServicio = response.data;
+        this.listadoFiltrado = [...this.listadoOrdenServicio];
         this.cdr.detectChanges();
       },
       error: (err) => console.error('Error:', err)
@@ -179,6 +186,23 @@ export class ListarordenesComponent implements OnInit {
     localStorage.setItem('idOrdenLocal', orden.idOrden);
     localStorage.setItem('folioLocal', orden.folio);
     this.router.navigate(['/entregas/registrar']);
+  }
+
+  // filter in real time
+  filtrar() {
+    const texto = this.textoBusqueda.toLowerCase().trim();
+    if (!texto) {
+      this.listadoFiltrado = [...this.listadoOrdenServicio];
+      return;
+    }
+    this.listadoFiltrado = this.listadoOrdenServicio.filter(filtro =>
+      filtro.folio.toLowerCase().includes(texto)
+    );
+  }
+
+  limpiarBusqueda() {
+    this.textoBusqueda = '';
+    this.listadoFiltrado = [...this.listadoOrdenServicio];
   }
 
 }
