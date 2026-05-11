@@ -59,12 +59,16 @@
                     <td>{{ orden.fechaEntrega && orden.fechaEntrega !== 'null' ? orden.fechaEntrega : 'No especificado'
                         }}</td>
                     <td>
+                        @if(orden.estado !== 'ENTREGADO' && orden.estado !== 'ELIMINADO') {
                         <button class="btn-edit" (click)="editarOrden(orden)"><i class="fa-solid fa-pen-to-square"></i>
-                            Editar</button>
+                            Editar
+                        </button>
+                        }
                         <button class="btn-delete" (click)="eliminarOrden(orden)"><i class="fa-solid fa-trash"></i>
                             Eliminar</button>
                         @if(orden.estado !== 'ENTREGADO' && orden.estado !== 'ELIMINADO') {
-                        <button class="btn-entrega" (click)="registrarEntrega(orden)"><i class="fa-solid fa-truck-fast"></i> 
+                        <button class="btn-entrega" (click)="registrarEntrega(orden)"><i
+                                class="fa-solid fa-truck-fast"></i>
                             Entrega
                         </button>
                         }
