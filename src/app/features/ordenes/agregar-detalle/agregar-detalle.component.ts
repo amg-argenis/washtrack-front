@@ -5,6 +5,9 @@ import { CommonModule } from '@angular/common';
 import { DetalleOrdenService } from '../../../servidor/detalle-orden.service';
 import { InsertarDetalleOrdenRequest } from '../../../models/detalleorden/insertar-detalle-orden-request';
 import { DetalleOrden } from '../../../models/detalleorden/detalle-orden';
+import { Proceso } from '../../../models/procesos/proceso';
+import { ProcesoService } from '../../../servidor/proceso.service';
+import { ProcesoResponse } from '../../../models/procesos/proceso-response';
 
 @Component({
   selector: 'app-agregar-detalle',
@@ -28,16 +31,11 @@ export class AgregarDetalleComponent implements OnInit {
     colorReferencia: ''
   };
 
-  procesos = [
-    { id: 'p0000001-0000-0000-0000-000000000001', nombre: 'Lavado en seco' },
-    { id: 'p0000001-0000-0000-0000-000000000002', nombre: 'Lavado industrial' },
-    { id: 'p0000001-0000-0000-0000-000000000003', nombre: 'Planchado' },
-    { id: 'p0000001-0000-0000-0000-000000000004', nombre: 'Desmanchado' },
-    { id: 'p0000001-0000-0000-0000-000000000005', nombre: 'Barrido natural' }
-  ];
+  procesosListado: Proceso[] = [];
 
   constructor(
     private detalleOrdenService: DetalleOrdenService,
+    private procesoService: ProcesoService,
     private router: Router,
     private cdr: ChangeDetectorRef) { }
 
@@ -51,6 +49,34 @@ export class AgregarDetalleComponent implements OnInit {
     }
 
     this.detalleRequest.ordenId = this.idOrden;
+
+    // Request para obtener listado de procesos
+    this.obtenerListadoProcesos();
+
+  }
+
+  obtenerListadoProcesos() {
+    this.procesoService.listarProcesos().subscribe({
+      next: (response: ProcesoResponse | null) => {
+        if (!response) {
+          this.errorMsg = 'No se recibio respuesta del servidor para listado de procesos.';
+          this.procesosListado = [];
+          return;
+        }
+        // Handle both array and single object
+        this.procesosListado = Array.isArray(response.data)
+          ? response.data
+          : [response.data];
+
+        console.log(this.procesosListado);
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.guardando = false;
+        this.errorMsg = 'Error al obtener el listado de procesos de lavado.';
+        console.error('Error al obtener procesos, Detalles: ', err);
+      }
+    });
   }
 
   agregarDetalle() {
@@ -87,7 +113,7 @@ export class AgregarDetalleComponent implements OnInit {
   }
 
   getNombreProceso(procesoId: string): string {
-    const proceso = this.procesos.find(p => p.id === procesoId);
+    const proceso = this.procesosListado.find(p => p.idproceso === procesoId);
     return proceso ? proceso.nombre : procesoId;
   }
 

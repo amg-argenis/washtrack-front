@@ -77,8 +77,8 @@
                     <label>Proceso</label>
                     <select [(ngModel)]="nuevoDetalle.procesoId">
                         <option value="" disabled>Selecciona un proceso</option>
-                        @for(proceso of procesos; track proceso.id) {
-                        <option [value]="proceso.id">{{ proceso.nombre }}</option>
+                        @for(proceso of procesosListado; track proceso.idproceso) {
+                        <option [value]="proceso.idproceso">{{ proceso.nombre }}</option>
                         }
                     </select>
                 </div>

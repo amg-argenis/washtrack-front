@@ -4,7 +4,7 @@
             <h3 class="page-title">Agregar Detalle</h3>
             <span class="folio-badge">{{ folio }}</span>
         </div>
-        <button class="btn-terminar" (click)="terminar()">✅ Terminar</button>
+        <button class="btn-terminar" (click)="terminar()"><i class="fa-solid fa-circle-check"></i> Terminar</button>
     </div>
 
     <div class="form-card">
@@ -17,8 +17,8 @@
                 <label>Proceso</label>
                 <select [(ngModel)]="detalleRequest.procesoId">
                     <option value="" disabled>Selecciona un proceso</option>
-                    @for(proceso of procesos; track proceso.id) {
-                    <option [value]="proceso.id">{{ proceso.nombre }}</option>
+                    @for(proceso of procesosListado; track proceso.idproceso) {
+                    <option [value]="proceso.idproceso">{{ proceso.nombre }}</option>
                     }
                 </select>
             </div>
