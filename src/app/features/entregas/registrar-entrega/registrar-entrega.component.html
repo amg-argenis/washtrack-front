@@ -4,7 +4,6 @@
             <h3 class="page-title">Registrar Entrega</h3>
             <span class="folio-badge">{{ folio }}</span>
         </div>
-        <button class="btn-secondary" (click)="cancelar()">Cancelar</button>
     </div>
 
     <div class="form-card">
@@ -48,7 +47,7 @@
         </div>
 
         <div class="form-actions">
-            <button class="btn-secondary" (click)="cancelar()">Cancelar</button>
+            <button class="btn-secondary" (click)="cancelar()"><i class="fa-solid fa-ban"></i> Cancelar</button>
             <button class="btn-primary" (click)="guardar()" [disabled]="guardando"><i class="fa-solid fa-floppy-disk"></i>
                 {{ guardando ? ' Registrando...' : ' Registrar Entrega' }}
             </button>
