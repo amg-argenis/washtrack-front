@@ -362,3 +362,36 @@
     width: 100%;
     text-align: center;
 }
+
+.detalle-valor {
+    font-weight: 600;
+    color: #1a1a2e;
+    font-size: 0.95rem;
+    word-break: break-word;
+    /* 👈 breaks long words */
+    overflow-wrap: break-word;
+    /* 👈 wraps long text */
+}
+
+.detalle-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+    /* 👈 allows flex items to shrink */
+}
+
+.detalle-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 16px;
+    min-width: 0;
+    /* 👈 prevents grid overflow */
+}
+
+.detalle-item.full-width .detalle-valor {
+    max-height: 60px;
+    overflow-y: auto;
+    line-height: 1.5;
+}
