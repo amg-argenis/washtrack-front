@@ -1,6 +1,4 @@
 export interface InsertarClienteRequest {
-    idCliente: string;
-    tenantId: string;
     nombre: string;
     contacto: string;
     telefono: string;

@@ -16,8 +16,6 @@ export class CrearClienteComponent {
   errorMsg = '';
 
   clienteRequest: InsertarClienteRequest = {
-    idCliente: '',
-    tenantId: '',
     nombre: '',
     contacto: '',
     telefono: '',
@@ -35,7 +33,12 @@ export class CrearClienteComponent {
     this.guardando = true;
     this.errorMsg = '';
 
-    this.clienteService.insertarCliente(this.clienteRequest).subscribe({
+    const newrequest = {
+      ...this.clienteRequest,
+      creditoHabilitado: String(this.clienteRequest.creditoHabilitado) === 'true' // convert to boolean
+    };
+
+    this.clienteService.insertarCliente(newrequest).subscribe({
       next: (data) => {
         this.guardando = false;
         if (!data) {

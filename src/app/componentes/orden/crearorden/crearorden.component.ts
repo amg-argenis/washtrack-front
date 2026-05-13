@@ -23,7 +23,6 @@ export class CrearordenComponent implements OnInit {
     estado: 'RECIBIDO',
     totalPrendas: 1,
     observaciones: '',
-    tenantId: '',
     fechaEntrega: ''
   };
 

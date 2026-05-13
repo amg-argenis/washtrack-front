@@ -4,6 +4,5 @@ export interface InsertarOrdenRequest {
   estado: string;
   totalPrendas: number;
   observaciones?: string;
-  tenantId?: string;
   fechaEntrega?: string;
 }
