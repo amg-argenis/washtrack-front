@@ -1,1 +1,3 @@
-export interface InsertarTenantRequest {}
+export interface InsertarTenantRequest {
+    nombre: string;
+}
