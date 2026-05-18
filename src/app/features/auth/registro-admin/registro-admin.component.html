@@ -1,1 +1,60 @@
-<p>registro-admin works!</p>
+<div class="registro-wrapper">
+    <div class="registro-card">
+
+        <div class="registro-brand">
+            <div class="logo">
+                <img src="assets/washtrack_logo.png" alt="WashTrack">
+            </div>
+            <h1 class="brand-name">WashTrack</h1>
+            <p class="brand-subtitle">{{ nombreEmpresa }}</p>
+        </div>
+
+        <div class="steps">
+            <div class="step step-done">
+                <span class="step-number">✓</span>
+                <span class="step-label">Empresa</span>
+            </div>
+            <div class="step-line step-line-done"></div>
+            <div class="step step-active">
+                <span class="step-number">2</span>
+                <span class="step-label">Administrador</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step step-inactive">
+                <span class="step-number">3</span>
+                <span class="step-label">Listo</span>
+            </div>
+        </div>
+
+        @if(errorMsg) {
+        <div class="alert-error">{{ errorMsg }}</div>
+        }
+
+        <div class="form-group">
+            <label>Nombre completo</label>
+            <input type="text" [(ngModel)]="adminRequest.nombre" placeholder="Ej. Juan Lopez Martinez" />
+        </div>
+
+        <div class="form-group">
+            <label>Correo electronico</label>
+            <input type="email" [(ngModel)]="adminRequest.email" placeholder="correo@empresa.com" />
+        </div>
+
+        <div class="form-group">
+            <label>Contrasena</label>
+            <input type="password" [(ngModel)]="adminRequest.password" placeholder="••••••••" />
+        </div>
+
+        <div class="form-actions">
+            <button class="btn-secondary" (click)="volverAtras()">← Volver</button>
+            <button class="btn-primary" (click)="registrar()" [disabled]="guardando">
+                {{ guardando ? 'Creando cuenta...' : 'Crear cuenta →' }}
+            </button>
+        </div>
+
+        <div class="info-msg">
+            <span>🔒 Tu cuenta sera creada como <strong>Administrador</strong></span>
+        </div>
+
+    </div>
+</div>

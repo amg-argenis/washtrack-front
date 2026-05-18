@@ -1,0 +1,213 @@
+.registro-wrapper {
+    min-height: 100vh;
+    background: #f4f6fb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.registro-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    padding: 40px;
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.registro-brand {
+    text-align: center;
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo {
+    background: #ffffff;
+    padding: 8px 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo img {
+    width: 120px;
+    height: auto;
+    object-fit: contain;
+}
+
+.brand-name {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0;
+}
+
+.brand-subtitle {
+    font-size: 0.88rem;
+    color: rgb(13, 109, 252);
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Steps */
+.steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.step-number {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.step-done .step-number {
+    background: rgb(25, 135, 84);
+    color: white;
+}
+
+.step-active .step-number {
+    background: rgb(13, 109, 252);
+    color: white;
+}
+
+.step-inactive .step-number {
+    background: #e8ecf4;
+    color: #999;
+}
+
+.step-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.step-done .step-label {
+    color: rgb(25, 135, 84);
+}
+
+.step-active .step-label {
+    color: rgb(13, 109, 252);
+}
+
+.step-inactive .step-label {
+    color: #999;
+}
+
+.step-line {
+    width: 40px;
+    height: 2px;
+    background: #e8ecf4;
+    margin-bottom: 16px;
+}
+
+.step-line-done {
+    background: rgb(25, 135, 84);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.form-group input {
+    padding: 12px 16px;
+    border: 1px solid #dde2f0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #1a1a2e;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.form-group input:focus {
+    border-color: rgb(13, 109, 252);
+}
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-primary {
+    flex: 1;
+    background: rgb(13, 109, 252);
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background: rgb(10, 88, 202);
+}
+
+.btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    background: #f0f2f8;
+    color: #555;
+    border: none;
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-secondary:hover {
+    background: #e0e4f0;
+}
+
+.info-msg {
+    text-align: center;
+    font-size: 0.82rem;
+    color: #888;
+    padding: 8px;
+    background: rgba(13, 109, 252, 0.05);
+    border-radius: 8px;
+}
+
+.alert-error {
+    background: rgba(220, 53, 69, 0.1);
+    color: rgb(220, 53, 69);
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+}
