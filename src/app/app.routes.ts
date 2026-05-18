@@ -47,5 +47,9 @@ export const routes: Routes = [
     // New Tenant
     { path: 'registro', component: RegistroTenantComponent },
     { path: 'registro/admin', component: RegistroAdminComponent },
+    // Registro Admin
+    { path: 'registro', component: RegistroTenantComponent },
+    { path: 'registro/admin', component: RegistroAdminComponent },
+    { path: 'registro/listo', component: RegistroListoComponent },
 
 ];

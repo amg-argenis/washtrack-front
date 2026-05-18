@@ -28,10 +28,12 @@ export class App implements OnInit {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
-      this.esLogin = event.url === '/login' || 
-                     event.url === '/' ||
-                     event.url === '/registro' ||
-                     event.url === '/registro/admin';
+      this.esLogin = event.url === '/login' ||
+        event.url === '/' ||
+        event.url === '/registro' ||
+        event.url === '/registro/admin' ||
+        event.url === '/registro/listo';
+
       if (!this.esLogin) {
         this.nombre = this.authService.getNombre() || '';
         this.rol = this.authService.getRol() || '';
