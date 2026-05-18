@@ -1,9 +1,64 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { TenantService } from '../../../servidor/tenant.service';
+import { InsertarTenantRequest } from '../../../models/tenant/insertar-tenant-request';
 
 @Component({
   selector: 'app-registro-tenant',
-  imports: [],
+  imports: [FormsModule, CommonModule],
   templateUrl: './registro-tenant.component.html',
-  styleUrl: './registro-tenant.component.css',
+  styleUrl: './registro-tenant.component.css'
 })
-export class RegistroTenantComponent {}
+export class RegistroTenantComponent {
+
+  guardando = false;
+  errorMsg = '';
+
+  tenantRequest: InsertarTenantRequest = {
+    nombre: ''
+  };
+
+  constructor(
+    private tenantService: TenantService,
+    private router: Router,
+    private cdr: ChangeDetectorRef) { }
+
+  registrar() {
+    this.guardando = true;
+    this.errorMsg = '';
+
+    this.tenantService.insertarTenant(this.tenantRequest).subscribe({
+      next: (response) => {
+        this.guardando = false;
+        if (!response) {
+          this.errorMsg = 'No se recibio respuesta del servidor.';
+          this.cdr.detectChanges();
+          return;
+        }
+        if (response.success) {
+          // Save tenantId for next step
+          const tenant = Array.isArray(response.data) ? response.data[0] : response.data;
+          localStorage.setItem('newTenantId', tenant.idtenant);
+          localStorage.setItem('newTenantNombre', tenant.nombre);
+          // Redirect to admin registration
+          this.router.navigate(['/registro/admin']);
+        } else {
+          this.errorMsg = response.message || 'Error al registrar la empresa.';
+          this.cdr.detectChanges();
+        }
+      },
+      error: (err) => {
+        this.guardando = false;
+        this.errorMsg = 'Error al registrar la empresa. Intenta de nuevo.';
+        console.error('Error al registrar tenant:', err);
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  irALogin() {
+    this.router.navigate(['/login']);
+  }
+}

@@ -1,1 +1,49 @@
-<p>registro-tenant works!</p>
+<div class="registro-wrapper">
+    <div class="registro-card">
+
+        <div class="registro-brand">
+            <div class="logo">
+                <img src="assets/washtrack_logo.png" alt="WashTrack">
+            </div>
+            <h1 class="brand-name">WashTrack</h1>
+            <p class="brand-subtitle">Registro de nueva empresa</p>
+        </div>
+
+        <div class="steps">
+            <div class="step step-active">
+                <span class="step-number">1</span>
+                <span class="step-label">Empresa</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step step-inactive">
+                <span class="step-number">2</span>
+                <span class="step-label">Administrador</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step step-inactive">
+                <span class="step-number">3</span>
+                <span class="step-label">Listo</span>
+            </div>
+        </div>
+
+        @if(errorMsg) {
+        <div class="alert-error">{{ errorMsg }}</div>
+        }
+
+        <div class="form-group">
+            <label>Nombre de la empresa</label>
+            <input type="text" [(ngModel)]="tenantRequest.nombre" placeholder="Ej. Lavanderia El Blanco Sa de CV"
+                (keyup.enter)="registrar()" />
+        </div>
+
+        <button class="btn-primary" (click)="registrar()" [disabled]="guardando">
+            {{ guardando ? 'Registrando...' : 'Continuar →' }}
+        </button>
+
+        <div class="login-link">
+            ¿Ya tienes cuenta?
+            <span (click)="irALogin()">Inicia sesion</span>
+        </div>
+
+    </div>
+</div>

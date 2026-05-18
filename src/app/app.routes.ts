@@ -14,6 +14,8 @@ import { InicioComponent } from './features/dashboard/inicio/inicio.component';
 import { ListarProcesosComponent } from './features/procesos/listar-procesos/listar-procesos.component';
 import { CrearProcesoComponent } from './features/procesos/crear-proceso/crear-proceso.component';
 import { EditarProcesoComponent } from './features/procesos/editar-proceso/editar-proceso.component';
+import { RegistroTenantComponent } from './features/auth/registro-tenant/registro-tenant.component';
+import { RegistroAdminComponent } from './features/auth/registro-admin/registro-admin.component';
 
 
 export const routes: Routes = [
@@ -42,5 +44,8 @@ export const routes: Routes = [
     { path: 'procesos/listar', component: ListarProcesosComponent, canActivate: [authGuard] },
     { path: 'procesos/crear', component: CrearProcesoComponent, canActivate: [authGuard] },
     { path: 'procesos/editar', component: EditarProcesoComponent, canActivate: [authGuard] },
+    // New Tenant
+    { path: 'registro', component: RegistroTenantComponent },
+    { path: 'registro/admin', component: RegistroAdminComponent },
 
 ];
