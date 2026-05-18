@@ -16,6 +16,7 @@ import { CrearProcesoComponent } from './features/procesos/crear-proceso/crear-p
 import { EditarProcesoComponent } from './features/procesos/editar-proceso/editar-proceso.component';
 import { RegistroTenantComponent } from './features/auth/registro-tenant/registro-tenant.component';
 import { RegistroAdminComponent } from './features/auth/registro-admin/registro-admin.component';
+import { RegistroListoComponent } from './features/auth/registro-listo/registro-listo.component';
 
 
 export const routes: Routes = [
@@ -50,6 +51,6 @@ export const routes: Routes = [
     // Registro Admin
     { path: 'registro', component: RegistroTenantComponent },
     { path: 'registro/admin', component: RegistroAdminComponent },
-    { path: 'registro/listo', component: RegistroListoComponent },
+    { path: 'registro/listo', component: RegistroListoComponent }
 
 ];

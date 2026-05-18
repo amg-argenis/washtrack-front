@@ -1,0 +1,148 @@
+.registro-wrapper {
+    min-height: 100vh;
+    background: #f4f6fb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.registro-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    padding: 40px;
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+}
+
+.registro-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo {
+    background: #ffffff;
+    padding: 8px 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo img {
+    width: 120px;
+    height: auto;
+    object-fit: contain;
+}
+
+.brand-name {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0;
+}
+
+/* Steps */
+.steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.step-number {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.step-done .step-number {
+    background: rgb(25, 135, 84);
+    color: white;
+}
+
+.step-active .step-number {
+    background: rgb(13, 109, 252);
+    color: white;
+}
+
+.step-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.step-done .step-label {
+    color: rgb(25, 135, 84);
+}
+
+.step-active .step-label {
+    color: rgb(13, 109, 252);
+}
+
+.step-line {
+    width: 40px;
+    height: 2px;
+    background: #e8ecf4;
+    margin-bottom: 16px;
+}
+
+.step-line-done {
+    background: rgb(25, 135, 84);
+}
+
+.success-icon {
+    font-size: 4rem;
+}
+
+.success-msg {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.success-msg h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: rgb(25, 135, 84);
+}
+
+.success-msg p {
+    font-size: 0.88rem;
+    color: #888;
+    line-height: 1.5;
+}
+
+.btn-primary {
+    background: rgb(13, 109, 252);
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background: rgb(10, 88, 202);
+}

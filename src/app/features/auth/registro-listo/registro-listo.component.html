@@ -1,1 +1,41 @@
-<p>registro-listo works!</p>
+<div class="registro-wrapper">
+    <div class="registro-card">
+
+        <div class="registro-brand">
+            <div class="logo">
+                <img src="assets/washtrack_logo.png" alt="WashTrack">
+            </div>
+            <h1 class="brand-name">WashTrack</h1>
+        </div>
+
+        <div class="steps">
+            <div class="step step-done">
+                <span class="step-number">✓</span>
+                <span class="step-label">Empresa</span>
+            </div>
+            <div class="step-line step-line-done"></div>
+            <div class="step step-done">
+                <span class="step-number">✓</span>
+                <span class="step-label">Administrador</span>
+            </div>
+            <div class="step-line step-line-done"></div>
+            <div class="step step-active">
+                <span class="step-number">3</span>
+                <span class="step-label">Listo</span>
+            </div>
+        </div>
+
+        <div class="success-icon">🎉</div>
+
+        <div class="success-msg">
+            <h2>¡Registro completado!</h2>
+            <p>Tu empresa y cuenta de administrador han sido creados exitosamente.</p>
+            <p>Ya puedes iniciar sesion con tus credenciales.</p>
+        </div>
+
+        <button class="btn-primary" (click)="irALogin()">
+            Iniciar Sesion →
+        </button>
+
+    </div>
+</div>

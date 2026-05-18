@@ -57,4 +57,9 @@ export class LoginComponent {
     });
   }
 
+  // Registro de nuevo usuario
+  irARegistro() {
+    this.router.navigate(['/registro']);
+  }
+
 }
