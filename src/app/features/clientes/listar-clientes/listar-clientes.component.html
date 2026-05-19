@@ -34,7 +34,7 @@
                 </tr>
             </thead>
             <tbody>
-                @for(cliente of listadoFiltrado; track cliente.idCliente) {
+                @for(cliente of listadoPaginado; track cliente.idCliente) {
                 <tr>
                     <td>{{ cliente.nombre }}</td>
                     <td>{{ cliente.contacto || '—' }}</td>
@@ -64,4 +64,31 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Pagination controls -->
+    @if(totalPaginas > 1) {
+    <div class="pagination-wrapper">
+        <div class="pagination-info">
+            Mostrando {{ (paginaActual - 1) * registrosPorPagina + 1 }} -
+            {{ paginaActual * registrosPorPagina > listadoFiltrado.length ?
+            listadoFiltrado.length :
+            paginaActual * registrosPorPagina }}
+            de {{ listadoFiltrado.length }} registros
+        </div>
+        <div class="pagination-controls">
+            <button class="btn-pag" (click)="paginaAnterior()" [disabled]="paginaActual === 1">
+                ‹
+            </button>
+            @for(pagina of paginas; track pagina) {
+            <button class="btn-pag" [class.btn-pag-active]="pagina === paginaActual" (click)="irAPagina(pagina)">
+                {{ pagina }}
+            </button>
+            }
+            <button class="btn-pag" (click)="paginaSiguiente()" [disabled]="paginaActual === totalPaginas">
+                ›
+            </button>
+        </div>
+    </div>
+    }
+
 </div>

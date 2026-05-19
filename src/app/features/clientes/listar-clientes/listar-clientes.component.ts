@@ -18,6 +18,12 @@ export class ListarClientesComponent implements OnInit {
   listadoClientes: Cliente[] = [];
   // filtered list for display
   listadoFiltrado: Cliente[] = [];
+  // pagination properties
+  paginaActual: number = 1;
+  registrosPorPagina: number = 6;
+  totalPaginas: number = 0;
+  listadoPaginado: Cliente[] = [];
+  paginas: number[] = [];
   // search text
   textoBusqueda: string = '';
 
@@ -36,11 +42,14 @@ export class ListarClientesComponent implements OnInit {
         if (!response) {
           this.listadoClientes = [];
           this.listadoFiltrado = [];
+          this.calcularPaginacion();
           this.cdr.detectChanges();
           return;
         }
         this.listadoClientes = response.data;
         this.listadoFiltrado = [...this.listadoClientes];
+        this.paginaActual = 1;
+        this.calcularPaginacion();
         this.cdr.detectChanges();
       },
       error: (err) => console.error('Error al listar clientes:', err)
@@ -82,11 +91,43 @@ export class ListarClientesComponent implements OnInit {
       cliente.contacto?.toLowerCase().includes(texto) ||
       cliente.email?.toLowerCase().includes(texto)
     );
+    this.paginaActual = 1;        // add
+    this.calcularPaginacion();    // add
   }
 
   limpiarBusqueda() {
     this.textoBusqueda = '';
     this.listadoFiltrado = [...this.listadoClientes];
+    this.paginaActual = 1;        // add
+    this.calcularPaginacion();    // add
+  }
+
+  // PAGINACION
+  calcularPaginacion() {
+    this.totalPaginas = Math.ceil(this.listadoFiltrado.length / this.registrosPorPagina);
+    this.paginas = Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
+    this.aplicarPagina();
+  }
+
+  aplicarPagina() {
+    const inicio = (this.paginaActual - 1) * this.registrosPorPagina;
+    const fin = inicio + this.registrosPorPagina;
+    this.listadoPaginado = this.listadoFiltrado.slice(inicio, fin);
+    this.cdr.detectChanges();
+  }
+
+  irAPagina(pagina: number) {
+    if (pagina < 1 || pagina > this.totalPaginas) return;
+    this.paginaActual = pagina;
+    this.aplicarPagina();
+  }
+
+  paginaAnterior() {
+    this.irAPagina(this.paginaActual - 1);
+  }
+
+  paginaSiguiente() {
+    this.irAPagina(this.paginaActual + 1);
   }
 
 }
