@@ -31,6 +31,12 @@ export class ListarordenesComponent implements OnInit {
 
   // filtered list for display
   listadoFiltrado: Orden[] = [];
+  // pagination properties
+  paginaActual: number = 1;
+  registrosPorPagina: number = 10;
+  totalPaginas: number = 0;
+  listadoPaginado: Orden[] = [];
+  paginas: number[] = [];
   // search text
   textoBusqueda: string = '';
 
@@ -48,15 +54,61 @@ export class ListarordenesComponent implements OnInit {
       next: (response: OrdenResponse | null) => {
         if (!response) {
           this.listadoOrdenServicio = [];
-          this.listadoFiltrado = [...this.listadoOrdenServicio];
+          this.listadoFiltrado = [];
+          this.calcularPaginacion();  // 👈 add
           this.cdr.detectChanges();
           return;
         }
         this.listadoOrdenServicio = response.data;
         this.listadoFiltrado = [...this.listadoOrdenServicio];
+        this.paginaActual = 1;        // 👈 add
+        this.calcularPaginacion();    // 👈 add
         this.cdr.detectChanges();
       },
       error: (err) => console.error('Error:', err)
+    });
+  }
+
+  // Update filtrar() method
+  filtrar() {
+    const texto = this.textoBusqueda.toLowerCase().trim();
+    if (!texto) {
+      this.listadoFiltrado = [...this.listadoOrdenServicio];
+    } else {
+      this.listadoFiltrado = this.listadoOrdenServicio.filter(filtro =>
+        filtro.folio.toLowerCase().includes(texto)
+      );
+    }
+    this.paginaActual = 1;        // 👈 add
+    this.calcularPaginacion();    // 👈 add
+  }
+
+  // Update limpiarBusqueda() method
+  limpiarBusqueda() {
+    this.textoBusqueda = '';
+    this.listadoFiltrado = [...this.listadoOrdenServicio];
+    this.paginaActual = 1;        // 👈 add
+    this.calcularPaginacion();    // 👈 add
+  }
+
+  // Update listarOrdenesPorFecha() method
+  listarOrdenesPorFecha(fecha: string) {
+    this.ordenService.listarOrdenesPorFecha(fecha).subscribe({
+      next: (response: OrdenResponse | null) => {
+        if (!response) {
+          this.listadoOrdenServicio = [];
+          this.listadoFiltrado = [];
+          this.calcularPaginacion(); // pagination
+          this.cdr.detectChanges();
+          return;
+        }
+        this.listadoOrdenServicio = response.data;
+        this.listadoFiltrado = [...this.listadoOrdenServicio];
+        this.paginaActual = 1;        // actual page
+        this.calcularPaginacion();    // pagination 
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Error al filtrar por fecha:', err)
     });
   }
 
@@ -165,22 +217,7 @@ export class ListarordenesComponent implements OnInit {
     this.fechaFiltro = '';
     this.listarOrdenesServicioComponent();
   }
-
-  listarOrdenesPorFecha(fecha: string) {
-    this.ordenService.listarOrdenesPorFecha(fecha).subscribe({
-      next: (response: OrdenResponse | null) => {
-        if (!response) {
-          this.listadoOrdenServicio = [];
-          this.cdr.detectChanges();
-          return;
-        }
-        this.listadoOrdenServicio = response.data;
-        this.cdr.detectChanges();
-      },
-      error: (err) => console.error('Error al filtrar por fecha:', err)
-    });
-  }
-
+  
   // Registrar entregas
   registrarEntrega(orden: Orden) {
     localStorage.setItem('idOrdenLocal', orden.idOrden);
@@ -189,20 +226,34 @@ export class ListarordenesComponent implements OnInit {
   }
 
   // filter in real time
-  filtrar() {
-    const texto = this.textoBusqueda.toLowerCase().trim();
-    if (!texto) {
-      this.listadoFiltrado = [...this.listadoOrdenServicio];
-      return;
-    }
-    this.listadoFiltrado = this.listadoOrdenServicio.filter(filtro =>
-      filtro.folio.toLowerCase().includes(texto)
-    );
+
+
+  // PAGINACION
+  calcularPaginacion() {
+    this.totalPaginas = Math.ceil(this.listadoFiltrado.length / this.registrosPorPagina);
+    this.paginas = Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
+    this.aplicarPagina();
   }
 
-  limpiarBusqueda() {
-    this.textoBusqueda = '';
-    this.listadoFiltrado = [...this.listadoOrdenServicio];
+  aplicarPagina() {
+    const inicio = (this.paginaActual - 1) * this.registrosPorPagina;
+    const fin = inicio + this.registrosPorPagina;
+    this.listadoPaginado = this.listadoFiltrado.slice(inicio, fin);
+    this.cdr.detectChanges();
+  }
+
+  irAPagina(pagina: number) {
+    if (pagina < 1 || pagina > this.totalPaginas) return;
+    this.paginaActual = pagina;
+    this.aplicarPagina();
+  }
+
+  paginaAnterior() {
+    this.irAPagina(this.paginaActual - 1);
+  }
+
+  paginaSiguiente() {
+    this.irAPagina(this.paginaActual + 1);
   }
 
 }

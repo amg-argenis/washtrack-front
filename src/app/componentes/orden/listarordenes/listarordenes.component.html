@@ -17,7 +17,7 @@
         </div>
     </div>
 
-        <!-- Search box -->
+    <!-- Search box -->
     <div class="search-wrapper">
         <input type="text" class="search-input" [(ngModel)]="textoBusqueda" (input)="filtrar()"
             placeholder="Buscar por folio o nombre cliente..." />
@@ -45,7 +45,8 @@
                 </tr>
             </thead>
             <tbody>
-                @for(orden of listadoFiltrado; track orden.idOrden) {
+                <!-- Changed from listadoFiltrado to listadoPaginado -->
+                @for(orden of listadoPaginado; track orden.idOrden) {
                 <tr class="fila-orden" [class.fila-expandida]="idOrdenExpand === orden.idOrden">
                     <td>
                         <button class="btn-expand" (click)="toggleDetalle(orden)"
@@ -69,16 +70,16 @@
                         }}</td>
                     <td>
                         @if(orden.estado !== 'ENTREGADO' && orden.estado !== 'ELIMINADO') {
-                        <button class="btn-edit" (click)="editarOrden(orden)"><i class="fa-solid fa-pen-to-square"></i>
-                            Editar
+                        <button class="btn-edit" (click)="editarOrden(orden)">
+                            <i class="fa-solid fa-pen-to-square"></i> Editar
                         </button>
                         }
-                        <button class="btn-delete" (click)="eliminarOrden(orden)"><i class="fa-solid fa-trash"></i>
-                            Eliminar</button>
+                        <button class="btn-delete" (click)="eliminarOrden(orden)">
+                            <i class="fa-solid fa-trash"></i> Eliminar
+                        </button>
                         @if(orden.estado !== 'ENTREGADO' && orden.estado !== 'ELIMINADO') {
-                        <button class="btn-entrega" (click)="registrarEntrega(orden)"><i
-                                class="fa-solid fa-truck-fast"></i>
-                            Entrega
+                        <button class="btn-entrega" (click)="registrarEntrega(orden)">
+                            <i class="fa-solid fa-truck-fast"></i> Entrega
                         </button>
                         }
                     </td>
@@ -89,7 +90,6 @@
                 <tr class="fila-detalle">
                     <td colspan="7">
                         <div class="detalle-wrapper">
-
                             @if(cargandoDetalle) {
                             <span class="detalle-loading">Cargando detalle...</span>
                             } @else if(detalleOrden && !cargandoDetalle) {
@@ -114,8 +114,7 @@
                                     @if(hayDiscrepanciaPrendas()) {
                                     <span class="total-prendas-msg">
                                         <i class="fa-solid fa-triangle-exclamation"></i> La suma de prendas en detalle
-                                        es {{ getSumaPrendasDetalle() }}, no coincide
-                                        con el total registrado.
+                                        es {{ getSumaPrendasDetalle() }}, no coincide con el total registrado.
                                     </span>
                                     }
                                 </div>
@@ -147,12 +146,10 @@
                                     </div>
                                 </div>
                                 }
-
                             </div>
                             } @else {
                             <span class="detalle-empty">Sin detalle disponible para esta orden.</span>
                             }
-
                         </div>
                     </td>
                 </tr>
@@ -166,4 +163,31 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Pagination controls -->
+    @if(totalPaginas > 1) {
+    <div class="pagination-wrapper">
+        <div class="pagination-info">
+            Mostrando {{ (paginaActual - 1) * registrosPorPagina + 1 }} -
+            {{ paginaActual * registrosPorPagina > listadoFiltrado.length ?
+            listadoFiltrado.length :
+            paginaActual * registrosPorPagina }}
+            de {{ listadoFiltrado.length }} registros
+        </div>
+        <div class="pagination-controls">
+            <button class="btn-pag" (click)="paginaAnterior()" [disabled]="paginaActual === 1">
+                ‹
+            </button>
+            @for(pagina of paginas; track pagina) {
+            <button class="btn-pag" [class.btn-pag-active]="pagina === paginaActual" (click)="irAPagina(pagina)">
+                {{ pagina }}
+            </button>
+            }
+            <button class="btn-pag" (click)="paginaSiguiente()" [disabled]="paginaActual === totalPaginas">
+                ›
+            </button>
+        </div>
+    </div>
+    }
+
 </div>
