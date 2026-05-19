@@ -56,14 +56,12 @@ export class ListarordenesComponent implements OnInit {
           this.listadoOrdenServicio = [];
           this.listadoFiltrado = [];
           this.calcularPaginacion();  // add
-          this.cdr.detectChanges();
           return;
         }
         this.listadoOrdenServicio = response.data;
         this.listadoFiltrado = [...this.listadoOrdenServicio];
         this.paginaActual = 1;        // add
         this.calcularPaginacion();    // add
-        this.cdr.detectChanges();
       },
       error: (err) => console.error('Error:', err)
     });

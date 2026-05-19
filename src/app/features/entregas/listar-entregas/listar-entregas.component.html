@@ -6,6 +6,15 @@
         </button> -->
     </div>
 
+    <!-- Search box -->
+    <div class="search-wrapper">
+        <input type="text" class="search-input" [(ngModel)]="textoBusqueda" (input)="filtrar()"
+            placeholder="Buscar por folio o nombre cliente..." />
+        @if(textoBusqueda) {
+        <button class="btn-limpiar" (click)="limpiarBusqueda()"><i class="fa-solid fa-x"></i> Limpiar</button>
+        }
+    </div>
+
     <div class="total-registros">
         <span>Total de registros: <strong>{{ registros }}</strong></span>
     </div>
@@ -25,7 +34,7 @@
                 </tr>
             </thead>
             <tbody>
-                @for(entrega of listadoEntregas; track entrega.idEntrega) {
+                @for(entrega of listadoFiltrado; track entrega.idEntrega) {
                 <tr>
                     <td class="detalle-id">{{ entrega.folio }}</td>
                     <td>{{ entrega.cliente }}</td>
@@ -57,4 +66,31 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Pagination controls -->
+    @if(totalPaginas > 1) {
+    <div class="pagination-wrapper">
+        <div class="pagination-info">
+            Mostrando {{ (paginaActual - 1) * registrosPorPagina + 1 }} -
+            {{ paginaActual * registrosPorPagina > listadoFiltrado.length ?
+            listadoFiltrado.length :
+            paginaActual * registrosPorPagina }}
+            de {{ listadoFiltrado.length }} registros
+        </div>
+        <div class="pagination-controls">
+            <button class="btn-pag" (click)="paginaAnterior()" [disabled]="paginaActual === 1">
+                ‹
+            </button>
+            @for(pagina of paginas; track pagina) {
+            <button class="btn-pag" [class.btn-pag-active]="pagina === paginaActual" (click)="irAPagina(pagina)">
+                {{ pagina }}
+            </button>
+            }
+            <button class="btn-pag" (click)="paginaSiguiente()" [disabled]="paginaActual === totalPaginas">
+                ›
+            </button>
+        </div>
+    </div>
+    }
+
 </div>

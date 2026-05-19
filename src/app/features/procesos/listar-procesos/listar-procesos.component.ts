@@ -41,7 +41,6 @@ export class ListarProcesosComponent implements OnInit {
           this.listadoProcesos = [];
           this.listadoFiltrado = [];
           this.cdr.detectChanges();
-          this.calcularPaginacion();
           return;
         }
         this.listadoProcesos = Array.isArray(response.data)
@@ -51,7 +50,6 @@ export class ListarProcesosComponent implements OnInit {
         this.listadoFiltrado = [...this.listadoProcesos];
         this.paginaActual = 1;        // add
         this.calcularPaginacion();    // add
-        this.cdr.detectChanges();
       },
       error: (err) => console.error('Error al listar procesos:', err)
     });
