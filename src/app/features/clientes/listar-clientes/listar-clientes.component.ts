@@ -84,6 +84,9 @@ export class ListarClientesComponent implements OnInit {
     const texto = this.textoBusqueda.toLowerCase().trim();
     if (!texto) {
       this.listadoFiltrado = [...this.listadoClientes];
+      this.textoBusqueda = '';
+      this.paginaActual = 1;        // add
+      this.calcularPaginacion();    // add
       return;
     }
     this.listadoFiltrado = this.listadoClientes.filter(cliente =>
@@ -96,8 +99,8 @@ export class ListarClientesComponent implements OnInit {
   }
 
   limpiarBusqueda() {
-    this.textoBusqueda = '';
     this.listadoFiltrado = [...this.listadoClientes];
+    this.textoBusqueda = '';
     this.paginaActual = 1;        // add
     this.calcularPaginacion();    // add
   }

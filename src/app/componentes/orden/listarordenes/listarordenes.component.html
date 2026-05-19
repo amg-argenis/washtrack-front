@@ -12,7 +12,7 @@
         <div class="filtro-controls">
             <input type="date" class="filtro-input" [(ngModel)]="fechaFiltro" (change)="onFechaChange()" />
             @if(fechaFiltro) {
-            <button class="btn-limpiar" (click)="limpiarFiltro()">✕ Limpiar</button>
+            <button class="btn-limpiar" (click)="limpiarFiltro()"><i class="fa-solid fa-x"></i> Limpiar</button>
             }
         </div>
     </div>

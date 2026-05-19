@@ -74,19 +74,24 @@ export class ListarordenesComponent implements OnInit {
     const texto = this.textoBusqueda.toLowerCase().trim();
     if (!texto) {
       this.listadoFiltrado = [...this.listadoOrdenServicio];
-    } else {
-      this.listadoFiltrado = this.listadoOrdenServicio.filter(filtro =>
-        filtro.folio.toLowerCase().includes(texto)
-      );
+      this.textoBusqueda = '';
+      this.paginaActual = 1;        // add
+      this.calcularPaginacion();    // add
+      return;
     }
+
+    this.listadoFiltrado = this.listadoOrdenServicio.filter(filtro =>
+      filtro.folio.toLowerCase().includes(texto)
+    );
+
     this.paginaActual = 1;        // add
     this.calcularPaginacion();    // add
   }
 
   // Update limpiarBusqueda() method
   limpiarBusqueda() {
-    this.textoBusqueda = '';
     this.listadoFiltrado = [...this.listadoOrdenServicio];
+    this.textoBusqueda = '';
     this.paginaActual = 1;        // add
     this.calcularPaginacion();    // add
   }
