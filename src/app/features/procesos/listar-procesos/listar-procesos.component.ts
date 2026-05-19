@@ -7,7 +7,7 @@ import { Proceso } from '../../../models/procesos/proceso';
 
 @Component({
   selector: 'app-listar-procesos',
-  imports: [CommonModule, FormsModule],  // 👈 add FormsModule
+  imports: [CommonModule, FormsModule],  // add FormsModule
   templateUrl: './listar-procesos.component.html',
   styleUrl: './listar-procesos.component.css'
 })
@@ -16,6 +16,12 @@ export class ListarProcesosComponent implements OnInit {
   listadoProcesos: Proceso[] = [];
   // filtered list for display
   listadoFiltrado: Proceso[] = [];
+  // pagination properties
+  paginaActual: number = 1;
+  registrosPorPagina: number = 10;
+  totalPaginas: number = 0;
+  listadoPaginado: Proceso[] = [];
+  paginas: number[] = [];
   // search text
   textoBusqueda: string = '';
 
@@ -35,6 +41,7 @@ export class ListarProcesosComponent implements OnInit {
           this.listadoProcesos = [];
           this.listadoFiltrado = [];
           this.cdr.detectChanges();
+          this.calcularPaginacion();
           return;
         }
         this.listadoProcesos = Array.isArray(response.data)
@@ -42,6 +49,8 @@ export class ListarProcesosComponent implements OnInit {
           : [response.data];
         // copy original list
         this.listadoFiltrado = [...this.listadoProcesos];
+        this.paginaActual = 1;        // add
+        this.calcularPaginacion();    // add
         this.cdr.detectChanges();
       },
       error: (err) => console.error('Error al listar procesos:', err)
@@ -78,11 +87,43 @@ export class ListarProcesosComponent implements OnInit {
       proceso.descripcion?.toLowerCase().includes(texto) ||
       proceso.codigo?.toLowerCase().includes(texto)
     );
+    this.paginaActual = 1;        // add
+    this.calcularPaginacion();    // add
   }
 
   limpiarBusqueda() {
     this.textoBusqueda = '';
     this.listadoFiltrado = [...this.listadoProcesos];
+    this.paginaActual = 1;        // add
+    this.calcularPaginacion();    // add
+  }
+
+  // PAGINACION
+  calcularPaginacion() {
+    this.totalPaginas = Math.ceil(this.listadoFiltrado.length / this.registrosPorPagina);
+    this.paginas = Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
+    this.aplicarPagina();
+  }
+
+  aplicarPagina() {
+    const inicio = (this.paginaActual - 1) * this.registrosPorPagina;
+    const fin = inicio + this.registrosPorPagina;
+    this.listadoPaginado = this.listadoFiltrado.slice(inicio, fin);
+    this.cdr.detectChanges();
+  }
+
+  irAPagina(pagina: number) {
+    if (pagina < 1 || pagina > this.totalPaginas) return;
+    this.paginaActual = pagina;
+    this.aplicarPagina();
+  }
+
+  paginaAnterior() {
+    this.irAPagina(this.paginaActual - 1);
+  }
+
+  paginaSiguiente() {
+    this.irAPagina(this.paginaActual + 1);
   }
 
 }

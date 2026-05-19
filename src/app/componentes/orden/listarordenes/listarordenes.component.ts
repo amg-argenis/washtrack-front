@@ -55,14 +55,14 @@ export class ListarordenesComponent implements OnInit {
         if (!response) {
           this.listadoOrdenServicio = [];
           this.listadoFiltrado = [];
-          this.calcularPaginacion();  // 👈 add
+          this.calcularPaginacion();  // add
           this.cdr.detectChanges();
           return;
         }
         this.listadoOrdenServicio = response.data;
         this.listadoFiltrado = [...this.listadoOrdenServicio];
-        this.paginaActual = 1;        // 👈 add
-        this.calcularPaginacion();    // 👈 add
+        this.paginaActual = 1;        // add
+        this.calcularPaginacion();    // add
         this.cdr.detectChanges();
       },
       error: (err) => console.error('Error:', err)
@@ -79,16 +79,16 @@ export class ListarordenesComponent implements OnInit {
         filtro.folio.toLowerCase().includes(texto)
       );
     }
-    this.paginaActual = 1;        // 👈 add
-    this.calcularPaginacion();    // 👈 add
+    this.paginaActual = 1;        // add
+    this.calcularPaginacion();    // add
   }
 
   // Update limpiarBusqueda() method
   limpiarBusqueda() {
     this.textoBusqueda = '';
     this.listadoFiltrado = [...this.listadoOrdenServicio];
-    this.paginaActual = 1;        // 👈 add
-    this.calcularPaginacion();    // 👈 add
+    this.paginaActual = 1;        // add
+    this.calcularPaginacion();    // add
   }
 
   // Update listarOrdenesPorFecha() method
@@ -217,16 +217,13 @@ export class ListarordenesComponent implements OnInit {
     this.fechaFiltro = '';
     this.listarOrdenesServicioComponent();
   }
-  
+
   // Registrar entregas
   registrarEntrega(orden: Orden) {
     localStorage.setItem('idOrdenLocal', orden.idOrden);
     localStorage.setItem('folioLocal', orden.folio);
     this.router.navigate(['/entregas/registrar']);
   }
-
-  // filter in real time
-
 
   // PAGINACION
   calcularPaginacion() {

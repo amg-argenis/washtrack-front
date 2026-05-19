@@ -33,7 +33,7 @@
             </thead>
             <tbody>
                 <!-- Use listadoFiltrado instead of listadoProcesos -->
-                @for(proceso of listadoFiltrado; track proceso.idproceso) {
+                @for(proceso of listadoPaginado; track proceso.idproceso) {
                 <tr>
                     <td><span class="codigo-badge">{{ proceso.codigo }}</span></td>
                     <td>{{ proceso.nombre }}</td>
@@ -46,9 +46,11 @@
                         </span>
                     </td>
                     <td>
-                        <button class="btn-edit" (click)="editarProceso(proceso)">✏️ Editar</button>
+                        <button class="btn-edit" (click)="editarProceso(proceso)">
+                            <i class="fa-solid fa-pen-to-square"></i> Editar</button>
                         @if(proceso.activo) {
-                        <button class="btn-delete" (click)="eliminarProceso(proceso)">🗑️ Eliminar</button>
+                        <button class="btn-delete" (click)="eliminarProceso(proceso)">
+                            <i class="fa-solid fa-trash"></i> Eliminar</button>
                         }
                     </td>
                 </tr>
@@ -66,4 +68,31 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Pagination controls -->
+    @if(totalPaginas > 1) {
+    <div class="pagination-wrapper">
+        <div class="pagination-info">
+            Mostrando {{ (paginaActual - 1) * registrosPorPagina + 1 }} -
+            {{ paginaActual * registrosPorPagina > listadoFiltrado.length ?
+            listadoFiltrado.length :
+            paginaActual * registrosPorPagina }}
+            de {{ listadoFiltrado.length }} registros
+        </div>
+        <div class="pagination-controls">
+            <button class="btn-pag" (click)="paginaAnterior()" [disabled]="paginaActual === 1">
+                ‹
+            </button>
+            @for(pagina of paginas; track pagina) {
+            <button class="btn-pag" [class.btn-pag-active]="pagina === paginaActual" (click)="irAPagina(pagina)">
+                {{ pagina }}
+            </button>
+            }
+            <button class="btn-pag" (click)="paginaSiguiente()" [disabled]="paginaActual === totalPaginas">
+                ›
+            </button>
+        </div>
+    </div>
+    }
+
 </div>
