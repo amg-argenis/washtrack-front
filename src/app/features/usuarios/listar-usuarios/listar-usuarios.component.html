@@ -1,1 +1,95 @@
-<p>listar-usuarios works!</p>
+<div class="page-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">Listado de Usuarios</h3>
+        <button class="btn-primary" (click)="crearUsuario()">
+            <i class="fa-solid fa-plus"></i> Nuevo Usuario
+        </button>
+    </div>
+
+    <div class="search-wrapper">
+        <input type="text" class="search-input" [(ngModel)]="textoBusqueda" (input)="filtrar()"
+            placeholder="Buscar por nombre, email o rol..." />
+        @if(textoBusqueda) {
+        <button class="btn-limpiar" (click)="limpiarBusqueda()">
+            <i class="fa-solid fa-x"></i> Limpiar
+        </button>
+        }
+    </div>
+
+    <div class="total-registros">
+        <span>Total de registros: <strong>{{ listadoFiltrado.length }}</strong></span>
+    </div>
+
+    <div class="card-table">
+        <table class="tabla">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(usuario of listadoPaginado; track usuario.idUsuario) {
+                <tr>
+                    <td>{{ usuario.nombre }}</td>
+                    <td>{{ usuario.email }}</td>
+                    <td>
+                        <span class="badge-rol" [class.badge-admin]="usuario.rol === 'ADMIN'"
+                            [class.badge-operador]="usuario.rol === 'OPERADOR'"
+                            [class.badge-viewer]="usuario.rol === 'VIEWER'">
+                            {{ usuario.rol }}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="badge-estado" [class.badge-activo]="usuario.activo"
+                            [class.badge-inactivo]="!usuario.activo">
+                            {{ usuario.activo ? 'Activo' : 'Inactivo' }}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn-edit" (click)="editarUsuario(usuario)">
+                            <i class="fa-solid fa-pen-to-square"></i> Editar
+                        </button>
+                        @if(usuario.activo) {
+                        <button class="btn-delete" (click)="eliminarUsuario(usuario)">
+                            <i class="fa-solid fa-trash"></i> Eliminar
+                        </button>
+                        } @else {
+                        <button class="btn-reactivar" (click)="reactivarUsuario(usuario)">
+                            <i class="fa-solid fa-rotate-left"></i> Reactivar
+                        </button>
+                        }
+                    </td>
+                </tr>
+                } @empty {
+                <tr>
+                    <td colspan="5" class="empty-msg">No hay usuarios registrados</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if(totalPaginas > 1) {
+    <div class="pagination-wrapper">
+        <div class="pagination-info">
+            Mostrando {{ (paginaActual - 1) * registrosPorPagina + 1 }} -
+            {{ paginaActual * registrosPorPagina > listadoFiltrado.length ?
+            listadoFiltrado.length :
+            paginaActual * registrosPorPagina }}
+            de {{ listadoFiltrado.length }} registros
+        </div>
+        <div class="pagination-controls">
+            <button class="btn-pag" (click)="paginaAnterior()" [disabled]="paginaActual === 1">‹</button>
+            @for(pagina of paginas; track pagina) {
+            <button class="btn-pag" [class.btn-pag-active]="pagina === paginaActual" (click)="irAPagina(pagina)">{{
+                pagina }}</button>
+            }
+            <button class="btn-pag" (click)="paginaSiguiente()" [disabled]="paginaActual === totalPaginas">›</button>
+        </div>
+    </div>
+    }
+</div>

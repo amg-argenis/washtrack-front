@@ -1,0 +1,258 @@
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.page-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1a1a2e;
+}
+
+.btn-primary {
+    background: rgb(13, 109, 252);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background: rgb(10, 88, 202);
+}
+
+.search-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 10px 16px;
+    border: 1px solid #dde2f0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.search-input:focus {
+    border-color: rgb(13, 109, 252);
+}
+
+.btn-limpiar {
+    background: #f0f2f8;
+    color: #555;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.total-registros {
+    font-size: 0.88rem;
+    color: #555;
+}
+
+.total-registros strong {
+    color: rgb(13, 109, 252);
+    font-weight: 700;
+}
+
+.card-table {
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+    overflow: hidden;
+}
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.tabla thead tr {
+    background: rgb(13, 109, 252);
+    color: white;
+}
+
+.tabla th {
+    padding: 14px 18px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.tabla td {
+    padding: 13px 18px;
+    border-bottom: 1px solid #f0f2f8;
+    color: #333;
+}
+
+.tabla tbody tr:hover {
+    background: rgba(13, 109, 252, 0.04);
+}
+
+.tabla tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.empty-msg {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+    font-style: italic;
+}
+
+.badge-rol {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-admin {
+    background: rgba(111, 66, 193, 0.1);
+    color: rgb(111, 66, 193);
+}
+
+.badge-operador {
+    background: rgba(13, 109, 252, 0.1);
+    color: rgb(13, 109, 252);
+}
+
+.badge-viewer {
+    background: rgba(108, 117, 125, 0.1);
+    color: rgb(108, 117, 125);
+}
+
+.badge-estado {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-activo {
+    background: rgba(25, 135, 84, 0.1);
+    color: rgb(25, 135, 84);
+}
+
+.badge-inactivo {
+    background: rgba(220, 53, 69, 0.1);
+    color: rgb(220, 53, 69);
+}
+
+.btn-edit {
+    background: rgba(13, 109, 252, 0.1);
+    color: rgb(13, 109, 252);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-right: 6px;
+    transition: background 0.2s;
+}
+
+.btn-edit:hover {
+    background: rgba(13, 109, 252, 0.2);
+}
+
+.btn-delete {
+    background: rgba(220, 53, 69, 0.1);
+    color: rgb(220, 53, 69);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-delete:hover {
+    background: rgba(220, 53, 69, 0.2);
+}
+
+.btn-reactivar {
+    background: rgba(25, 135, 84, 0.1);
+    color: rgb(25, 135, 84);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-reactivar:hover {
+    background: rgba(25, 135, 84, 0.2);
+}
+
+.pagination-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 4px;
+}
+
+.pagination-info {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-pag {
+    width: 34px;
+    height: 34px;
+    border: 1px solid #dde2f0;
+    border-radius: 8px;
+    background: white;
+    color: #555;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-pag:hover {
+    background: rgba(13, 109, 252, 0.08);
+    border-color: rgb(13, 109, 252);
+    color: rgb(13, 109, 252);
+}
+
+.btn-pag-active {
+    background: rgb(13, 109, 252) !important;
+    border-color: rgb(13, 109, 252) !important;
+    color: white !important;
+}
+
+.btn-pag:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}

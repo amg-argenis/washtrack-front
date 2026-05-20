@@ -1,1 +1,4 @@
-export interface EliminarReactivarUsuarioRequest {}
+export interface EliminarReactivarUsuarioRequest {
+    idUsuario: string;
+    email: string;
+}
