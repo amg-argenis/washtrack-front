@@ -17,6 +17,9 @@ import { EditarProcesoComponent } from './features/procesos/editar-proceso/edita
 import { RegistroTenantComponent } from './features/auth/registro-tenant/registro-tenant.component';
 import { RegistroAdminComponent } from './features/auth/registro-admin/registro-admin.component';
 import { RegistroListoComponent } from './features/auth/registro-listo/registro-listo.component';
+import { ListarUsuariosComponent } from './features/usuarios/listar-usuarios/listar-usuarios.component';
+import { CrearUsuarioComponent } from './features/usuarios/crear-usuario/crear-usuario.component';
+import { EditarUsuarioComponent } from './features/usuarios/editar-usuario/editar-usuario.component';
 
 
 export const routes: Routes = [
@@ -51,6 +54,10 @@ export const routes: Routes = [
     // Registro Admin
     { path: 'registro', component: RegistroTenantComponent },
     { path: 'registro/admin', component: RegistroAdminComponent },
-    { path: 'registro/listo', component: RegistroListoComponent }
+    { path: 'registro/listo', component: RegistroListoComponent },
+    // Usuarios
+    { path: 'usuarios/listar', component: ListarUsuariosComponent, canActivate: [authGuard] },
+    { path: 'usuarios/crear', component: CrearUsuarioComponent, canActivate: [authGuard] },
+    { path: 'usuarios/editar', component: EditarUsuarioComponent, canActivate: [authGuard] },
 
 ];
