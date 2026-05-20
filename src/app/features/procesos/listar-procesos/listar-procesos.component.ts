@@ -78,6 +78,9 @@ export class ListarProcesosComponent implements OnInit {
     const texto = this.textoBusqueda.toLowerCase().trim();
     if (!texto) {
       this.listadoFiltrado = [...this.listadoProcesos];
+      this.textoBusqueda = '';
+      this.paginaActual = 1;        // add
+      this.calcularPaginacion();    // add
       return;
     }
     this.listadoFiltrado = this.listadoProcesos.filter(proceso =>
@@ -90,8 +93,8 @@ export class ListarProcesosComponent implements OnInit {
   }
 
   limpiarBusqueda() {
-    this.textoBusqueda = '';
     this.listadoFiltrado = [...this.listadoProcesos];
+    this.textoBusqueda = '';
     this.paginaActual = 1;        // add
     this.calcularPaginacion();    // add
   }
