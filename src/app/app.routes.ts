@@ -38,8 +38,6 @@ export const routes: Routes = [
     // Entregas
     { path: 'entregas/listar', component: ListarEntregasComponent, canActivate: [authGuard] },
     { path: 'entregas/registrar', component: RegistrarEntregaComponent, canActivate: [authGuard] },
-    // Default
-    { path: '', redirectTo: 'login', pathMatch: 'full' },
     // Dashboard
     { path: 'inicio', component: InicioComponent, canActivate: [authGuard] },
     // Procesos
@@ -47,9 +45,6 @@ export const routes: Routes = [
     { path: 'procesos/listar', component: ListarProcesosComponent, canActivate: [authGuard] },
     { path: 'procesos/crear', component: CrearProcesoComponent, canActivate: [authGuard] },
     { path: 'procesos/editar', component: EditarProcesoComponent, canActivate: [authGuard] },
-    // New Tenant
-    { path: 'registro', component: RegistroTenantComponent },
-    { path: 'registro/admin', component: RegistroAdminComponent },
     // Registro Admin
     { path: 'registro', component: RegistroTenantComponent },
     { path: 'registro/admin', component: RegistroAdminComponent },
@@ -58,5 +53,7 @@ export const routes: Routes = [
     { path: 'usuarios/listar', component: ListarUsuariosComponent, canActivate: [authGuard] },
     { path: 'usuarios/crear', component: CrearUsuarioComponent, canActivate: [authGuard] },
     { path: 'usuarios/editar', component: EditarUsuarioComponent, canActivate: [authGuard] },
+    // Default
+    { path: '', redirectTo: 'login', pathMatch: 'full' }
 
 ];
