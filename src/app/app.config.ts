@@ -13,8 +13,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideHttpClient(withInterceptors([
       errorInterceptor,
-      authInterceptor,  // 👈 agrega el token en cada request
-      errorInterceptor  // 👈 maneja errores globales
+      authInterceptor,  // aqui se agrega el token en cada request
+      errorInterceptor  // aqui se manejan errores globales
     ])),
 
   ]

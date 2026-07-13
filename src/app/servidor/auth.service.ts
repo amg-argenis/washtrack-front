@@ -18,7 +18,7 @@ export class AuthService {
     return this.http.post<LoginResponse>(
       `${this.apiUrl}/usuarios/login`,
       request,
-      { observe: 'response' }  // 👈 agrega esto
+      { observe: 'response' }
     ).pipe(
       map(response => {
         if (response.status === 204 || !response.body) return null;

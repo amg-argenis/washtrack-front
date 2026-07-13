@@ -38,7 +38,6 @@ export const routes: Routes = [
     // Entregas
     { path: 'entregas/listar', component: ListarEntregasComponent, canActivate: [authGuard] },
     { path: 'entregas/registrar', component: RegistrarEntregaComponent, canActivate: [authGuard] },
-
     // Default
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     // Dashboard
