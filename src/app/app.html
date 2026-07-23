@@ -5,44 +5,74 @@
     <div class="sidebar-brand">
       <div class="logo">
         <img src="assets/washtrack_logo.png" alt="WashTrack">
-        <!-- <span class="brand-name">WashTrack</span> -->
       </div>
     </div>
 
     <nav class="sidebar-nav">
+
+      <!-- All roles -->
       <a routerLink="/inicio" routerLinkActive="active" class="nav-item">
         <span class="nav-icon"><i class="fa-solid fa-house"></i></span> Inicio
       </a>
+
+      <!-- ADMIN + OPERADOR -->
+      @if(rol === 'ADMIN' || rol === 'OPERADOR') {
       <a routerLink="/ordenes/listar" routerLinkActive="active" class="nav-item">
         <span class="nav-icon"><i class="fa-solid fa-clipboard"></i></span> Órdenes
       </a>
+      }
+
+      <!-- ADMIN + OPERADOR -->
+      @if(rol === 'ADMIN' || rol === 'OPERADOR') {
       <a routerLink="/entregas/listar" routerLinkActive="active" class="nav-item">
         <span class="nav-icon"><i class="fa-solid fa-truck-fast"></i></span> Entregas
       </a>
+      }
+
+      <!-- ADMIN only -->
+      @if(rol === 'ADMIN') {
       <a routerLink="/procesos/listar" routerLinkActive="active" class="nav-item">
         <span class="nav-icon"><i class="fa-solid fa-atom"></i></span> Procesos
       </a>
+      }
+
+      <!-- ADMIN only -->
+      @if(rol === 'ADMIN') {
       <a routerLink="/clientes/listar" routerLinkActive="active" class="nav-item">
         <span class="nav-icon"><i class="fa-solid fa-handshake"></i></span> Clientes
       </a>
+      }
+
+      <!-- ADMIN only -->
+      @if(rol === 'ADMIN') {
       <a routerLink="/facturas" routerLinkActive="active" class="nav-item">
         <span class="nav-icon"><i class="fa-solid fa-file-invoice-dollar"></i></span> Facturas
       </a>
+      }
+
+      <!-- ADMIN only -->
+      @if(rol === 'ADMIN') {
       <a routerLink="/usuarios/listar" routerLinkActive="active" class="nav-item">
         <span><i class="fa-solid fa-user-tie"></i></span> Usuarios
       </a>
-      <!-- <a routerLink="/empleados" routerLinkActive="active" class="nav-item">
-        <span class="nav-icon"><i class="fa-solid fa-user-tie"></i></span> Empleados
-      </a> -->
+      }
+
+      <!-- ADMIN only -->
+      @if(rol === 'ADMIN') {
       <a routerLink="/reportes" routerLinkActive="active" class="nav-item">
         <span class="nav-icon"><i class="fa-solid fa-chart-line"></i></span> Reportes
       </a>
+      }
+
     </nav>
 
     <div class="sidebar-footer">
+      <!-- ADMIN only -->
+      @if(rol === 'ADMIN') {
       <a routerLink="/configuracion" class="nav-item">
         <span class="nav-icon"><i class="fa-solid fa-gear"></i></span> Configuracion
       </a>
+      }
     </div>
   </aside>
   }
