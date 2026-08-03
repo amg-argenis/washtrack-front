@@ -16,6 +16,7 @@ export class EditarProcesoComponent {
 
   guardando = false;
   errorMsg = '';
+  submitted = false;
 
   proceso: Proceso | null = null;
 
@@ -36,8 +37,8 @@ export class EditarProcesoComponent {
     // Convert JSON string to object
     this.proceso = JSON.parse(procesoLocal) as Proceso;
 
-    this.procesoRequest.nombre = this.proceso.nombre;
-    this.procesoRequest.descripcion = this.proceso.descripcion;
+    this.procesoRequest.nombre = this.proceso.nombre || '';
+    this.procesoRequest.descripcion = this.proceso.descripcion || '';
     this.procesoRequest.preciounitario = this.proceso.preciounitario;
     this.procesoRequest.codigo = this.proceso.codigo;
 
@@ -48,9 +49,24 @@ export class EditarProcesoComponent {
     private router: Router,
     private cdr: ChangeDetectorRef) { }
 
+  formularioValido(): boolean {
+    if (!this.procesoRequest.nombre.trim()) return false;
+    if (this.procesoRequest.nombre.length > 100) return false;
+    if (this.procesoRequest.descripcion && this.procesoRequest.descripcion.length > 500) return false;
+    if (this.procesoRequest.preciounitario == null || this.procesoRequest.preciounitario <= 0) return false;
+    return true;
+  }
+
   editar() {
-    this.guardando = true;
+    this.submitted = true;
     this.errorMsg = '';
+
+    if (!this.formularioValido()) {
+      this.errorMsg = 'Por favor capture y corrija los datos antes de continuar.';
+      return;
+    }
+
+    this.guardando = true;
 
     this.procesoService.actualizarProceso(this.procesoRequest).subscribe({
       next: (response) => {

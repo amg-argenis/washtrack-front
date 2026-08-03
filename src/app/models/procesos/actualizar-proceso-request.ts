@@ -1,6 +1,6 @@
 export interface ActualizarProcesoRequest {
     nombre: string;
     descripcion: string;
-    preciounitario: number;
+    preciounitario: number | null;
     codigo: string;
 }

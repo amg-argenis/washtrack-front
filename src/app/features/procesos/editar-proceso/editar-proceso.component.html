@@ -9,21 +9,44 @@
         }
 
         <div class="form-grid">
-            <div class="form-group full-width">
-                <label>Nombre del Proceso</label>
-                <input type="text" [(ngModel)]="procesoRequest.nombre" placeholder="Ej. Lavado Stone" />
+            <!-- Nombre (Obligatorio, max 100 caracteres) -->
+            <div class="form-group full-width"
+                [class.has-error]="submitted && (!procesoRequest.nombre.trim() || procesoRequest.nombre.length > 100)">
+                <label>Nombre del Proceso <span class="required-mark">*</span></label>
+                <input type="text" [(ngModel)]="procesoRequest.nombre" maxlength="100" placeholder="Ej. Lavado Stone"
+                    [class.input-error]="submitted && (!procesoRequest.nombre.trim() || procesoRequest.nombre.length > 100)" />
+                @if(submitted && !procesoRequest.nombre.trim()) {
+                <span class="field-error">El nombre del proceso es obligatorio.</span>
+                } @else if(submitted && procesoRequest.nombre.length > 100) {
+                <span class="field-error">El nombre no puede superar los 100 caracteres.</span>
+                }
             </div>
 
-            <div class="form-group full-width">
+            <!-- Descripcion (Opcional, max 500 caracteres) -->
+            <div class="form-group full-width"
+                [class.has-error]="submitted && procesoRequest.descripcion.length > 500">
                 <label>Descripcion</label>
-                <textarea [(ngModel)]="procesoRequest.descripcion" rows="3"
+                <textarea [(ngModel)]="procesoRequest.descripcion" rows="3" maxlength="500"
+                    [class.input-error]="submitted && procesoRequest.descripcion.length > 500"
                     placeholder="Descripcion del proceso..."></textarea>
+                <span class="char-counter" [class.counter-warn]="procesoRequest.descripcion.length > 450">
+                    {{ procesoRequest.descripcion.length }}/500
+                </span>
+                @if(submitted && procesoRequest.descripcion.length > 500) {
+                <span class="field-error">La descripcion no puede superar los 500 caracteres.</span>
+                }
             </div>
 
-            <div class="form-group">
-                <label>Precio Unitario (MXN)</label>
-                <input type="number" [(ngModel)]="procesoRequest.preciounitario" min="1" step="0.01"
-                    placeholder="0.00" />
+            <!-- Precio Unitario (Obligatorio, numerico > 0) -->
+            <div class="form-group"
+                [class.has-error]="submitted && (procesoRequest.preciounitario == null || procesoRequest.preciounitario <= 0)">
+                <label>Precio Unitario (MXN) <span class="required-mark">*</span></label>
+                <input type="number" [(ngModel)]="procesoRequest.preciounitario" min="0.01" step="0.01"
+                    placeholder="0.00"
+                    [class.input-error]="submitted && (procesoRequest.preciounitario == null || procesoRequest.preciounitario <= 0)" />
+                @if(submitted && (procesoRequest.preciounitario == null || procesoRequest.preciounitario <= 0)) {
+                <span class="field-error">Ingresa un precio unitario valido (mayor a 0).</span>
+                }
             </div>
         </div>
 
