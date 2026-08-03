@@ -15,6 +15,7 @@ export class RegistroTenantComponent {
 
   guardando = false;
   errorMsg = '';
+  submitted = false;
 
   tenantRequest: InsertarTenantRequest = {
     nombre: ''
@@ -25,9 +26,31 @@ export class RegistroTenantComponent {
     private router: Router,
     private cdr: ChangeDetectorRef) { }
 
+  // ----------------- Validaciones Formulario
+
+  nombreVacio(): boolean {
+    return !this.tenantRequest.nombre.trim();
+  }
+
+  nombreLargo(): boolean {
+    return this.tenantRequest.nombre.length > 100;
+  }
+
+  formularioValido(): boolean {
+    if (this.nombreVacio() || this.nombreLargo()) return false;
+    return true;
+  }
+
   registrar() {
-    this.guardando = true;
+    this.submitted = true;
     this.errorMsg = '';
+
+    if (!this.formularioValido()) {
+      this.errorMsg = 'Por favor capture y corrija los datos antes de continuar.';
+      return;
+    }
+
+    this.guardando = true;
 
     this.tenantService.insertarTenant(this.tenantRequest).subscribe({
       next: (response) => {

@@ -18,7 +18,11 @@ export class EditarClienteComponent implements OnInit {
 
   guardando = false;
   errorMsg = '';
+  submitted = false;
   cliente!: Cliente;
+
+  private readonly emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  private readonly telefonoRegex = /^[0-9+()\-\s]{7,20}$/;
 
   clienteRequest: ActualizarClienteRequest = {
     idCliente: '',
@@ -27,8 +31,8 @@ export class EditarClienteComponent implements OnInit {
     contacto: '',
     telefono: '',
     email: '',
-    creditoHabilitado: false,
-    limiteCredito: 0,
+    creditoHabilitado: null,
+    limiteCredito: null,
     activo: false
   };
 
@@ -68,10 +72,10 @@ export class EditarClienteComponent implements OnInit {
 
           this.clienteRequest.idCliente = this.cliente.idCliente;
           this.clienteRequest.tenantId = this.cliente.tenantId;
-          this.clienteRequest.nombre = this.cliente.nombre;
-          this.clienteRequest.contacto = this.cliente.contacto;
-          this.clienteRequest.telefono = this.cliente.telefono;
-          this.clienteRequest.email = this.cliente.email;
+          this.clienteRequest.nombre = this.cliente.nombre || '';
+          this.clienteRequest.contacto = this.cliente.contacto || '';
+          this.clienteRequest.telefono = this.cliente.telefono || '';
+          this.clienteRequest.email = this.cliente.email || '';
           this.clienteRequest.creditoHabilitado = this.cliente.creditoHabilitado;
           this.clienteRequest.limiteCredito = this.cliente.limiteCredito;
           this.clienteRequest.activo = this.cliente.activo;
@@ -87,9 +91,72 @@ export class EditarClienteComponent implements OnInit {
     });
   }
 
+  // ----------------- Validaciones Formulario
+
+  nombreVacio(): boolean {
+    return !this.clienteRequest.nombre.trim();
+  }
+
+  nombreLargo(): boolean {
+    return this.clienteRequest.nombre.length > 100;
+  }
+
+  contactoVacio(): boolean {
+    return !this.clienteRequest.contacto.trim();
+  }
+
+  contactoLargo(): boolean {
+    return this.clienteRequest.contacto.length > 100;
+  }
+
+  telefonoVacio(): boolean {
+    return !this.clienteRequest.telefono.trim();
+  }
+
+  telefonoInvalido(): boolean {
+    const telefono = this.clienteRequest.telefono.trim();
+    if (!telefono) return false; // se reporta como vacio
+    return !this.telefonoRegex.test(telefono);
+  }
+
+  emailInvalido(): boolean {
+    const email = this.clienteRequest.email.trim();
+    if (!email) return false; // opcional
+    return !this.emailRegex.test(email);
+  }
+
+  creditoHabilitadoVacio(): boolean {
+    return this.clienteRequest.creditoHabilitado == null;
+  }
+
+  limiteCreditoInvalido(): boolean {
+    const limite = this.clienteRequest.limiteCredito;
+    if (limite == null || limite < 0) return true;
+    // Si el credito esta habilitado el limite debe ser mayor a 0
+    if (this.clienteRequest.creditoHabilitado && limite <= 0) return true;
+    return false;
+  }
+
+  formularioValido(): boolean {
+    if (this.nombreVacio() || this.nombreLargo()) return false;
+    if (this.contactoVacio() || this.contactoLargo()) return false;
+    if (this.telefonoVacio() || this.telefonoInvalido()) return false;
+    if (this.emailInvalido()) return false; // email opcional
+    if (this.creditoHabilitadoVacio()) return false;
+    if (this.limiteCreditoInvalido()) return false;
+    return true;
+  }
+
   guardar() {
-    this.guardando = true;
+    this.submitted = true;
     this.errorMsg = '';
+
+    if (!this.formularioValido()) {
+      this.errorMsg = 'Por favor capture y corrija los datos antes de continuar.';
+      return;
+    }
+
+    this.guardando = true;
 
     this.clienteService.actualizarCliente(this.clienteRequest).subscribe({
       next: (data) => {

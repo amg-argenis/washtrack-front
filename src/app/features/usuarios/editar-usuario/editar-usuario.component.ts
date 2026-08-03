@@ -16,7 +16,10 @@ export class EditarUsuarioComponent implements OnInit {
 
   guardando = false;
   errorMsg = '';
+  submitted = false;
   roles = ['ADMIN', 'OPERADOR', 'VIEWER'];
+
+  private readonly emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
   usuarioRequest: ActualizarUsuarioRequest = {
     idUsuario: '',
@@ -43,16 +46,57 @@ export class EditarUsuarioComponent implements OnInit {
 
     this.usuarioRequest = {
       idUsuario: usuario.idUsuario,
-      nombre: usuario.nombre,
-      email: usuario.email,
+      nombre: usuario.nombre || '',
+      email: usuario.email || '',
       password: '',
-      rol: usuario.rol
+      rol: usuario.rol || ''
     };
   }
 
+  // ----------------- Validaciones Formulario
+
+  nombreVacio(): boolean {
+    return !this.usuarioRequest.nombre.trim();
+  }
+
+  nombreLargo(): boolean {
+    return this.usuarioRequest.nombre.length > 100;
+  }
+
+  emailVacio(): boolean {
+    return !this.usuarioRequest.email.trim();
+  }
+
+  emailInvalido(): boolean {
+    const email = this.usuarioRequest.email.trim();
+    if (!email) return false; // se reporta como vacio
+    return !this.emailRegex.test(email);
+  }
+
+  passwordInvalido(): boolean {
+    // Opcional: en blanco significa que no se cambia la contrasena
+    if (!this.usuarioRequest.password) return false;
+    return this.usuarioRequest.password.length < 8;
+  }
+
+  formularioValido(): boolean {
+    if (this.nombreVacio() || this.nombreLargo()) return false;
+    if (this.emailVacio() || this.emailInvalido()) return false;
+    if (this.passwordInvalido()) return false;
+    if (!this.usuarioRequest.rol) return false;
+    return true;
+  }
+
   guardar() {
-    this.guardando = true;
+    this.submitted = true;
     this.errorMsg = '';
+
+    if (!this.formularioValido()) {
+      this.errorMsg = 'Por favor capture y corrija los datos antes de continuar.';
+      return;
+    }
+
+    this.guardando = true;
 
     this.usuarioService.actualizarUsuario(this.usuarioRequest).subscribe({
       next: (response) => {

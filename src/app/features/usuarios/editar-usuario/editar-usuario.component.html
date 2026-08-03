@@ -10,29 +10,54 @@
         }
 
         <div class="form-grid">
-            <div class="form-group full-width">
-                <label>Nombre completo</label>
-                <input type="text" [(ngModel)]="usuarioRequest.nombre" placeholder="Ej. Juan Lopez Martinez" />
+            <!-- Nombre (Obligatorio, max 100 caracteres) -->
+            <div class="form-group full-width" [class.has-error]="submitted && (nombreVacio() || nombreLargo())">
+                <label>Nombre completo <span class="required-mark">*</span></label>
+                <input type="text" [(ngModel)]="usuarioRequest.nombre" maxlength="100"
+                    placeholder="Ej. Juan Lopez Martinez"
+                    [class.input-error]="submitted && (nombreVacio() || nombreLargo())" />
+                @if(submitted && nombreVacio()) {
+                <span class="field-error">El nombre completo es obligatorio.</span>
+                } @else if(submitted && nombreLargo()) {
+                <span class="field-error">El nombre no puede superar los 100 caracteres.</span>
+                }
             </div>
 
-            <div class="form-group">
-                <label>Correo electronico</label>
-                <input type="email" [(ngModel)]="usuarioRequest.email" placeholder="correo@empresa.com" />
+            <!-- Email (Obligatorio, formato valido) -->
+            <div class="form-group" [class.has-error]="submitted && (emailVacio() || emailInvalido())">
+                <label>Correo electronico <span class="required-mark">*</span></label>
+                <input type="email" [(ngModel)]="usuarioRequest.email" placeholder="correo@empresa.com"
+                    [class.input-error]="submitted && (emailVacio() || emailInvalido())" />
+                @if(submitted && emailVacio()) {
+                <span class="field-error">El correo electronico es obligatorio.</span>
+                } @else if(submitted && emailInvalido()) {
+                <span class="field-error">Ingresa un correo valido (ejemplo: correo&#64;dominio.com).</span>
+                }
             </div>
 
-            <div class="form-group">
+            <!-- Nueva contrasena (Opcional, minimo 8 caracteres si se captura) -->
+            <div class="form-group" [class.has-error]="submitted && passwordInvalido()">
                 <label>Nueva contrasena</label>
                 <input type="password" [(ngModel)]="usuarioRequest.password"
-                    placeholder="Dejar en blanco para no cambiar" />
+                    placeholder="Dejar en blanco para no cambiar"
+                    [class.input-error]="submitted && passwordInvalido()" />
+                @if(submitted && passwordInvalido()) {
+                <span class="field-error">La contrasena debe tener al menos 8 caracteres.</span>
+                }
             </div>
 
-            <div class="form-group">
-                <label>Rol</label>
-                <select [(ngModel)]="usuarioRequest.rol">
+            <!-- Rol (Obligatorio) -->
+            <div class="form-group" [class.has-error]="submitted && !usuarioRequest.rol">
+                <label>Rol <span class="required-mark">*</span></label>
+                <select [(ngModel)]="usuarioRequest.rol" [class.input-error]="submitted && !usuarioRequest.rol">
+                    <option value="" disabled>Seleccione...</option>
                     @for(rol of roles; track rol) {
                     <option [value]="rol">{{ rol }}</option>
                     }
                 </select>
+                @if(submitted && !usuarioRequest.rol) {
+                <span class="field-error">Selecciona un rol.</span>
+                }
             </div>
         </div>
 

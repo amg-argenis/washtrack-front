@@ -14,7 +14,10 @@ export class RegistroAdminComponent implements OnInit {
 
   guardando = false;
   errorMsg = '';
+  submitted = false;
   nombreEmpresa = '';
+
+  private readonly emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
   adminRequest = {
     tenantId: '',
@@ -42,9 +45,47 @@ export class RegistroAdminComponent implements OnInit {
     this.nombreEmpresa = nombreTenant || '';
   }
 
+  // ----------------- Validaciones Formulario
+
+  nombreVacio(): boolean {
+    return !this.adminRequest.nombre.trim();
+  }
+
+  nombreLargo(): boolean {
+    return this.adminRequest.nombre.length > 100;
+  }
+
+  emailVacio(): boolean {
+    return !this.adminRequest.email.trim();
+  }
+
+  emailInvalido(): boolean {
+    const email = this.adminRequest.email.trim();
+    if (!email) return false; // se reporta como vacio
+    return !this.emailRegex.test(email);
+  }
+
+  passwordInvalido(): boolean {
+    return this.adminRequest.password.length < 8;
+  }
+
+  formularioValido(): boolean {
+    if (this.nombreVacio() || this.nombreLargo()) return false;
+    if (this.emailVacio() || this.emailInvalido()) return false;
+    if (this.passwordInvalido()) return false;
+    return true;
+  }
+
   registrar() {
-    this.guardando = true;
+    this.submitted = true;
     this.errorMsg = '';
+
+    if (!this.formularioValido()) {
+      this.errorMsg = 'Por favor capture y corrija los datos antes de continuar.';
+      return;
+    }
+
+    this.guardando = true;
 
     this.usuarioService.insertarUsuario(this.adminRequest).subscribe({
       next: (response) => {

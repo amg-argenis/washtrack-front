@@ -9,37 +9,80 @@
         }
 
         <div class="form-grid">
-            <div class="form-group">
-                <label>Nombre</label>
-                <input type="text" [(ngModel)]="clienteRequest.nombre" placeholder="Nombre del cliente" />
+            <!-- Nombre (Obligatorio, max 100 caracteres) -->
+            <div class="form-group" [class.has-error]="submitted && (nombreVacio() || nombreLargo())">
+                <label>Nombre <span class="required-mark">*</span></label>
+                <input type="text" [(ngModel)]="clienteRequest.nombre" maxlength="100"
+                    placeholder="Nombre del cliente"
+                    [class.input-error]="submitted && (nombreVacio() || nombreLargo())" />
+                @if(submitted && nombreVacio()) {
+                <span class="field-error">El nombre del cliente es obligatorio.</span>
+                } @else if(submitted && nombreLargo()) {
+                <span class="field-error">El nombre no puede superar los 100 caracteres.</span>
+                }
             </div>
 
-            <div class="form-group">
-                <label>Contacto</label>
-                <input type="text" [(ngModel)]="clienteRequest.contacto" placeholder="Nombre del contacto" />
+            <!-- Contacto (Obligatorio, max 100 caracteres) -->
+            <div class="form-group" [class.has-error]="submitted && (contactoVacio() || contactoLargo())">
+                <label>Contacto <span class="required-mark">*</span></label>
+                <input type="text" [(ngModel)]="clienteRequest.contacto" maxlength="100"
+                    placeholder="Nombre del contacto"
+                    [class.input-error]="submitted && (contactoVacio() || contactoLargo())" />
+                @if(submitted && contactoVacio()) {
+                <span class="field-error">El contacto es obligatorio.</span>
+                } @else if(submitted && contactoLargo()) {
+                <span class="field-error">El contacto no puede superar los 100 caracteres.</span>
+                }
             </div>
 
-            <div class="form-group">
-                <label>Telefono</label>
-                <input type="text" [(ngModel)]="clienteRequest.telefono" placeholder="Telefono" />
+            <!-- Telefono (Obligatorio, formato valido) -->
+            <div class="form-group" [class.has-error]="submitted && (telefonoVacio() || telefonoInvalido())">
+                <label>Telefono <span class="required-mark">*</span></label>
+                <input type="text" [(ngModel)]="clienteRequest.telefono" maxlength="20" placeholder="Telefono"
+                    [class.input-error]="submitted && (telefonoVacio() || telefonoInvalido())" />
+                @if(submitted && telefonoVacio()) {
+                <span class="field-error">El telefono es obligatorio.</span>
+                } @else if(submitted && telefonoInvalido()) {
+                <span class="field-error">Ingresa un telefono valido (entre 7 y 20 digitos).</span>
+                }
             </div>
 
-            <div class="form-group">
+            <!-- Email (Opcional, formato valido) -->
+            <div class="form-group" [class.has-error]="submitted && emailInvalido()">
                 <label>Email</label>
-                <input type="email" [(ngModel)]="clienteRequest.email" placeholder="correo@ejemplo.com" />
+                <input type="email" [(ngModel)]="clienteRequest.email" placeholder="correo@ejemplo.com"
+                    [class.input-error]="submitted && emailInvalido()" />
+                @if(submitted && emailInvalido()) {
+                <span class="field-error">Ingresa un email valido (ejemplo: correo&#64;dominio.com).</span>
+                }
             </div>
 
-            <div class="form-group">
-                <label>Credito Habilitado</label>
-                <select [(ngModel)]="clienteRequest.creditoHabilitado">
-                    <option [value]=true>Si</option>
-                    <option [value]=false>No</option>
+            <!-- Credito Habilitado (Obligatorio) -->
+            <div class="form-group" [class.has-error]="submitted && creditoHabilitadoVacio()">
+                <label>Credito Habilitado <span class="required-mark">*</span></label>
+                <select [(ngModel)]="clienteRequest.creditoHabilitado"
+                    [class.input-error]="submitted && creditoHabilitadoVacio()">
+                    <option [ngValue]="null" disabled>Seleccione...</option>
+                    <option [ngValue]="true">Si</option>
+                    <option [ngValue]="false">No</option>
                 </select>
+                @if(submitted && creditoHabilitadoVacio()) {
+                <span class="field-error">Selecciona si el cliente tiene credito habilitado.</span>
+                }
             </div>
 
-            <div class="form-group">
-                <label>Limite de Credito</label>
-                <input type="number" [(ngModel)]="clienteRequest.limiteCredito" min="0" />
+            <!-- Limite de Credito (Obligatorio, mayor a 0 si el credito esta habilitado) -->
+            <div class="form-group" [class.has-error]="submitted && limiteCreditoInvalido()">
+                <label>Limite de Credito <span class="required-mark">*</span></label>
+                <input type="number" [(ngModel)]="clienteRequest.limiteCredito" min="0" step="0.01"
+                    placeholder="0.00" [class.input-error]="submitted && limiteCreditoInvalido()" />
+                @if(submitted && limiteCreditoInvalido()) {
+                <span class="field-error">
+                    {{ clienteRequest.creditoHabilitado
+                    ? 'Con credito habilitado el limite debe ser mayor a 0.'
+                    : 'Ingresa un limite de credito valido (0 o mayor).' }}
+                </span>
+                }
             </div>
         </div>
 
