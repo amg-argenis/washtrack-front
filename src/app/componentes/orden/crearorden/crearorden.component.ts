@@ -21,7 +21,7 @@ export class CrearordenComponent implements OnInit {
     clienteId: '',
     fechaIngreso: '',
     estado: 'RECIBIDO',
-    totalPrendas: 1,
+    totalPrendas: null,
     observaciones: '',
     fechaEntrega: ''
   };
@@ -29,6 +29,7 @@ export class CrearordenComponent implements OnInit {
   estados = ['RECIBIDO', 'EN_PROCESO', 'LISTO', 'ENTREGADO'];
   guardando = false;
   errorMsg = '';
+  submitted = false;
   listadoClientes: Cliente[] = [];
   clienteSeleccionado: string = ''; // nombre del cliente seleccionado
 
@@ -65,9 +66,26 @@ export class CrearordenComponent implements OnInit {
     this.orden.clienteId = idCliente;
   }
 
+  formularioValido(): boolean {
+    if (!this.orden.clienteId) return false;
+    if (!this.orden.estado) return false;
+    if (this.orden.totalPrendas == null || this.orden.totalPrendas < 1) return false;
+    if (!this.orden.fechaIngreso) return false;
+    if (this.orden.fechaEntrega && this.orden.fechaEntrega < this.orden.fechaIngreso) return false;
+    if (this.orden.observaciones && this.orden.observaciones.length > 500) return false;
+    return true;
+  }
+
   guardar() {
-    this.guardando = true;
+    this.submitted = true;
     this.errorMsg = '';
+
+    if (!this.formularioValido()) {
+      this.errorMsg = 'Por favor corrige los errores antes de continuar.';
+      return;
+    }
+
+    this.guardando = true;
 
     this.ordenService.crearOrden(this.orden).subscribe({
       next: (data: InsertarOrdenResponse | null) => {

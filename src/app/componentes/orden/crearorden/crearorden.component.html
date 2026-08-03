@@ -9,12 +9,13 @@
         }
 
         <div class="form-grid">
-            <div class="form-group">
-                <label>Cliente</label>
+            <!-- Cliente (Obligatorio) -->
+            <div class="form-group" [class.has-error]="submitted && !orden.clienteId">
+                <label>Cliente <span class="required-mark">*</span></label>
                 <div class="dropdown-search-wrapper">
-                    <input type="text" class="dropdown-search-input" [(ngModel)]="textoBusquedaCliente"
-                        (focus)="abrirDropdown()" (blur)="cerrarDropdown()" (input)="filtrarClientes()"
-                        placeholder="Buscar cliente..." />
+                    <input type="text" class="dropdown-search-input" [class.input-error]="submitted && !orden.clienteId"
+                        [(ngModel)]="textoBusquedaCliente" (focus)="abrirDropdown()" (blur)="cerrarDropdown()"
+                        (input)="filtrarClientes()" placeholder="Buscar cliente..." />
 
                     @if(mostrarDropdown) {
                     <div class="dropdown-list">
@@ -28,35 +29,70 @@
                     </div>
                     }
                 </div>
+                @if(submitted && !orden.clienteId) {
+                <span class="field-error">Selecciona un cliente.</span>
+                }
             </div>
 
-            <div class="form-group">
-                <label>Estado</label>
-                <select [(ngModel)]="orden.estado">
+            <!-- Estado (Obligatorio) -->
+            <div class="form-group" [class.has-error]="submitted && !orden.estado">
+                <label>Estado <span class="required-mark">*</span></label>
+                <select [(ngModel)]="orden.estado" [class.input-error]="submitted && !orden.estado">
                     @for(estado of estados; track estado) {
                     <option [value]="estado">{{ estado }}</option>
                     }
                 </select>
+                @if(submitted && !orden.estado) {
+                <span class="field-error">Selecciona un estado.</span>
+                }
             </div>
 
-            <div class="form-group">
-                <label>Total Prendas</label>
-                <input type="number" [(ngModel)]="orden.totalPrendas" min="1" />
+            <!-- Total Prendas (Obligatorio, numérico >= 1) -->
+            <div class="form-group"
+                [class.has-error]="submitted && (orden.totalPrendas == null || orden.totalPrendas < 1)">
+                <label>Total Prendas <span class="required-mark">*</span></label>
+                <input type="number" [(ngModel)]="orden.totalPrendas"
+                    [class.input-error]="submitted && (orden.totalPrendas == null || orden.totalPrendas < 1)" min="1"
+                    placeholder="Ej. 5" />
+                @if(submitted && (orden.totalPrendas == null || orden.totalPrendas < 1)) { <span class="field-error">
+                    Ingresa un número de prendas válido (mínimo 1).</span>
+                    }
             </div>
 
-            <div class="form-group">
-                <label>Fecha Ingreso</label>
-                <input type="date" [(ngModel)]="orden.fechaIngreso" />
+            <!-- Fecha Ingreso (Obligatorio) -->
+            <div class="form-group" [class.has-error]="submitted && !orden.fechaIngreso">
+                <label>Fecha Ingreso <span class="required-mark">*</span></label>
+                <input type="date" [(ngModel)]="orden.fechaIngreso"
+                    [class.input-error]="submitted && !orden.fechaIngreso" />
+                @if(submitted && !orden.fechaIngreso) {
+                <span class="field-error">La fecha de ingreso es obligatoria.</span>
+                }
             </div>
 
-            <div class="form-group">
+            <!-- Fecha Entrega (Opcional) -->
+            <div class="form-group"
+                [class.has-error]="submitted && orden.fechaIngreso && orden.fechaEntrega && orden.fechaEntrega < orden.fechaIngreso">
                 <label>Fecha Entrega</label>
-                <input type="date" [(ngModel)]="orden.fechaEntrega" />
+                <input type="date" [(ngModel)]="orden.fechaEntrega"
+                    [class.input-error]="submitted && orden.fechaIngreso && orden.fechaEntrega && orden.fechaEntrega < orden.fechaIngreso" />
+                @if(submitted && orden.fechaIngreso && orden.fechaEntrega && orden.fechaEntrega < orden.fechaIngreso) {
+                    <span class="field-error">La fecha de entrega debe ser igual o posterior a la de ingreso.</span>
+                    }
             </div>
 
-            <div class="form-group full-width">
+            <!-- Observaciones (Opcional, máx 500 caracteres) -->
+            <div class="form-group full-width"
+                [class.has-error]="submitted && orden.observaciones && orden.observaciones.length > 500">
                 <label>Observaciones</label>
-                <textarea [(ngModel)]="orden.observaciones" rows="3" placeholder="Observaciones..."></textarea>
+                <textarea [(ngModel)]="orden.observaciones" rows="3"
+                    [class.input-error]="submitted && orden.observaciones && orden.observaciones.length > 500"
+                    maxlength="500" placeholder="Observaciones..."></textarea>
+                <span class="char-counter" [class.counter-warn]="(orden.observaciones?.length ?? 0) > 450">
+                    {{ orden.observaciones?.length ?? 0 }}/500
+                </span>
+                @if(submitted && orden.observaciones && orden.observaciones.length > 500) {
+                <span class="field-error">Las observaciones no pueden superar los 500 caracteres.</span>
+                }
             </div>
         </div>
 
@@ -68,4 +104,5 @@
             </button>
         </div>
     </div>
+
 </div>
