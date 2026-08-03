@@ -1,8 +1,8 @@
 export interface InsertarEntregaRequest {
     ordenId: string;
     fechaEntrega: string;
-    totalEntregado: number;
-    conformidadCliente: boolean;
+    totalEntregado: number | null;
+    conformidadCliente: boolean | null;
     observaciones: string;
     tipo: string;
 }

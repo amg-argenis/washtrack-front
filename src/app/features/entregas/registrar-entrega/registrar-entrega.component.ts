@@ -15,15 +15,16 @@ export class RegistrarEntregaComponent implements OnInit {
 
   guardando = false;
   errorMsg = '';
+  submitted = false;
   ordenId: string = '';
   folio: string = '';
 
   entregaRequest: InsertarEntregaRequest = {
     ordenId: '',
-    tipo: 'PARCIAL',
+    tipo: '',
     fechaEntrega: '',
-    totalEntregado: 1,
-    conformidadCliente: false,
+    totalEntregado: null,
+    conformidadCliente: null,
     observaciones: ''
   };
 
@@ -46,14 +47,26 @@ export class RegistrarEntregaComponent implements OnInit {
     this.entregaRequest.ordenId = this.ordenId;
   }
 
+  formularioValido(): boolean {
+    if (!this.entregaRequest.tipo) return false;
+    if (!this.entregaRequest.fechaEntrega) return false;
+    if (this.entregaRequest.totalEntregado == null || this.entregaRequest.totalEntregado < 1) return false;
+    if (this.entregaRequest.conformidadCliente == null) return false;
+    return true;
+  }
+
   guardar() {
-    this.guardando = true;
+    this.submitted = true;
     this.errorMsg = '';
 
-    const request: InsertarEntregaRequest = {
-      ...this.entregaRequest,
-      conformidadCliente: String(this.entregaRequest.conformidadCliente) === 'true'
-    };
+    if (!this.formularioValido()) {
+      this.errorMsg = 'Por favor corrige los errores antes de continuar.';
+      return;
+    }
+
+    this.guardando = true;
+
+    const request: InsertarEntregaRequest = { ...this.entregaRequest };
 
     this.entregaService.insertarEntrega(request).subscribe({
       next: (data) => {
