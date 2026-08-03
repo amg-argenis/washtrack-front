@@ -2,8 +2,8 @@ export interface ActualizarEntregaRequest {
     idEntrega: string;
     ordenId: string;
     fechaEntrega: string;
-    totalEntregado: number;
-    conformidadCliente: boolean;
+    totalEntregado: number | null;
+    conformidadCliente: boolean | null;
     observaciones: string;
     estado: string;
     tipo: string;

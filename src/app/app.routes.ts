@@ -11,6 +11,7 @@ import { authGuard } from './servidor/auth-guard';
 import { adminGuard, operadorGuard } from './servidor/role-guard';
 import { ListarEntregasComponent } from './features/entregas/listar-entregas/listar-entregas.component';
 import { RegistrarEntregaComponent } from './features/entregas/registrar-entrega/registrar-entrega.component';
+import { ActualizarEntregaComponent } from './features/entregas/actualizar-entrega/actualizar-entrega.component';
 import { InicioComponent } from './features/dashboard/inicio/inicio.component';
 import { ListarProcesosComponent } from './features/procesos/listar-procesos/listar-procesos.component';
 import { CrearProcesoComponent } from './features/procesos/crear-proceso/crear-proceso.component';
@@ -38,6 +39,7 @@ export const routes: Routes = [
     // Entregas - ADMIN + OPERADOR
     { path: 'entregas/listar', component: ListarEntregasComponent, canActivate: [authGuard, operadorGuard] },
     { path: 'entregas/registrar', component: RegistrarEntregaComponent, canActivate: [authGuard, operadorGuard] },
+    { path: 'entregas/actualizar', component: ActualizarEntregaComponent, canActivate: [authGuard, operadorGuard] },
 
     // Clientes - ADMIN only
     { path: 'clientes/listar', component: ListarClientesComponent, canActivate: [authGuard, adminGuard] },

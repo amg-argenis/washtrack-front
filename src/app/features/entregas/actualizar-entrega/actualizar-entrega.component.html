@@ -1,0 +1,81 @@
+<div class="page-wrapper">
+    <div class="page-header">
+        <div>
+            <h3 class="page-title">Actualizar Entrega</h3>
+            <span class="folio-badge">{{ folio }}</span>
+        </div>
+    </div>
+
+    <div class="form-card">
+        @if(errorMsg) {
+        <div class="alert-error">{{ errorMsg }}</div>
+        }
+
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Cliente</label>
+                <input type="text" [value]="cliente" disabled />
+            </div>
+
+            <div class="form-group" [class.has-error]="submitted && !entregaRequest.tipo">
+                <label>Tipo de Entrega <span class="required-mark">*</span></label>
+                <select [(ngModel)]="entregaRequest.tipo" [class.input-error]="submitted && !entregaRequest.tipo">
+                    <option value="" disabled>Seleccione...</option>
+                    @for(tipo of tipos; track tipo) {
+                    <option [value]="tipo">{{ tipo }}</option>
+                    }
+                </select>
+                @if(submitted && !entregaRequest.tipo) {
+                <span class="field-error">Selecciona un tipo de entrega.</span>
+                }
+            </div>
+
+            <div class="form-group" [class.has-error]="submitted && !entregaRequest.fechaEntrega">
+                <label>Fecha de Entrega <span class="required-mark">*</span></label>
+                <input type="date" [(ngModel)]="entregaRequest.fechaEntrega"
+                    [class.input-error]="submitted && !entregaRequest.fechaEntrega" />
+                @if(submitted && !entregaRequest.fechaEntrega) {
+                <span class="field-error">La fecha de entrega es requerida.</span>
+                }
+            </div>
+
+            <div class="form-group"
+                [class.has-error]="submitted && (entregaRequest.totalEntregado == null || entregaRequest.totalEntregado < 1)">
+                <label>Total Entregado <span class="required-mark">*</span></label>
+                <input type="number" [(ngModel)]="entregaRequest.totalEntregado" min="1" placeholder="Ej. 5"
+                    [class.input-error]="submitted && (entregaRequest.totalEntregado == null || entregaRequest.totalEntregado < 1)" />
+                @if(submitted && (entregaRequest.totalEntregado == null || entregaRequest.totalEntregado < 1)) {
+                <span class="field-error">Ingresa un total válido (mínimo 1).</span>
+                }
+            </div>
+
+            <div class="form-group" [class.has-error]="submitted && entregaRequest.conformidadCliente == null">
+                <label>Conformidad del Cliente <span class="required-mark">*</span></label>
+                <select [(ngModel)]="entregaRequest.conformidadCliente"
+                    [class.input-error]="submitted && entregaRequest.conformidadCliente == null">
+                    <option [ngValue]="null" disabled>Seleccione...</option>
+                    <option [ngValue]="true">Si</option>
+                    <option [ngValue]="false">No</option>
+                </select>
+                @if(submitted && entregaRequest.conformidadCliente == null) {
+                <span class="field-error">Selecciona la conformidad del cliente.</span>
+                }
+            </div>
+
+            <div class="form-group full-width">
+                <label>Observaciones</label>
+                <textarea [(ngModel)]="entregaRequest.observaciones" rows="3"
+                    placeholder="Observaciones de la entrega..."></textarea>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button class="btn-secondary" (click)="cancelar()"><i class="fa-solid fa-ban"></i> Cancelar</button>
+            <button class="btn-primary" (click)="guardar()" [disabled]="guardando"><i
+                    class="fa-solid fa-floppy-disk"></i>
+                {{ guardando ? ' Actualizando...' : ' Actualizar Entrega' }}
+            </button>
+        </div>
+    </div>
+
+</div>

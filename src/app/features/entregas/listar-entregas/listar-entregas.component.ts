@@ -92,6 +92,11 @@ export class ListarEntregasComponent implements OnInit {
     this.router.navigate(['/entregas/registrar']);
   }
 
+  editarEntrega(entrega: Entrega) {
+    localStorage.setItem('entregaLocal', JSON.stringify(entrega));
+    this.router.navigate(['/entregas/actualizar']);
+  }
+
   eliminarEntrega(entrega: Entrega) {
     if (!confirm(`Eliminar la entrega de la orden ${entrega.ordenId}?`)) return;
 
