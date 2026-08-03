@@ -29,13 +29,14 @@ export class ActualizarordenComponent implements OnInit {
   estados = ['RECIBIDO', 'EN_PROCESO', 'LISTO', 'ENTREGADO'];
   guardando = false;
   errorMsg = '';
+  submitted = false;
   ordenConDetalles: OrdenConDetalles | null = null;
 
   // Nuevo detalle
   agregandoDetalle = false;
   guardandoDetalle = false;
   nuevoDetalle: InsertarDetalleOrdenRequest = {
-    ordenId: '', procesoId: '', tipoPrenda: '', cantidad: 1, colorReferencia: ''
+    ordenId: '', procesoId: '', tipoPrenda: null, cantidad: null, colorReferencia: null
   };
 
   procesosListado: Proceso[] = [];
@@ -72,7 +73,7 @@ export class ActualizarordenComponent implements OnInit {
           ? response.data
           : [response.data];
 
-        console.log(this.procesosListado);
+        // console.log(this.procesosListado);
         this.cdr.detectChanges();
       },
       error: (err) => {
@@ -130,9 +131,30 @@ export class ActualizarordenComponent implements OnInit {
     });
   }
 
+  // ----------------- Validaciones Formulario Orden
+
+  formularioOrdenValido(): boolean {
+    if (!this.ordenCrearActualizar.estado) return false;
+    if (this.ordenCrearActualizar.totalPrendas == null || this.ordenCrearActualizar.totalPrendas < 1) return false;
+    if (!this.ordenCrearActualizar.fechaIngreso) return false;
+    if (
+      this.ordenCrearActualizar.fechaEntrega &&
+      this.ordenCrearActualizar.fechaEntrega !== 'null' &&
+      this.ordenCrearActualizar.fechaEntrega < this.ordenCrearActualizar.fechaIngreso
+    ) return false;
+    return true;
+  }
+
   guardar() {
-    this.guardando = true;
+    this.submitted = true;
     this.errorMsg = '';
+
+    if (!this.formularioOrdenValido()) {
+      this.errorMsg = 'Por favor corrige los errores antes de actualizar la orden.';
+      return;
+    }
+
+    this.guardando = true;
 
     this.ordenService.actualizarOrden(this.ordenCrearActualizar).subscribe({
       next: (data) => {
@@ -153,17 +175,42 @@ export class ActualizarordenComponent implements OnInit {
 
   mostrarFormDetalle() {
     this.agregandoDetalle = true;
+    this.submitted = false;
+    this.errorMsg = '';
+    this.procesoSeleccionado = '';
+    this.textoBusquedaProceso = '';
     this.nuevoDetalle = {
       ordenId: this.ordenCrearActualizar.idOrden,
-      procesoId: '', tipoPrenda: '', cantidad: 1, colorReferencia: ''
+      procesoId: '', tipoPrenda: null, cantidad: null, colorReferencia: null
     };
   }
 
   cancelarDetalle() {
     this.agregandoDetalle = false;
+    this.submitted = false;
+    this.errorMsg = '';
+  }
+
+  // ----------------- Validaciones Formulario
+
+  formularioDetalleValido(): boolean {
+    if (!this.nuevoDetalle.procesoId) return false;
+    if (!this.nuevoDetalle.tipoPrenda) return false;
+    if (this.nuevoDetalle.cantidad == null || this.nuevoDetalle.cantidad < 1) return false;
+    if (!this.nuevoDetalle.colorReferencia) return false;
+    return true;
   }
 
   guardarDetalle() {
+    this.submitted = true;
+    this.errorMsg = '';
+
+    if (!this.formularioDetalleValido()) {
+      this.errorMsg = 'Por favor complete correctamente el formulario detalle de la orden.';
+      this.guardando = false;
+      return;
+    }
+
     this.guardandoDetalle = true;
 
     this.detalleOrdenService.insertarDetalle(this.nuevoDetalle).subscribe({

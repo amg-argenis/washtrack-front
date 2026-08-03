@@ -81,7 +81,7 @@ export class CrearordenComponent implements OnInit {
     this.errorMsg = '';
 
     if (!this.formularioValido()) {
-      this.errorMsg = 'Por favor corrige los errores antes de continuar.';
+      this.errorMsg = 'Por favor capture y corrija los datos antes de continuar.';
       return;
     }
 

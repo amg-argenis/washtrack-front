@@ -19,23 +19,36 @@
                 <input type="text" [value]="ordenCrearActualizar.nombreCliente" disabled />
             </div>
 
-            <div class="form-group">
-                <label>Estado</label>
-                <select [(ngModel)]="ordenCrearActualizar.estado">
+            <div class="form-group" [class.has-error]="submitted && !ordenCrearActualizar.estado">
+                <label>Estado <span class="required-mark">*</span></label>
+                <select [(ngModel)]="ordenCrearActualizar.estado"
+                    [class.input-error]="submitted && !ordenCrearActualizar.estado">
                     @for(estado of estados; track estado) {
                     <option [value]="estado">{{ estado }}</option>
                     }
                 </select>
+                @if(submitted && !ordenCrearActualizar.estado) {
+                <span class="field-error">Selecciona un estado.</span>
+                }
             </div>
 
-            <div class="form-group">
-                <label>Total Prendas</label>
-                <input type="number" [(ngModel)]="ordenCrearActualizar.totalPrendas" min="1" />
+            <div class="form-group"
+                [class.has-error]="submitted && (ordenCrearActualizar.totalPrendas == null || ordenCrearActualizar.totalPrendas < 1)">
+                <label>Total Prendas <span class="required-mark">*</span></label>
+                <input type="number" [(ngModel)]="ordenCrearActualizar.totalPrendas" min="1" placeholder="Ej. 10"
+                    [class.input-error]="submitted && (ordenCrearActualizar.totalPrendas == null || ordenCrearActualizar.totalPrendas < 1)" />
+                @if(submitted && (ordenCrearActualizar.totalPrendas == null || ordenCrearActualizar.totalPrendas < 1)) {
+                    <span class="field-error">Ingresa un total de prendas válido (mínimo 1).</span>
+                    }
             </div>
 
-            <div class="form-group">
-                <label>Fecha Ingreso</label>
-                <input type="date" [(ngModel)]="ordenCrearActualizar.fechaIngreso" />
+            <div class="form-group" [class.has-error]="submitted && !ordenCrearActualizar.fechaIngreso">
+                <label>Fecha Ingreso <span class="required-mark">*</span></label>
+                <input type="date" [(ngModel)]="ordenCrearActualizar.fechaIngreso"
+                    [class.input-error]="submitted && !ordenCrearActualizar.fechaIngreso" />
+                @if(submitted && !ordenCrearActualizar.fechaIngreso) {
+                <span class="field-error">La fecha de ingreso es requerida.</span>
+                }
             </div>
 
             <div class="form-group">
@@ -74,14 +87,19 @@
         <!-- Formulario agregar detalle -->
         @if(agregandoDetalle) {
         <div class="form-detalle">
-            <div class="form-grid">
 
+            @if(errorMsg) {
+            <div class="alert-error">{{ errorMsg }}</div>
+            }
+
+            <div class="form-grid">
                 <div class="form-group">
-                    <label>Tipo de proceso</label>
+                    <label>Tipo de proceso <span class="required-mark">*</span></label>
                     <div class="dropdown-search-wrapper">
                         <input type="text" class="dropdown-search-input" [(ngModel)]="textoBusquedaProceso"
                             (focus)="abrirDropdown()" (blur)="cerrarDropdown()" (input)="filtrarProcesos()"
-                            placeholder="Buscar proceso..." />
+                            placeholder="Buscar proceso..."
+                            [class.input-error]="submitted && !nuevoDetalle.procesoId" />
 
                         @if(mostrarDropdown) {
                         <div class="dropdown-list">
@@ -95,26 +113,43 @@
                         </div>
                         }
                     </div>
+                    @if(submitted && !nuevoDetalle.procesoId) {
+                    <span class="field-error">Selecciona un proceso.</span>
+                    }
+                </div>
+
+                <div class="form-group" [class.has-error]="submitted && !nuevoDetalle.tipoPrenda">
+                    <label>Tipo de Prenda <span class="required-mark">*</span></label>
+                    <input type="text" [(ngModel)]="nuevoDetalle.tipoPrenda" placeholder="Ej: Pantalon de mezclilla"
+                        [class.input-error]="submitted && !nuevoDetalle.tipoPrenda" />
+                    @if(submitted && !nuevoDetalle.tipoPrenda) {
+                    <span class="field-error">Ingresa un tipo de prenda.</span>
+                    }
                 </div>
 
                 <div class="form-group">
-                    <label>Tipo de Prenda</label>
-                    <input type="text" [(ngModel)]="nuevoDetalle.tipoPrenda" placeholder="Ej: Pantalon de mezclilla" />
+                    <label>Cantidad <span class="required-mark">*</span></label>
+                    <input type="number" [(ngModel)]="nuevoDetalle.cantidad"
+                        [class.input-error]="submitted && (nuevoDetalle.cantidad == null || nuevoDetalle.cantidad < 1)"
+                        min="1" placeholder="Ej. 5" />
+                    @if(submitted && (nuevoDetalle.cantidad == null || nuevoDetalle.cantidad < 1)) { <span
+                        class="field-error">Ingresa un número de prendas válido (mínimo 1).</span>
+                        }
                 </div>
 
-                <div class="form-group">
-                    <label>Cantidad</label>
-                    <input type="number" [(ngModel)]="nuevoDetalle.cantidad" min="1" />
-                </div>
-
-                <div class="form-group">
-                    <label>Color / Referencia</label>
-                    <input type="text" [(ngModel)]="nuevoDetalle.colorReferencia" placeholder="Ej: Azul marino" />
+                <div class="form-group" [class.has-error]="submitted && !nuevoDetalle.colorReferencia">
+                    <label>Color / Referencia <span class="required-mark">*</span></label>
+                    <input type="text" [(ngModel)]="nuevoDetalle.colorReferencia" placeholder="Ej: Azul marino"
+                        [class.input-error]="submitted && !nuevoDetalle.colorReferencia" />
+                    @if(submitted && !nuevoDetalle.colorReferencia) {
+                    <span class="field-error">Ingresa un color o referencia.</span>
+                    }
                 </div>
             </div>
 
             <div class="form-actions">
-                <button class="btn-secondary" (click)="cancelarDetalle()"><i class="fa-solid fa-ban"></i> Cancelar</button>
+                <button class="btn-secondary" (click)="cancelarDetalle()"><i class="fa-solid fa-ban"></i>
+                    Cancelar</button>
                 <button class="btn-primary" (click)="guardarDetalle()" [disabled]="guardandoDetalle"><i
                         class="fa-solid fa-floppy-disk"></i>
                     {{ guardandoDetalle ? ' Guardando...' : 'Guardar Prenda' }}

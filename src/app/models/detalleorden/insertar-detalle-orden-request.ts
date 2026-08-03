@@ -1,7 +1,7 @@
 export interface InsertarDetalleOrdenRequest {
     ordenId: string;
     procesoId: string;
-    tipoPrenda: string;
-    cantidad: number;
-    colorReferencia: string;
+    tipoPrenda: string | null;
+    cantidad: number | null;
+    colorReferencia: string | null;
 }
