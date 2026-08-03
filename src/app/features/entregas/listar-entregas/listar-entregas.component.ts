@@ -73,7 +73,8 @@ export class ListarEntregasComponent implements OnInit {
     }
 
     this.listadoFiltrado = this.listadoEntregas.filter(filtro =>
-      filtro.folio.toLowerCase().includes(texto) // Listado por folio
+      filtro.folio.toLowerCase().includes(texto) || // Listado por folio
+      filtro.cliente.toLowerCase().includes(texto) // Listado por cliente
     );
 
     this.paginaActual = 1;        // add
