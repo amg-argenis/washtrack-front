@@ -150,7 +150,7 @@ export class ActualizarordenComponent implements OnInit {
     this.errorMsg = '';
 
     if (!this.formularioOrdenValido()) {
-      this.errorMsg = 'Por favor corrige los errores antes de actualizar la orden.';
+      this.errorMsg = 'Por favor capture y corrija los datos antes de continuar.';
       return;
     }
 
