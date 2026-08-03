@@ -15,11 +15,12 @@ export class CrearProcesoComponent {
 
   guardando = false;
   errorMsg = '';
+  submitted = false;
 
   procesoRequest: InsertarProcesoRequest = {
     nombre: '',
     descripcion: '',
-    preciounitario: 0
+    preciounitario: null
   };
 
   constructor(
@@ -27,9 +28,24 @@ export class CrearProcesoComponent {
     private router: Router,
     private cdr: ChangeDetectorRef) { }
 
+  formularioValido(): boolean {
+    if (!this.procesoRequest.nombre.trim()) return false;
+    if (this.procesoRequest.nombre.length > 100) return false;
+    if (this.procesoRequest.descripcion && this.procesoRequest.descripcion.length > 500) return false;
+    if (this.procesoRequest.preciounitario == null || this.procesoRequest.preciounitario <= 0) return false;
+    return true;
+  }
+
   guardar() {
-    this.guardando = true;
+    this.submitted = true;
     this.errorMsg = '';
+
+    if (!this.formularioValido()) {
+      this.errorMsg = 'Por favor capture y corrija los datos antes de continuar.';
+      return;
+    }
+
+    this.guardando = true;
 
     this.procesoService.insertarProceso(this.procesoRequest).subscribe({
       next: (response) => {
